@@ -1,11 +1,11 @@
+package com.ags.projectseelion;
+
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
-
-import com.ags.projectseelion.R;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ class MonumentAdapter extends RecyclerView.Adapter<MonumentAdapter.MonumentHolde
     public void onBindViewHolder(MonumentHolder holder, int position) {
         POI m = monuments.get(position);
         holder.tvName.setText(m.getName());
-        holder.checkBoxVisit.setOnCheckedChangeListener((compoundButton, b) -> m.setVisit(b));
+        holder.checkBoxVisit.setOnCheckedChangeListener((compoundButton, b) -> m.setToVisit(b));
         holder.root.setOnClickListener((view -> {
             if (onItemClickListener != null)
                 onItemClickListener.onItemClick(holder.getAdapterPosition());
