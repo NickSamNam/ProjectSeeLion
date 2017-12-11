@@ -1,313 +1,320 @@
 [
 	{
-		"1": "2",
-		"51°35.6467’": "51°35.5967’",
-		"4°46.7650’ ": "4°46.7633’",
-		"VVV": "Liefdeszuster",
-		"Beginpunt": ""
+		"Nummer": "1",
+		"Lat": "51°35.6467’",
+		"Long": "4°46.7650’ ",
+		"Naam": "VVV",
+		"Opmerking": "Beginpunt"
 	},
 	{
-		"1": "3",
-		"51°35.6467’": "51°35.5500’",
-		"4°46.7650’ ": "4°46.7817’",
-		"VVV": "Nassau Baronie Monument",
-		"Beginpunt": ""
+		"Nummer": "2",
+		"Lat": "51°35.5967’",
+		"Long": "4°46.7633’",
+		"Naam": "Liefdeszuster",
+		"Opmerking": ""
 	},
 	{
-		"1": "4",
-		"51°35.6467’": "51°35.5500’",
-		"4°46.7650’ ": "4°46.7633’",
-		"VVV": "",
-		"Beginpunt": "Pad ten westen van monument "
+		"Nummer": "3",
+		"Lat": "51°35.5500’",
+		"Long": "4°46.7817’",
+		"Naam": "Nassau Baronie Monument",
+		"Opmerking": ""
 	},
 	{
-		"1": "5",
-		"51°35.6467’": "51°35.5700’",
-		"4°46.7650’ ": "4°46.7083’",
-		"VVV": "The Light House",
-		"Beginpunt": ""
+		"Nummer": "4",
+		"Lat": "51°35.5500’",
+		"Long": "4°46.7633’",
+		"Naam": "",
+		"Opmerking": "Pad ten westen van monument "
 	},
 	{
-		"1": "6",
-		"51°35.6467’": "51°35.5600’",
-		"4°46.7650’ ": "4°46.6750’",
-		"VVV": "",
-		"Beginpunt": ""
+		"Nummer": "5",
+		"Lat": "51°35.5700’",
+		"Long": "4°46.7083’",
+		"Naam": "The Light House",
+		"Opmerking": ""
 	},
 	{
-		"1": "7",
-		"51°35.6467’": "51°35.4367’",
-		"4°46.7650’ ": "4°46.6200’",
-		"VVV": "",
-		"Beginpunt": "Einde park"
+		"Nummer": "6",
+		"Lat": "51°35.5600’",
+		"Long": "4°46.6750’",
+		"Naam": "",
+		"Opmerking": ""
 	},
 	{
-		"1": "8",
-		"51°35.6467’": "51°35.4367’",
-		"4°46.7650’ ": "4°46.5700’",
-		"VVV": "Kasteel van Breda",
-		"Beginpunt": "Kasteelplein"
+		"Nummer": "7",
+		"Lat": "51°35.4367’",
+		"Long": "4°46.6200’",
+		"Naam": "",
+		"Opmerking": "Einde park"
 	},
 	{
-		"1": "9",
-		"51°35.6467’": "51°35.3817’",
-		"4°46.7650’ ": "4°46.5683’",
-		"VVV": "Stadhouderspoort",
-		"Beginpunt": ""
+		"Nummer": "8",
+		"Lat": "51°35.4367’",
+		"Long": "4°46.5700’",
+		"Naam": "Kasteel van Breda",
+		"Opmerking": "Kasteelplein"
 	},
 	{
-		"1": "10",
-		"51°35.6467’": "51°35.4200’",
-		"4°46.7650’ ": "4°46.5600’",
-		"VVV": "",
-		"Beginpunt": "Kruising Kasteelplein/Cingelstraat"
+		"Nummer": "9",
+		"Lat": "51°35.3817’",
+		"Long": "4°46.5683’",
+		"Naam": "Stadhouderspoort",
+		"Opmerking": ""
 	},
 	{
-		"1": "11",
-		"51°35.6467’": "51°35.4233’",
-		"4°46.7650’ ": "4°46.5000’",
-		"VVV": "",
-		"Beginpunt": "Bocht Cingelstraat"
+		"Nummer": "10",
+		"Lat": "51°35.4200’",
+		"Long": "4°46.5600’",
+		"Naam": "",
+		"Opmerking": "Kruising Kasteelplein/Cingelstraat"
 	},
 	{
-		"1": "12",
-		"51°35.6467’": "51°35.4017’",
-		"4°46.7650’ ": "4°46.4617’",
-		"VVV": "Huis van Brecht (rechter zijde)",
-		"Beginpunt": ""
+		"Nummer": "11",
+		"Lat": "51°35.4233’",
+		"Long": "4°46.5000’",
+		"Naam": "",
+		"Opmerking": "Bocht Cingelstraat"
 	},
 	{
-		"1": "13",
-		"51°35.6467’": "51°35.4117’",
-		"4°46.7650’ ": "4°46.4067’",
-		"VVV": "Spanjaardsgat (rechter zijde)",
-		"Beginpunt": ""
+		"Nummer": "12",
+		"Lat": "51°35.4017’",
+		"Long": "4°46.4617’",
+		"Naam": "Huis van Brecht (rechter zijde)",
+		"Opmerking": ""
 	},
 	{
-		"1": "14",
-		"51°35.6467’": "51°35.3900’",
-		"4°46.7650’ ": "4°46.4000’",
-		"VVV": "Begin Vismarkt",
-		"Beginpunt": ""
+		"Nummer": "13",
+		"Lat": "51°35.4117’",
+		"Long": "4°46.4067’",
+		"Naam": "Spanjaardsgat (rechter zijde)",
+		"Opmerking": ""
 	},
 	{
-		"1": "15",
-		"51°35.6467’": "51°35.3617’",
-		"4°46.7650’ ": "4°46.4667’",
-		"VVV": "Begin Havermarkt",
-		"Beginpunt": ""
+		"Nummer": "14",
+		"Lat": "51°35.3900’",
+		"Long": "4°46.4000’",
+		"Naam": "Begin Vismarkt",
+		"Opmerking": ""
 	},
 	{
-		"1": "16",
-		"51°35.6467’": "51°35.3267’",
-		"4°46.7650’ ": "4°46.4933’",
-		"VVV": "",
-		"Beginpunt": "Kruising Torenstraat/Kerkplein"
+		"Nummer": "15",
+		"Lat": "51°35.3617’",
+		"Long": "4°46.4667’",
+		"Naam": "Begin Havermarkt",
+		"Opmerking": ""
 	},
 	{
-		"1": "17",
-		"51°35.6467’": "51°35.3300’",
-		"4°46.7650’ ": "4°46.5167’",
-		"VVV": "Grote Kerk",
-		"Beginpunt": ""
+		"Nummer": "16",
+		"Lat": "51°35.3267’",
+		"Long": "4°46.4933’",
+		"Naam": "",
+		"Opmerking": "Kruising Torenstraat/Kerkplein"
 	},
 	{
-		"1": "18",
-		"51°35.6467’": "51°35.3267’",
-		"4°46.7650’ ": "4°46.4933’",
-		"VVV": "",
-		"Beginpunt": "Kruising Torenstraat/Kerkplein"
+		"Nummer": "17",
+		"Lat": "51°35.3300’",
+		"Long": "4°46.5167’",
+		"Naam": "Grote Kerk",
+		"Opmerking": ""
 	},
 	{
-		"1": "19",
-		"51°35.6467’": "51°35.2917’",
-		"4°46.7650’ ": "4°46.5083’",
-		"VVV": "Het Poortje",
-		"Beginpunt": ""
+		"Nummer": "18",
+		"Lat": "51°35.3267’",
+		"Long": "4°46.4933’",
+		"Naam": "",
+		"Opmerking": "Kruising Torenstraat/Kerkplein"
 	},
 	{
-		"1": "20",
-		"51°35.6467’": "51°35.2250’",
-		"4°46.7650’ ": "4°46.5450’",
-		"VVV": "Ridderstraat",
-		"Beginpunt": ""
+		"Nummer": "19",
+		"Lat": "51°35.2917’",
+		"Long": "4°46.5083’",
+		"Naam": "Het Poortje",
+		"Opmerking": ""
 	},
 	{
-		"1": "21",
-		"51°35.6467’": "51°35.2450’",
-		"4°46.7650’ ": "4°46.5933’",
-		"VVV": "Grote Markt",
-		"Beginpunt": "Zuidpunt Grote Markt"
+		"Nummer": "20",
+		"Lat": "51°35.2250’",
+		"Long": "4°46.5450’",
+		"Naam": "Ridderstraat",
+		"Opmerking": ""
 	},
 	{
-		"1": "22",
-		"51°35.6467’": "51°35.2817’",
-		"4°46.7650’ ": "4°46.5800’",
-		"VVV": "Bevrijdingsmonument",
-		"Beginpunt": ""
+		"Nummer": "21",
+		"Lat": "51°35.2450’",
+		"Long": "4°46.5933’",
+		"Naam": "Grote Markt",
+		"Opmerking": "Zuidpunt Grote Markt"
 	},
 	{
-		"1": "23",
-		"51°35.6467’": "51°35.3250’",
-		"4°46.7650’ ": "4°46.5667’",
-		"VVV": "Stadhuis",
-		"Beginpunt": ""
+		"Nummer": "22",
+		"Lat": "51°35.2817’",
+		"Long": "4°46.5800’",
+		"Naam": "Bevrijdingsmonument",
+		"Opmerking": ""
 	},
 	{
-		"1": "24",
-		"51°35.6467’": "51°35.2783’",
-		"4°46.7650’ ": "4°46.5817’",
-		"VVV": "",
-		"Beginpunt": "Terug naar begin Grote Markt"
+		"Nummer": "23",
+		"Lat": "51°35.3250’",
+		"Long": "4°46.5667’",
+		"Naam": "Stadhuis",
+		"Opmerking": ""
 	},
 	{
-		"1": "25",
-		"51°35.6467’": "51°35.2500’",
-		"4°46.7650’ ": "4°46.5933’",
-		"VVV": "",
-		"Beginpunt": "Zuidpunt Grote Markt"
+		"Nummer": "24",
+		"Lat": "51°35.2783’",
+		"Long": "4°46.5817’",
+		"Naam": "",
+		"Opmerking": "Terug naar begin Grote Markt"
 	},
 	{
-		"1": "26",
-		"51°35.6467’": "51°35.2583’",
-		"4°46.7650’ ": "4°46.6350’",
-		"VVV": "Antonius van Paduakerk",
-		"Beginpunt": ""
+		"Nummer": "25",
+		"Lat": "51°35.2500’",
+		"Long": "4°46.5933’",
+		"Naam": "",
+		"Opmerking": "Zuidpunt Grote Markt"
 	},
 	{
-		"1": "27",
-		"51°35.6467’": "51°35.2967’",
-		"4°46.7650’ ": "4°46.7100’",
-		"VVV": "",
-		"Beginpunt": "Kruising St.Janstraat/Molenstraat"
+		"Nummer": "26",
+		"Lat": "51°35.2583’",
+		"Long": "4°46.6350’",
+		"Naam": "Antonius van Paduakerk",
+		"Opmerking": ""
 	},
 	{
-		"1": "28",
-		"51°35.6467’": "51°35.2800’",
-		"4°46.7650’ ": "4°46.7367’",
-		"VVV": "Bibliotheek",
-		"Beginpunt": ""
+		"Nummer": "27",
+		"Lat": "51°35.2967’",
+		"Long": "4°46.7100’",
+		"Naam": "",
+		"Opmerking": "Kruising St.Janstraat/Molenstraat"
 	},
 	{
-		"1": "29",
-		"51°35.6467’": "51°35.2417’",
-		"4°46.7650’ ": "4°46.8133’",
-		"VVV": "",
-		"Beginpunt": "Kruising Molenstraat/Kloosterplein"
+		"Nummer": "28",
+		"Lat": "51°35.2800’",
+		"Long": "4°46.7367’",
+		"Naam": "Bibliotheek",
+		"Opmerking": ""
 	},
 	{
-		"1": "30",
-		"51°35.6467’": "51°35.2633’",
-		"4°46.7650’ ": "4°46.8617’",
-		"VVV": "Kloosterkazerne",
-		"Beginpunt": ""
+		"Nummer": "29",
+		"Lat": "51°35.2417’",
+		"Long": "4°46.8133’",
+		"Naam": "",
+		"Opmerking": "Kruising Molenstraat/Kloosterplein"
 	},
 	{
-		"1": "31",
-		"51°35.6467’": "51°35.2650’",
-		"4°46.7650’ ": "4°46.9200’",
-		"VVV": "Chasse theater",
-		"Beginpunt": ""
+		"Nummer": "30",
+		"Lat": "51°35.2633’",
+		"Long": "4°46.8617’",
+		"Naam": "Kloosterkazerne",
+		"Opmerking": ""
 	},
 	{
-		"1": "32",
-		"51°35.6467’": "51°35.2650’",
-		"4°46.7650’ ": "4°46.8750’",
-		"VVV": "",
-		"Beginpunt": "Kruising Kloosterplein/Vlaszak"
+		"Nummer": "31",
+		"Lat": "51°35.2650’",
+		"Long": "4°46.9200’",
+		"Naam": "Chasse theater",
+		"Opmerking": ""
 	},
 	{
-		"1": "33",
-		"51°35.6467’": "51°35.3167’",
-		"4°46.7650’ ": "4°46.8533’",
-		"VVV": "Binding van Isaac",
-		"Beginpunt": ""
+		"Nummer": "32",
+		"Lat": "51°35.2650’",
+		"Long": "4°46.8750’",
+		"Naam": "",
+		"Opmerking": "Kruising Kloosterplein/Vlaszak"
 	},
 	{
-		"1": "34",
-		"51°35.6467’": "51°35.3700’",
-		"4°46.7650’ ": "4°46.8267’",
-		"VVV": "",
-		"Beginpunt": "Kruising Vlaszak/Boschstraat"
+		"Nummer": "33",
+		"Lat": "51°35.3167’",
+		"Long": "4°46.8533’",
+		"Naam": "Binding van Isaac",
+		"Opmerking": ""
 	},
 	{
-		"1": "35",
-		"51°35.6467’": "51°35.3800’",
-		"4°46.7650’ ": "4°46.8600’",
-		"VVV": "Beyerd",
-		"Beginpunt": ""
+		"Nummer": "34",
+		"Lat": "51°35.3700’",
+		"Long": "4°46.8267’",
+		"Naam": "",
+		"Opmerking": "Kruising Vlaszak/Boschstraat"
 	},
 	{
-		"1": "36",
-		"51°35.6467’": "51°35.3700’",
-		"4°46.7650’ ": "4°46.8267’",
-		"VVV": "",
-		"Beginpunt": "Kruising Vlaszak/Boschstraat"
+		"Nummer": "35",
+		"Lat": "51°35.3800’",
+		"Long": "4°46.8600’",
+		"Naam": "Beyerd",
+		"Opmerking": ""
 	},
 	{
-		"1": "37",
-		"51°35.6467’": "51°35.3733’",
-		"4°46.7650’ ": "4°46.8000’",
-		"VVV": "Gasthuispoort",
-		"Beginpunt": ""
+		"Nummer": "36",
+		"Lat": "51°35.3700’",
+		"Long": "4°46.8267’",
+		"Naam": "",
+		"Opmerking": "Kruising Vlaszak/Boschstraat"
 	},
 	{
-		"1": "38",
-		"51°35.6467’": "51°35.3650’",
-		"4°46.7650’ ": "4°46.7917’",
-		"VVV": "",
-		"Beginpunt": "Ingang Veemarktstraat"
+		"Nummer": "37",
+		"Lat": "51°35.3733’",
+		"Long": "4°46.8000’",
+		"Naam": "Gasthuispoort",
+		"Opmerking": ""
 	},
 	{
-		"1": "39",
-		"51°35.6467’": "51°35.3417’",
-		"4°46.7650’ ": "4°46.7817’",
-		"VVV": "",
-		"Beginpunt": "1e bocht Veemarktstraat"
+		"Nummer": "38",
+		"Lat": "51°35.3650’",
+		"Long": "4°46.7917’",
+		"Naam": "",
+		"Opmerking": "Ingang Veemarktstraat"
 	},
 	{
-		"1": "40",
-		"51°35.6467’": "51°35.3133’",
-		"4°46.7650’ ": "4°46.7000’",
-		"VVV": "",
-		"Beginpunt": "Kruising Veemarktstraat/St.Annastraat"
+		"Nummer": "39",
+		"Lat": "51°35.3417’",
+		"Long": "4°46.7817’",
+		"Naam": "",
+		"Opmerking": "1e bocht Veemarktstraat"
 	},
 	{
-		"1": "41",
-		"51°35.6467’": "51°35.3467’",
-		"4°46.7650’ ": "4°46.6767’",
-		"VVV": "Willem Merkxtuin",
-		"Beginpunt": "Ingang Willem Merkxtuin"
+		"Nummer": "40",
+		"Lat": "51°35.3133’",
+		"Long": "4°46.7000’",
+		"Naam": "",
+		"Opmerking": "Kruising Veemarktstraat/St.Annastraat"
 	},
 	{
-		"1": "42",
-		"51°35.6467’": "51°35.3800’",
-		"4°46.7650’ ": "4°46.6683’",
-		"VVV": "",
-		"Beginpunt": "Kruising St.Annastraat/Catharinastraat"
+		"Nummer": "41",
+		"Lat": "51°35.3467’",
+		"Long": "4°46.6767’",
+		"Naam": "Willem Merkxtuin",
+		"Opmerking": "Ingang Willem Merkxtuin"
 	},
 	{
-		"1": "43",
-		"51°35.6467’": "51°35.3817’",
-		"4°46.7650’ ": "4°46.7017’",
-		"VVV": "Begijnenhof",
-		"Beginpunt": "Ingang Begijnenhof"
+		"Nummer": "42",
+		"Lat": "51°35.3800’",
+		"Long": "4°46.6683’",
+		"Naam": "",
+		"Opmerking": "Kruising St.Annastraat/Catharinastraat"
 	},
 	{
-		"1": "44",
-		"51°35.6467’": "51°35.3800’",
-		"4°46.7650’ ": "4°46.6683’",
-		"VVV": "",
-		"Beginpunt": "Kruising St.Annastraat/Catharinastraat"
+		"Nummer": "43",
+		"Lat": "51°35.3817’",
+		"Long": "4°46.7017’",
+		"Naam": "Begijnenhof",
+		"Opmerking": "Ingang Begijnenhof"
 	},
 	{
-		"1": "45",
-		"51°35.6467’": "51°35.3700’",
-		"4°46.7650’ ": "4°46.5750’",
-		"VVV": "Einde stadswandeling",
-		"Beginpunt": "Eindpunt"
+		"Nummer": "44",
+		"Lat": "51°35.3800’",
+		"Long": "4°46.6683’",
+		"Naam": "",
+		"Opmerking": "Kruising St.Annastraat/Catharinastraat"
 	},
 	{
-		"1": ""
+		"Nummer": "45",
+		"Lat": "51°35.3700’",
+		"Long": "4°46.5750’",
+		"Naam": "Einde stadswandeling",
+		"Opmerking": "Eindpunt"
+	},
+	{
+		"Nummer": ""
 	}
 ]
