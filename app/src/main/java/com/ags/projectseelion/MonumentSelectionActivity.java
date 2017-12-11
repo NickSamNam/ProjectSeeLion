@@ -23,9 +23,8 @@ public class MonumentSelectionActivity extends AppCompatActivity {
     }
 
     private void btnContinueOnClick(View view) {
-        // TODO use correct intent and bundle
         Intent intent = new Intent(getApplicationContext(), HistorischeActivity.class);
-        intent.putExtra("monuments", monuments);
+        intent.putExtra("monuments", monuments.toArray());
         startActivity(intent);
     }
 }
