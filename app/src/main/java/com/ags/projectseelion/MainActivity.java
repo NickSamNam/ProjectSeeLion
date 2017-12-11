@@ -29,13 +29,15 @@ public class MainActivity extends AppCompatActivity {
         });
         checkBoxDutch.setOnCheckedChangeListener((compoundButton, b) -> {
             Log.i("BOX", "dutchbuttonclicked "+b);
-            checkBoxEnglish.setChecked(!b);
+            if(checkBoxEnglish.isChecked())
+                checkBoxEnglish.setChecked(!b);
             updateLocale("nl");
 
         });
         checkBoxEnglish.setOnCheckedChangeListener((compoundButton, b)->{
             Log.i("BOX", "Englishbuttonclicked "+b);
-            checkBoxDutch.setChecked(!b);
+            if(checkBoxDutch.isChecked())
+                checkBoxDutch.setChecked(!b);
             updateLocale("en");
         });
     }
