@@ -3,4 +3,5 @@
     <string name="app_name">BreNavigator</string>
     <string name="select_route">Route Selecteren</string>
     <string name="monuments">Monumenten</string>
+    <string name="historical_kilometer">Historische Kilometer</string>
 </resources>

@@ -13,4 +13,6 @@
     <string name="information">Informatie</string>
     <string name="filter">Filter</string>
     <string name="continue_btn">Continue</string>
+    <string name="historical_kilometer">Historical Kilometer</string>
+    <string name="blind_walls" translatable="false">Blind Walls</string>
 </resources>
