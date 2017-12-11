@@ -59,13 +59,10 @@ public class MainActivity extends AppCompatActivity {
         Locale oldLocale = getResources().getConfiguration().locale;
         if (!newLocale.getLanguage().equals(oldLocale.getLanguage())) {
             Configuration configuration = new Configuration(getResources().getConfiguration());
-            configuration.setLocale(newLocale);
+            configuration.locale = newLocale;
             getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
             recreate();
-//            getResources().getConfiguration().locale = newLocale;
-//            recreate();
         }
-
     }
 
     private void OnContinueButtonClicked() {
