@@ -1,0 +1,51 @@
+package com.ags.projectseelion;
+
+import android.content.Context;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+/**
+ * Created by tmbro on 11-12-2017.
+ */
+
+public class JsonParser {
+    Context context;
+    JSONObject json = null;
+    public JsonParser(Context context){
+        this.context = context;
+    }
+
+    public POI parseToPOI(String location){
+        try {
+        InputStream ins = context.getResources().openRawResource(
+                context.getResources().getIdentifier(location,
+                        "raw", context.getPackageName()));
+
+        int size = 0;
+
+        size = ins.available();
+
+        byte[] buffer = new byte[size];
+        ins.read(buffer);
+        ins.close();
+        json = new JSONObject(new String(buffer, "UTF-8"));
+
+        POI poi = new POI(
+                json.getString("Naam"),
+                null,
+                null,
+                json.getString("Long"),
+                json.getString("Lat"));
+
+        return poi;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+}
