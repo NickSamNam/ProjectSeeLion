@@ -15,4 +15,8 @@
     <string name="historical_kilometer">Historical Kilometer</string>
     <string name="blind_walls" translatable="false">Blind Walls</string>
     <string name="title_activity_map">Map</string>
+    <string name="titel">Historische Kilometer</string>
+    <string name="looptijd">Geschatte looptijd: </string>
+    <string name="afstand">Afstand (kilometers): </string>
+    <string name="startroute">Start route</string>
 </resources>
