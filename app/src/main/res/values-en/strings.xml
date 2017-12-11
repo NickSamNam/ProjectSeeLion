@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BreNavigator</string>
+    <string name="select_route">Select Route</string>
+    <string name="monuments">Monuments</string>
+    <string name="welcome_title">Welcome to the BreNavigator App</string>
+</resources>
