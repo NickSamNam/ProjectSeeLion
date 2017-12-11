@@ -15,4 +15,5 @@
     <string name="continue_btn">Continue</string>
     <string name="historical_kilometer">Historical Kilometer</string>
     <string name="blind_walls" translatable="false">Blind Walls</string>
+    <string name="title_activity_map">Map</string>
 </resources>
