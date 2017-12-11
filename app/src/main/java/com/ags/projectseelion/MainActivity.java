@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
             Log.i("BOX", "dutchbuttonclicked "+b);
             if(checkBoxEnglish.isChecked())
                 checkBoxEnglish.setChecked(!b);
+            else
+                checkBoxDutch.setChecked(!b);
             updateLocale("nl");
 
         });
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
             Log.i("BOX", "Englishbuttonclicked "+b);
             if(checkBoxDutch.isChecked())
                 checkBoxDutch.setChecked(!b);
+            else
+                checkBoxEnglish.setChecked(!b);
             updateLocale("en");
         });
     }
