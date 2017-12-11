@@ -57,7 +57,7 @@ class MonumentAdapter extends RecyclerView.Adapter<MonumentAdapter.MonumentHolde
 
         public MonumentHolder(View itemView) {
             super(itemView);
-            root = itemView
+            root = itemView;
             tvName = itemView.findViewById(R.id.item_monument_tv_name);
             checkBoxVisit = itemView.findViewById(R.id.item_monument_checkBox_visit);
         }
