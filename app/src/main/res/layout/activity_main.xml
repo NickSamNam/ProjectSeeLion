@@ -7,47 +7,78 @@
     tools:context="com.ags.projectseelion.MainActivity">
 
     <RelativeLayout
-        android:layout_width="342dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="9dp"
-        tools:layout_editor_absoluteY="215dp">
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="167dp">
 
-        <TextView
-            android:id="@+id/activity_main_textView_english"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="342dp"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/relativeLayout"
+            android:layout_alignRight="@+id/relativeLayout"
+            android:layout_below="@+id/relativeLayout"
+            tools:layout_editor_absoluteX="9dp"
+            tools:layout_editor_absoluteY="124dp">
+
+            <TextView
+                android:id="@+id/activity_main_textView_dutch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/nederlands"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="48dp"
+                tools:layout_editor_absoluteY="347dp" />
+
+            <CheckBox
+                android:id="@+id/activity_main_checkBox_dutch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/activity_main_textView_dutch"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                tools:layout_editor_absoluteX="195dp"
+                tools:layout_editor_absoluteY="42dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="344dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:text="@string/english"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="418dp">
 
-        <TextView
-            android:id="@+id/activity_main_textView_dutch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/activity_main_textView_english"
-            android:text="@string/nederlands"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+            <CheckBox
+                android:id="@+id/activity_main_checkBox_english"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/activity_main_textView_dutch"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                tools:layout_editor_absoluteX="277dp"
+                tools:layout_editor_absoluteY="347dp" />
 
-        <CheckBox
-            android:id="@+id/activity_main_checkBox_english"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/activity_main_textView_dutch"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true" />
-
-        <CheckBox
-            android:id="@+id/activity_main_checkBox_dutch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/activity_main_textView_dutch"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true" />
+            <TextView
+                android:id="@+id/activity_main_textView_english"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/english"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="186dp" />
+        </RelativeLayout>
     </RelativeLayout>
+
 </android.support.constraint.ConstraintLayout>
