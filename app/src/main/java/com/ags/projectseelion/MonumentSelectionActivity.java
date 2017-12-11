@@ -23,7 +23,7 @@ public class MonumentSelectionActivity extends AppCompatActivity {
     }
 
     private void btnContinueOnClick(View view) {
-        Intent intent = new Intent(getApplicationContext(), HistorischeActivity.class);
+        Intent intent = new Intent(getApplicationContext(), HistorischeKilometer.class);
         intent.putExtra("monuments", monuments.toArray());
         startActivity(intent);
     }

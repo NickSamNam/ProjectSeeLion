@@ -10,7 +10,7 @@
         android:id="@+id/activity_historische_kilometer_textView_titel"
         android:layout_width="384dp"
         android:layout_height="51dp"
-        android:text="@string/name"
+        android:text="@string/titel_historische_kilometer"
         android:textAlignment="center"
         android:textColor="@android:color/background_dark"
         android:textSize="36sp"
@@ -77,7 +77,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/activity_historische_kilometer_textView_afstand"
         app:layout_constraintTop_toBottomOf="@+id/activity_historische_kilometer_textView_looptijdvalue"
-        tools:text="10" />
+        tools:text="10"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="8dp" />
 
     <Button
         android:id="@+id/activity_historische_kilometer_button_startroute"
