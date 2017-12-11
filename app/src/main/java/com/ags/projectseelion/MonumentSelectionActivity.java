@@ -16,6 +16,7 @@ public class MonumentSelectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monument_selection);
 
+        // TODO: 11-12-2017 replace null with poi from mapController
         monuments = null;
 
         findViewById(R.id.activity_monument_selection_btn_continue).setOnClickListener(this::btnContinueOnClick);

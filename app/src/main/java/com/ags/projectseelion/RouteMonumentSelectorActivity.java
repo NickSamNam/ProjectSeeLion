@@ -14,8 +14,9 @@ public class RouteMonumentSelectorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_route_monument_selector);
 
         Button btn_RouteSelector = findViewById(R.id.activity_route_monument_selector_btn_selectroute);
-        btn_RouteSelector.setOnClickListener(view -> startActivity(new Intent(this,RouteSelectorActivity.class)));
+
         Button btn_MonumentSelector = findViewById(R.id.activity_route_monument_selector_btn_monuments);
+
         btn_MonumentSelector.setOnClickListener(view -> startActivity(new Intent(this, MonumentSelectionActivity.class)));
     }
 }
