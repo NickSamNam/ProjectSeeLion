@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".RouteMonumentSelectorActivity"></activity>
+        <activity android:name=".InformationActivity"></activity>
     </application>
 
 </manifest>
