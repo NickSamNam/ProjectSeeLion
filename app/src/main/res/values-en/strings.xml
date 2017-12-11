@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BreNavigator</string>
+    <string name="select_route">Select Route</string>
+    <string name="monuments">Monuments</string>
+    <string name="welcome_title">Welcome to the BreNavigator App</string>
+    <string name="welcome_text">" First of all, we would like to know which language you speak."</string>
+    <string name="continue_button">Continue</string>
+    <string name="no_gps_text">No GPS signal</string>
+    <string name="close">Close</string>
+    <string name="information">Information</string>
+    <string name="filter">Filter</string>
+    <string name="title_activity_map">Map</string>
+    <string name="historical_kilometer">Historical Kilometer</string>
+    <string name="oke">Oké</string>
+    <string name="nederlands">Dutch</string>
+    <string name="english">English</string>
+</resources>
