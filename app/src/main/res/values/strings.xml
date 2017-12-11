@@ -7,4 +7,6 @@
     <string name="continue_button">Verder</string>
     <string name="no_gps_text">Geen GPS signaal</string>
     <string name="oke">Oké</string>
+    <string name="close">Sluiten</string>
+    <string name="information">Informatie</string>
 </resources>
