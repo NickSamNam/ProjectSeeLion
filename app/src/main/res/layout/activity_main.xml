@@ -10,10 +10,10 @@
         android:layout_width="342dp"
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteX="9dp"
-        tools:layout_editor_absoluteY="16dp">
+        tools:layout_editor_absoluteY="215dp">
 
         <TextView
-            android:id="@+id/activity_main_textView_English"
+            android:id="@+id/activity_main_textView_english"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -24,29 +24,29 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/activity_main_textView_Dutch"
+            android:id="@+id/activity_main_textView_dutch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/activity_main_textView_English"
+            android:layout_below="@+id/activity_main_textView_english"
             android:text="@string/nederlands"
             android:textSize="30sp"
             android:textStyle="bold" />
 
         <CheckBox
-            android:id="@+id/activity_main_checkBox_English"
+            android:id="@+id/activity_main_checkBox_english"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/activity_main_textView_Dutch"
+            android:layout_above="@+id/activity_main_textView_dutch"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true" />
 
         <CheckBox
-            android:id="@+id/activity_main_checkBox_Dutch"
+            android:id="@+id/activity_main_checkBox_dutch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/activity_main_textView_Dutch"
+            android:layout_alignBottom="@+id/activity_main_textView_dutch"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true" />
     </RelativeLayout>
