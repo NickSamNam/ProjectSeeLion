@@ -14,6 +14,7 @@ public class POI {
     private float longitude;
     private float latitude;
     private Catagory catagory;
+    private boolean toVisit;
 
 
     public POI(int number, String name, Map<String, String> description, int image, float longitude, float latitude, Catagory catagory) {
@@ -24,8 +25,8 @@ public class POI {
         this.latitude = latitude;
         this.catagory = catagory;
         this.number = number;
+        toVisit = true;
     }
-
 
     public Catagory getCatagory() {
         return catagory;
@@ -53,5 +54,13 @@ public class POI {
 
     public int getNumber() {
         return number;
+    }
+
+    public boolean isToVisit() {
+        return toVisit;
+    }
+
+    public void setToVisit(boolean toVisit) {
+        this.toVisit = toVisit;
     }
 }
