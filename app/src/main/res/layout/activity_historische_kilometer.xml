@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ags.projectseelion.HistorischeKilometer">
+
+    <TextView
+        android:id="@+id/activity_historische_kilometer_textView_titel"
+        android:layout_width="384dp"
+        android:layout_height="51dp"
+        android:text="@string/name"
+        android:textAlignment="center"
+        android:textColor="@android:color/background_dark"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Historische Kilometer" />
+
+    <TextView
+        android:id="@+id/activity_historische_kilometer_textView_looptijd"
+        android:layout_width="206dp"
+        android:layout_height="36dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="76dp"
+        android:text="@string/looptijd"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_historische_kilometer_textView_titel"
+        tools:text="Geschatte looptijd: " />
+
+    <TextView
+        android:id="@+id/activity_historische_kilometer_textView_afstand"
+        android:layout_width="228dp"
+        android:layout_height="36dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/afstand"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_historische_kilometer_textView_looptijd"
+        tools:text="Afstand (kilometer):" />
+
+    <TextView
+        android:id="@+id/activity_historische_kilometer_textView_looptijdvalue"
+        android:layout_width="84dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="76dp"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.652"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/activity_historische_kilometer_textView_looptijd"
+        app:layout_constraintTop_toBottomOf="@+id/activity_historische_kilometer_textView_titel"
+        tools:text="45.00" />
+
+    <TextView
+        android:id="@+id/activity_historische_kilometer_textView_afstandvalue"
+        android:layout_width="84dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/activity_historische_kilometer_textView_afstand"
+        app:layout_constraintTop_toBottomOf="@+id/activity_historische_kilometer_textView_looptijdvalue"
+        tools:text="10" />
+
+    <Button
+        android:id="@+id/activity_historische_kilometer_button_startroute"
+        android:layout_width="363dp"
+        android:layout_height="wrap_content"
+        android:text="@string/startroute"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:text="Start route" />
+</android.support.constraint.ConstraintLayout>

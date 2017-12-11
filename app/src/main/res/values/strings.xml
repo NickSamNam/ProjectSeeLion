@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">BreNavigator</string>
+    <string name="titel">Historische Kilometer</string>
+    <string name="looptijd">Geschatte looptijd: </string>
+    <string name="afstand">Afstand (kilometers): </string>
+    <string name="startroute">Start route</string>
 </resources>
