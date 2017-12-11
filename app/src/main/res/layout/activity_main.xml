@@ -6,4 +6,19 @@
     android:layout_height="match_parent"
     tools:context="com.ags.projectseelion.MainActivity">
 
+    <RelativeLayout
+        android:layout_width="342dp"
+        android:layout_height="252dp"
+        tools:layout_editor_absoluteX="9dp"
+        tools:layout_editor_absoluteY="16dp">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="English" />
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
