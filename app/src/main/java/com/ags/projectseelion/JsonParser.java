@@ -13,8 +13,8 @@ import java.io.InputStream;
  */
 
 public class JsonParser {
-    Context context;
-    JSONObject json = null;
+    private Context context;
+    private JSONObject json = null;
     public JsonParser(Context context){
         this.context = context;
     }
@@ -35,18 +35,22 @@ public class JsonParser {
         json = new JSONObject(new String(buffer, "UTF-8"));
 
         POI poi = new POI(
-                json.getString("Naam"), //naam
+                json.getString("Naam"), //name
                 null,   //description
                 null,   //image
                 null,   //category
                 json.getString("Long"), //longitude
-                json.getString("Lat")); //latitude
+                json.getString("Lat"),  //latitude
+                json.getInt("Nummer")   //nummer
+        );
 
         return poi;
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         } catch (JSONException e) {
             e.printStackTrace();
+            return null;
         }
     }
 }
