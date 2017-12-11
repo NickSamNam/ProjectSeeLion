@@ -57,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void OnContinueButtonClicked() {
-
+        Intent i = new Intent(this, RouteMonumentSelectorActivity.class);
+        startActivity(i);
     }
 
 
