@@ -35,11 +35,12 @@ public class JsonParser {
         json = new JSONObject(new String(buffer, "UTF-8"));
 
         POI poi = new POI(
-                json.getString("Naam"),
-                null,
-                null,
-                json.getString("Long"),
-                json.getString("Lat"));
+                json.getString("Naam"), //naam
+                null,   //description
+                null,   //image
+                null,   //category
+                json.getString("Long"), //longitude
+                json.getString("Lat")); //latitude
 
         return poi;
         } catch (IOException e) {
