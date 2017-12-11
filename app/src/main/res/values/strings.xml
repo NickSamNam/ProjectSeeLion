@@ -2,4 +2,6 @@
     <string name="app_name">BreNavigator</string>
     <string name="english">English</string>
     <string name="nederlands">Nederlands</string>
+    <string name="welcome_title">Welkom in de BreNavigator App</string>
+    <string name="welcome_text">Allereerst willen we graag weten welke taal je spreekt</string>
 </resources>
