@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">BreNavigator</string>
+    <string name="app_name" translatable="false">BreNavigator</string>
+    <string name="historical_kilometer">Historical Kilometer</string>
+    <string name="blind_walls" translatable="false">Blind Walls</string>
 </resources>
