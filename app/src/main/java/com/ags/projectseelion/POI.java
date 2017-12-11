@@ -16,23 +16,23 @@ public class POI implements Parcelable {
     private int image;
     private float longitude;
     private float latitude;
-    private Catagory catagory;
+    private Category category;
     private boolean toVisit;
 
 
-    public POI(int number, String name, Map<String, String> description, int image, float longitude, float latitude, Catagory catagory) {
+    public POI(int number, String name, Map<String, String> description, int image, float longitude, float latitude, Category category) {
         this.name = name;
         this.description = description;
         this.image = image;
         this.longitude = longitude;
         this.latitude = latitude;
-        this.catagory = catagory;
+        this.category = category;
         this.number = number;
         toVisit = true;
     }
 
-    public Catagory getCatagory() {
-        return catagory;
+    public Category getCategory() {
+        return category;
     }
 
     public float getLatitude() {
@@ -73,7 +73,7 @@ public class POI implements Parcelable {
         image = in.readInt();
         longitude = in.readFloat();
         latitude = in.readFloat();
-        catagory = (Catagory) in.readValue(Catagory.class.getClassLoader());
+        category = (Category) in.readValue(Category.class.getClassLoader());
         toVisit = in.readByte() != 0x00;
     }
 
@@ -89,7 +89,7 @@ public class POI implements Parcelable {
         dest.writeInt(image);
         dest.writeFloat(longitude);
         dest.writeFloat(latitude);
-        dest.writeValue(catagory);
+        dest.writeValue(category);
         dest.writeByte((byte) (toVisit ? 0x01 : 0x00));
     }
 
