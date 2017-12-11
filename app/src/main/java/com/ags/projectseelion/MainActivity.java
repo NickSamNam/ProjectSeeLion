@@ -1,6 +1,7 @@
 package com.ags.projectseelion;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -57,9 +58,14 @@ public class MainActivity extends AppCompatActivity {
         Locale newLocale = new Locale(language);
         Locale oldLocale = getResources().getConfiguration().locale;
         if (!newLocale.getLanguage().equals(oldLocale.getLanguage())) {
-            getResources().getConfiguration().locale = newLocale;
+            Configuration configuration = new Configuration(getResources().getConfiguration());
+            configuration.setLocale(newLocale);
+            getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
             recreate();
+//            getResources().getConfiguration().locale = newLocale;
+//            recreate();
         }
+
     }
 
     private void OnContinueButtonClicked() {
