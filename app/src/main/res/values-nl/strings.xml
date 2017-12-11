@@ -4,4 +4,15 @@
     <string name="select_route">Route Selecteren</string>
     <string name="monuments">Monumenten</string>
     <string name="historical_kilometer">Historische Kilometer</string>
+    <string name="welcome_title">Welkom in de BreNavigator App</string>
+    <string name="welcome_text">Allereerst willen we graag weten welke taal je spreekt</string>
+    <string name="continue_button">Verder</string>
+    <string name="no_gps_text">Geen GPS signaal</string>
+    <string name="close">Sluiten</string>
+    <string name="information">Informatie</string>
+    <string name="filter">Filter</string>
+    <string name="title_activity_map">Kaart</string>
+    <string name="oke">Oké</string>
+    <string name="english">Engels</string>
+    <string name="nederlands">Nederlands</string>
 </resources>
