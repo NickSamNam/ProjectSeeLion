@@ -11,4 +11,6 @@
     <string name="oke">Oké</string>
     <string name="close">Sluiten</string>
     <string name="information">Informatie</string>
+    <string name="filter">Filter</string>
+    <string name="continue_btn">Continue</string>
 </resources>
