@@ -5,4 +5,6 @@
     <string name="welcome_title">Welkom in de BreNavigator App</string>
     <string name="welcome_text">Allereerst willen we graag weten welke taal je spreekt</string>
     <string name="continue_button">Verder</string>
+    <string name="no_gps_text">Geen GPS signaal</string>
+    <string name="oke">Oké</string>
 </resources>
