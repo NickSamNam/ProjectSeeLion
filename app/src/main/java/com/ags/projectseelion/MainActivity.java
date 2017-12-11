@@ -4,16 +4,15 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
+import android.widget.RadioButton;
 
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-    private CheckBox checkBoxEnglish;
-    private CheckBox checkBoxDutch;
+    private RadioButton radioButtonEnglish;
+    private RadioButton radioButtonDutch;
     private Button continueButton;
 
 
@@ -21,36 +20,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        checkBoxDutch = findViewById(R.id.activity_main_checkBox_dutch);
-        checkBoxEnglish = findViewById(R.id.activity_main_checkBox_english);
+        radioButtonDutch = findViewById(R.id.activity_main_radioButton_dutch);
+        radioButtonEnglish = findViewById(R.id.activity_main_radioButton_english);
         continueButton = findViewById(R.id.activity_main_button_continue);
         SetCheckedBox(getResources().getConfiguration().locale.getLanguage());
         continueButton.setOnClickListener(v->{
             OnContinueButtonClicked();
         });
-        checkBoxDutch.setOnCheckedChangeListener((compoundButton, b) -> {
-            Log.i("BOX", "dutchbuttonclicked "+b);
-            if(checkBoxEnglish.isChecked())
-                checkBoxEnglish.setChecked(!b);
-            else
-                checkBoxDutch.setChecked(!b);
-            updateLocale("nl");
-
-        });
-        checkBoxEnglish.setOnCheckedChangeListener((compoundButton, b)->{
-            Log.i("BOX", "Englishbuttonclicked "+b);
-            if(checkBoxDutch.isChecked())
-                checkBoxDutch.setChecked(!b);
-            else
-                checkBoxEnglish.setChecked(!b);
-            updateLocale("en");
-        });
     }
 
     private void SetCheckedBox(String language) {
         switch (language){
-            case "nl": checkBoxDutch.setChecked(true); break;
-            case "en": checkBoxEnglish.setChecked(true); break;
+            case "nl": radioButtonDutch.setChecked(true); break;
+            case "en": radioButtonEnglish.setChecked(true); break;
         }
     }
 
@@ -71,4 +53,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void onRadioButtonClicked(View view) {
+        if (!((RadioButton) view).isChecked()) return;
+
+        switch(view.getId()) {
+            case R.id.activity_main_radioButton_dutch:
+                radioButtonEnglish.setChecked(false);
+                updateLocale("nl");
+                    break;
+            case R.id.activity_main_radioButton_english:
+                radioButtonDutch.setChecked(false);
+                updateLocale("en");
+                    break;
+        }
+    }
 }
