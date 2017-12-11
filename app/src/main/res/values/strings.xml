@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">BreNavigator</string>
+    <string name="filter">Filter</string>
+    <string name="continue_btn">Continue</string>
 </resources>
