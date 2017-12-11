@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Template Historische kilometer</string>
+    <string name="looptijd">Geschatte looptijd:</string>
+    <string name="afstand">Afstand (kilometer):</string>
+    <string name="titel">Historische kilometer</string>
+    <string name="startroute">Start route</string>
+
+
+</resources>
