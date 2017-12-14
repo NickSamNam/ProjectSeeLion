@@ -55,7 +55,7 @@ public class JsonParser {
                 e.printStackTrace();
             }
         }
-        return POIList
+        return POIList;
     }
 
     private POI parsePOI(JSONObject json){
