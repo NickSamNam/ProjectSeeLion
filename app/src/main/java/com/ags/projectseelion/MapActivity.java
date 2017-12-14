@@ -1,27 +1,73 @@
 package com.ags.projectseelion;
 
-import android.support.v4.app.FragmentActivity;
+import android.app.AlertDialog;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.Task;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
+    private final static int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0;
+    private final static float DEFAULT_ZOOM = 18f;
+    private final static String KEY_LOCATION = "LOCATION";
+    private final static String KEY_CAMERA_POSITION = "CAMERA_POSITION";
+    public final static String KEY_ROUTE = "ROUTE";
 
+    private boolean fresh = true;
     private GoogleMap mMap;
+    private Location lastKnownLocation = null;
+    private CameraPosition cameraPosition = null;
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    private LatLng defaultLocation = new LatLng(32.676149, -117.157703);
+    private Route route;
+
+    // TODO: 11-12-2017 replace null with poi from mapController
+    List<POI> pois = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            fresh = false;
+            lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
+            cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
+        }
+
+        route = Route.values()[(getIntent().getIntExtra(KEY_ROUTE, 0))];
+
         setContentView(R.layout.activity_map);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable(KEY_CAMERA_POSITION, mMap.getCameraPosition());
+        outState.putParcelable(KEY_LOCATION, lastKnownLocation);
+        super.onSaveInstanceState(outState);
     }
 
 
@@ -37,10 +83,90 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setOnMarkerClickListener(this::onMarkerClick);
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        int i = 0;
+        for (POI poi : pois) {
+            Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(poi.getLatitude(), poi.getLongitude())).title(poi.getName()));
+            marker.setTag(i);
+            i++;
+        }
+        mMap.addMarker(new MarkerOptions().position(defaultLocation).title("Marker in Sydney"));
+
+        if (fresh) {
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
+            getLocationPermission();
+        }
+        updateLocationUI();
+        getDeviceLocation();
+    }
+
+    private void getDeviceLocation() {
+        try {
+            if (hasLocationPermission()) {
+                Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
+                locationResult.addOnCompleteListener(this, (task) -> {
+                    if (task.isSuccessful()) {
+                        lastKnownLocation = task.getResult();
+                        if (cameraPosition == null)
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                    new LatLng(lastKnownLocation.getLatitude(),
+                                            lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+                    } else {
+                        if (cameraPosition == null)
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
+                        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                    }
+                });
+            }
+        } catch (SecurityException e) {
+            Log.e("Exception: %s", e.getMessage());
+        }
+    }
+
+    private void updateLocationUI() {
+        try {
+            if (hasLocationPermission()) {
+                mMap.setMyLocationEnabled(true);
+                mMap.getUiSettings().setMyLocationButtonEnabled(true);
+            } else {
+                mMap.setMyLocationEnabled(false);
+                mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                lastKnownLocation = null;
+            }
+        } catch (SecurityException e) {
+            Log.e("Exception: %s", e.getMessage());
+        }
+    }
+
+    private boolean hasLocationPermission() {
+        return ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void getLocationPermission() {
+        if (!hasLocationPermission()) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{(android.Manifest.permission.ACCESS_FINE_LOCATION)},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    updateLocationUI();
+                    getDeviceLocation();
+                }
+            }
+        }
+    }
+
+    public boolean onMarkerClick(Marker marker) {
+        new AlertDialog.Builder(this).setMessage(pois.get((Integer) marker.getTag()).getDescription().get(getResources().getConfiguration()
+                .locale.getLanguage())).create().show();
+        return true;
     }
 }
