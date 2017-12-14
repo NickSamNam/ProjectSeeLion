@@ -13,17 +13,17 @@ public class POI implements Parcelable {
     private int number;
     private String name;
     private Map<String,String> description;
-    private String imageName;
-    private double longitude;
-    private double latitude;
+    private int image;
+    private float longitude;
+    private float latitude;
     private Category category;
     private boolean toVisit;
 
 
-    public POI(int number, String name, Map<String, String> description, String imageName, double longitude, double latitude, Category category) {
+    public POI(int number, String name, Map<String, String> description, int image, float longitude, float latitude, Category category) {
         this.name = name;
         this.description = description;
-        this.imageName = imageName;
+        this.image = image;
         this.longitude = longitude;
         this.latitude = latitude;
         this.category = category;
@@ -35,16 +35,16 @@ public class POI implements Parcelable {
         return category;
     }
 
-    public double getLatitude() {
+    public float getLatitude() {
         return latitude;
     }
 
-    public double getLongitude() {
+    public float getLongitude() {
         return longitude;
     }
 
-    public String getImageName() {
-        return imageName;
+    public int getImage() {
+        return image;
     }
 
     public Map<String, String> getDescription() {
@@ -70,7 +70,7 @@ public class POI implements Parcelable {
     protected POI(Parcel in) {
         number = in.readInt();
         name = in.readString();
-        imageName = in.readString();
+        image = in.readInt();
         longitude = in.readFloat();
         latitude = in.readFloat();
         category = (Category) in.readValue(Category.class.getClassLoader());
@@ -86,9 +86,9 @@ public class POI implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(number);
         dest.writeString(name);
-        dest.writeString(imageName);
-        dest.writeDouble(longitude);
-        dest.writeDouble(latitude);
+        dest.writeInt(image);
+        dest.writeFloat(longitude);
+        dest.writeFloat(latitude);
         dest.writeValue(category);
         dest.writeByte((byte) (toVisit ? 0x01 : 0x00));
     }
