@@ -1,7 +1,9 @@
 package com.ags.projectseelion;
 
 import android.content.Context;
+import android.location.Location;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,7 +16,8 @@ import java.io.InputStream;
 
 public class JsonParser {
     private Context context;
-    private JSONObject json = null;
+    private JSONArray jsonArray = null;
+    private JSONObject json;
     public JsonParser(Context context){
         this.context = context;
     }
@@ -32,16 +35,16 @@ public class JsonParser {
         byte[] buffer = new byte[size];
         ins.read(buffer);
         ins.close();
-        json = new JSONObject(new String(buffer, "UTF-8"));
-
+        jsonArray = new JSONArray(new String(buffer, "UTF-8"));
+        json = jsonArray.getJSONObject(i);
         POI poi = new POI(
+                json.getInt("Nummer"),   //nummer
+                Location.convert(json.getString("Lat")), //latitude
+                Location.convert(json.getString("Long")), //longitude
                 json.getString("Naam"), //name
-                null,   //description
-                null,   //image
-                null,   //category
-                json.getString("Long"), //longitude
-                json.getString("Lat"),  //latitude
-                json.getInt("Nummer")   //nummer
+                json.getString("Opmerkingen"), // opmerkingen
+                json.getString("Foto"),   //image
+                json.getString("Tekst")   //description
         );
 
         return poi;
@@ -53,4 +56,5 @@ public class JsonParser {
             return null;
         }
     }
+
 }
