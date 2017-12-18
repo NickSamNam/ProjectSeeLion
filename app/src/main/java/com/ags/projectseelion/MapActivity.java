@@ -9,6 +9,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.util.SparseArray;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -18,6 +19,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Task;
@@ -31,6 +33,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private final static String KEY_LOCATION = "LOCATION";
     private final static String KEY_CAMERA_POSITION = "CAMERA_POSITION";
     public final static String KEY_ROUTE = "ROUTE";
+    private final static int ZOOM_THRESHOLD = 10;
 
     private boolean fresh = true;
     private GoogleMap mMap;
@@ -39,6 +42,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private FusedLocationProviderClient fusedLocationProviderClient;
     private LatLng defaultLocation = new LatLng(32.676149, -117.157703);
     private Route route;
+    private SparseArray<Marker> visibleMarkers = new SparseArray<>();
 
     // TODO: 11-12-2017 replace null with poi from mapController
     List<POI> pois = new ArrayList<>();
@@ -84,14 +88,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setOnMarkerClickListener(this::onMarkerClick);
-
-        int i = 0;
-        for (POI poi : pois) {
-            Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(poi.getLatitude(), poi.getLongitude())).title(poi.getName()));
-            marker.setTag(i);
-            i++;
-        }
         mMap.addMarker(new MarkerOptions().position(defaultLocation).title("Marker in Sydney"));
+        mMap.setOnCameraIdleListener(() -> {
+            for (POI poi : pois) {
+                addMarker(poi);
+            }
+        });
 
         if (fresh) {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
@@ -99,6 +101,28 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
         updateLocationUI();
         getDeviceLocation();
+
+        for (POI poi : pois) {
+            addMarker(poi);
+        }
+    }
+
+    private void addMarker(POI poi) {
+        LatLngBounds bounds = mMap.getProjection().getVisibleRegion().latLngBounds;
+
+        if (bounds.contains(new LatLng(poi.getLatitude(), poi.getLongitude())) && mMap.getCameraPosition().zoom >= ZOOM_THRESHOLD) {
+            if (visibleMarkers.get(poi.getNumber()) == null) {
+                Marker marker = mMap.addMarker(new MarkerOptions()
+                        .title(poi.getName())
+                        .position(new LatLng(poi.getLatitude(), poi.getLongitude()))
+                        .snippet(poi.getDescription().get(getResources().getConfiguration().locale.getLanguage())));
+                marker.setTag(poi.getNumber());
+                visibleMarkers.put(poi.getNumber(), marker);
+            }
+        } else {
+            visibleMarkers.get(poi.getNumber()).remove();
+            visibleMarkers.remove(poi.getNumber());
+        }
     }
 
     private void getDeviceLocation() {
