@@ -128,7 +128,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private void addMarkerForRoute(POI poi){
         switch (route){
             case Custom: if(poi.isToVisit()) addMarker(poi); break;
-            case Historic: addMarker(poi);break;
+            case Historic: if(poi.getCategory().equals(Category.Building))addMarker(poi);break;
         }
     }
 
