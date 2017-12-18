@@ -114,7 +114,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         getDeviceLocation();
 
         for (POI poi : pois) {
-            addMarker(poi);
+            if (!poi.getName().equals(""))
+                addMarker(poi);
         }
 
         toVisitList = new ArrayList<>();
@@ -242,24 +243,29 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     private String getUrl() {
 
+        // Origin of route
         LatLng originLatLng = new LatLng(toVisitList.get(0).getLatitude(), toVisitList.get(0).getLongitude());
         String str_origin = "origin=" + originLatLng.latitude + "," + originLatLng.longitude;
 
+        // Detination of route
         LatLng destLatLng = new LatLng(toVisitList.get(toVisitList.size() - 1).getLatitude(), toVisitList.get(toVisitList.size() - 1).getLongitude());
         String str_dest = "destination=" + destLatLng.latitude + "," + destLatLng.longitude;
 
+        // Mode of transportation
         String trafficMode = "mode=walking";
 
-        String wayPoints = "waypoints=";
+        // Waypoints of route
+        String wayPoints = "waypoints=optimize:true|";
         //if (toVisitList.size() < 24) {
-            for (int i = 1; i < 23 /*toVisitList.size()*/; i++) {
-                LatLng wayPointLatLng = new LatLng(toVisitList.get(i).getLatitude(), toVisitList.get(i).getLongitude());
-                wayPoints += wayPointLatLng.latitude + "," + originLatLng.longitude;
-                if (i < 22)
-                    wayPoints += "|";
-            }
+        for (int i = 1; i < 23 /*toVisitList.size()*/; i++) {
+            LatLng wayPointLatLng = new LatLng(toVisitList.get(i).getLatitude(), toVisitList.get(i).getLongitude());
+            wayPoints += wayPointLatLng.latitude + "," + originLatLng.longitude;
+            if (i < 22)
+                wayPoints += "|";
+        }
         //}
 
+        // Url building
         String parameters = str_origin + "&" + str_dest + "&" + wayPoints + "&" + trafficMode;
 
         String output = "json";
