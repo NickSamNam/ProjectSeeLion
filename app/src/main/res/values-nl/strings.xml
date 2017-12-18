@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">BreNavigator</string>
-    <string name="select_route">Route Selecteren</string>
+    <string name="select_route">Historische Route</string>
     <string name="monuments">Monumenten</string>
     <string name="historical_kilometer">Historische Kilometer</string>
     <string name="welcome_title">Welkom in de BreNavigator App</string>
@@ -15,4 +14,6 @@
     <string name="oke">Oké</string>
     <string name="english">Engels</string>
     <string name="nederlands">Nederlands</string>
+    <string name="startroute">Start Route</string>
+    <string name="afstand">Afstand(kilometers):</string>
 </resources>

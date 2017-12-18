@@ -102,7 +102,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         mMap.addMarker(new MarkerOptions().position(defaultLocation).title("Marker in Sydney"));
         mMap.setOnCameraIdleListener(() -> {
             for (POI poi : pois) {
-                addMarker(poi);
+                addMarkerForRoute(poi);
             }
         });
 
@@ -119,8 +119,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         toVisitList = new ArrayList<>();
         for (POI poi : pois) {
-            if (poi.isToVisit())
-                toVisitList.add(poi);
+            addMarkerForRoute(poi);
         }
 
         String url = getUrl();
@@ -136,8 +135,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             if (visibleMarkers.get(poi.getNumber()) == null) {
                 Marker marker = mMap.addMarker(new MarkerOptions()
                         .title(poi.getName())
-                        .position(new LatLng(poi.getLatitude(), poi.getLongitude()))
-                        .snippet(poi.getDescription().get(getResources().getConfiguration().locale.getLanguage())));
+                        .position(new LatLng(poi.getLatitude(), poi.getLongitude())));
                 marker.setTag(poi.getNumber());
                 visibleMarkers.put(poi.getNumber(), marker);
             }
@@ -146,6 +144,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 visibleMarkers.get(poi.getNumber()).remove();
                 visibleMarkers.remove(poi.getNumber());
             }
+        }
+    }
+
+    private void addMarkerForRoute(POI poi){
+        switch (route){
+            case Custom: if(poi.isToVisit()) addMarker(poi); break;
+            case Historic: if(poi.getCategory().equals(Category.Building))addMarker(poi);break;
         }
     }
 
@@ -213,8 +218,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
     public boolean onMarkerClick(Marker marker) {
-        new AlertDialog.Builder(this).setMessage(pois.get((Integer) marker.getTag()).getDescription().get(getResources().getConfiguration()
-                .locale.getLanguage())).create().show();
+        Bundle args = new Bundle();
+        args.putInt(POIFragment.KEY_POI, (Integer) marker.getTag());
+        POIFragment poiFragment = new POIFragment();
+        poiFragment.setArguments(args);
+        poiFragment.show(getSupportFragmentManager(), "POI");
         return true;
     }
 

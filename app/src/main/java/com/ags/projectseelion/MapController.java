@@ -1,10 +1,13 @@
 package com.ags.projectseelion;
 
+import android.os.Parcelable;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -59,5 +62,16 @@ public class MapController {
         if (!init)
             throw new IllegalStateException("MapController was not initialised.");
         return pois;
+    }
+
+    public POI getPOINumber(int number) {
+        if(number < 0)
+            return new POI(-1,"TestPoi",new HashMap<>(),"placeholder",56.8451,86.2321,Category.Building);
+        else
+            for (POI poi:pois) {
+                if(poi.getNumber()== number)
+                    return poi;
+            }
+        return null;
     }
 }
