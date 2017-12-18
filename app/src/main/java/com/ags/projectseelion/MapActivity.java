@@ -35,6 +35,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -52,6 +53,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private FusedLocationProviderClient fusedLocationProviderClient;
     private LatLng defaultLocation = new LatLng(32.676149, -117.157703);
     private Route route;
+    private ArrayList<POI> toVisitList;
     private SparseArray<Marker> visibleMarkers = new SparseArray<>();
 
     List<POI> pois = MapController.getInstance().getPOIs();
@@ -115,11 +117,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             addMarker(poi);
         }
 
-        LatLng origin = new LatLng(51.571915,4.768323);
-        LatLng dest = new LatLng(50.000000,4.000000);
-//        LatLng origin = new LatLng(pois.get(0).getLatitude(),pois.get(0).getLongitude());
-//        LatLng dest = new LatLng(pois.get(pois.size()-1).getLatitude(),pois.get(pois.size()-1).getLongitude());
-        String url = getUrl(origin,dest);
+        toVisitList = new ArrayList<>();
+        for (POI poi : pois) {
+            if (poi.isToVisit())
+                toVisitList.add(poi);
+        }
+
+        String url = getUrl();
         FetchUrl fetch = new FetchUrl();
         fetch.execute(url);
 
@@ -233,9 +237,39 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         // Building the url to the web service
         String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
 
+        return url;
+    }
+
+    private String getUrl() {
+
+        LatLng originLatLng = new LatLng(toVisitList.get(0).getLatitude(), toVisitList.get(0).getLongitude());
+        String str_origin = "origin=" + originLatLng.latitude + "," + originLatLng.longitude;
+
+        LatLng destLatLng = new LatLng(toVisitList.get(toVisitList.size() - 1).getLatitude(), toVisitList.get(toVisitList.size() - 1).getLongitude());
+        String str_dest = "destination=" + destLatLng.latitude + "," + destLatLng.longitude;
+
+        String trafficMode = "mode=walking";
+
+        String wayPoints = "waypoints=";
+        //if (toVisitList.size() < 24) {
+            for (int i = 1; i < 23 /*toVisitList.size()*/; i++) {
+                LatLng wayPointLatLng = new LatLng(toVisitList.get(i).getLatitude(), toVisitList.get(i).getLongitude());
+                wayPoints += wayPointLatLng.latitude + "," + originLatLng.longitude;
+                if (i < 22)
+                    wayPoints += "|";
+            }
+        //}
+
+        String parameters = str_origin + "&" + str_dest + "&" + wayPoints + "&" + trafficMode;
+
+        String output = "json";
+
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_key);
+        Log.d("REQUESTURL", "getUrl: " + url);
 
         return url;
     }
+
 
     /**
      * A method to download json data from url
