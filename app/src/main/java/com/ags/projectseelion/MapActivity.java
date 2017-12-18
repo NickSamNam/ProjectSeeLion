@@ -113,10 +113,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         updateLocationUI();
         getDeviceLocation();
 
-        for (POI poi : pois) {
-            if (!poi.getName().equals(""))
-                addMarker(poi);
-        }
+        for (POI poi : pois)
+            addMarker(poi);
+
 
         toVisitList = new ArrayList<>();
         for (POI poi : pois) {
