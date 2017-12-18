@@ -116,8 +116,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         for (POI poi : pois)
             addMarker(poi);
 
-
         toVisitList = new ArrayList<>();
+        for (POI poi : pois) {
+            if (poi.isToVisit() && (poi.getCategory() == Category.Building))
+                toVisitList.add(poi);
+        }
+
+        Log.d("Size", "onMapReady: " + toVisitList.size());
+
         for (POI poi : pois) {
             addMarkerForRoute(poi);
         }
@@ -147,10 +153,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
     }
 
-    private void addMarkerForRoute(POI poi){
-        switch (route){
-            case Custom: if(poi.isToVisit()) addMarker(poi); break;
-            case Historic: if(poi.getCategory().equals(Category.Building))addMarker(poi);break;
+    private void addMarkerForRoute(POI poi) {
+        switch (route) {
+            case Custom:
+                if (poi.isToVisit()) addMarker(poi);
+                break;
+            case Historic:
+                if (poi.getCategory().equals(Category.Building)) addMarker(poi);
+                break;
         }
     }
 
@@ -263,14 +273,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         // Waypoints of route
         String wayPoints = "waypoints=optimize:true|";
-        //if (toVisitList.size() < 24) {
-        for (int i = 1; i < 23 /*toVisitList.size()*/; i++) {
-            LatLng wayPointLatLng = new LatLng(toVisitList.get(i).getLatitude(), toVisitList.get(i).getLongitude());
-            wayPoints += wayPointLatLng.latitude + "," + originLatLng.longitude;
-            if (i < 22)
-                wayPoints += "|";
+        if (toVisitList.size() < 24) {
+            for (int i = 1; i < toVisitList.size(); i++) {
+                LatLng wayPointLatLng = new LatLng(toVisitList.get(i).getLatitude(), toVisitList.get(i).getLongitude());
+                wayPoints += wayPointLatLng.latitude + "," + originLatLng.longitude;
+                if (i < toVisitList.size() - 1)
+                    wayPoints += "|";
+            }
         }
-        //}
 
         // Url building
         String parameters = str_origin + "&" + str_dest + "&" + wayPoints + "&" + trafficMode;
