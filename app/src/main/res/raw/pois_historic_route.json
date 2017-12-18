@@ -4,21 +4,27 @@
 		"NB": "51.356467",
 		"OL": "4.467650",
 		"Naam": "VVV",
-		"Opmerking": "Beginpunt"
+		"Opmerkingen": "Beginpunt",
+		"Foto": "1",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "2",
 		"NB": "51.355967",
 		"OL": "4.467633",
 		"Naam": "Liefdeszuster",
-		"Opmerking": ""
+		"Opmerkingen": "",
+		"Foto": "3",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "3",
 		"NB": "51.355500",
 		"OL": "4.467817",
 		"Naam": "Nassau Baronie Monument",
-		"Opmerking": ""
+		"Opmerkingen": "",
+		"Foto": "4",
+		"Tekst": "4. Als u de brug overgaat, ziet u aan uw linkerhand het Nassau-Baroniemonument. Bij de ingang van het stadspark, het Valkenberg, staat een monument dat u iets vertelt over de wordings- geschiedenis van de stad Breda, maar vooral over de Heren van de stad uit het Huis van Nassau en de 500-jarige band tussen Breda en het Huis van Nassau. Op 3 juli 1905 werd het Nassau-Baroniemonument, zoals het officieel heet, met  veel feestelijk vertoon door Koningin Wilhelmina onthuld. Het beeld herinnert aan het feit, dat in 1404 Graaf Engelbert, de eerste Bredase Nassau en zijn gemalin, Johanna van Polanen, werden ingehuldigd als Heer en Vrouwe van Breda. De ontwerper is de welbekende dr. P.J.H. Cuypers, die o.m. het Rijksmuseum en het Centraal Station in Amsterdam ontwierp. Op dit monument zijn niet alleen de wapenschilden van twintig gemeenten in en rond de Baronie aangebracht maar ook de Leeuw van Nassau die boven alles uittorent met koningskroon, zwaard en wapenschild. In de drie reliëfs is de 'blijde incomste' van Graaf Engelbert en zijn gemalin afgebeeld. De poorters bieden de sleutel van de stad aan."
 	},
 	{
 		"Nummer": "4",
@@ -34,126 +40,161 @@
 		"NB": "51.355700",
 		"OL": "4.467083",
 		"Naam": "The Light House",
-		"Opmerking": ""
+		"Opmerkingen": "",
+		"Foto": "5",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "6",
 		"NB": "51.355600",
 		"OL": "4.466750",
 		"Naam": "",
-		"Opmerking": ""
+		"Opmerkingen": "",
+		"Foto": "",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "7",
 		"NB": "51.354367",
 		"OL": "4.466200",
 		"Naam": "",
-		"Opmerking": "Einde park"
+		"Opmerkingen": "Einde park",
+		"Foto": "",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "8",
 		"NB": "51.354367",
 		"OL": "4.465700",
 		"Naam": "Kasteel van Breda",
-		"Opmerking": "Kasteelplein"
+		"Opmerkingen": "Kasteelplein",
+		"Foto": "9",
+		"Tekst": "6. Aan het einde van het park loopt u langs het poortgebouw van het kasteel; links kijkt u op het kasteelplein. Dit plein bevindt zich aan de zuiderzijde van het kasteel. U heeft zo een mooi uitzicht op de monumentale poort, de zgn. Stadhouderspoort met het wapen van stadhouder Willem de Vijfde, dat overigens pas later is aangebracht. Achter u ziet u het ruiterstandbeeld van stadhouder koning Willem III geplaatst. Voor dit standbeeld werd onder de burgerij van Breda een inzameling gehouden die f 47.000,-- opbracht. Voor de oude Nassaustad Breda is de stadhouderkoning van grote betekenis geweest. Hij voltooide na anderhalve eeuw de verbouwing van het Kasteel. Hendrik de Derde van Nassau en zijn (drede) vrouw Mencia de Mendoza hebben veel in Breda vertoefd, maar verbleven dan toch bij voorkeur in de vertrekken boven de overigens al lang geleden gesloopte watermolen op het terrein van het Kasteel. Rechts van de poort bevindt zich het zgn. Blokhuis, de ambtswoning van de gouveneur van de KMA. Willem van Oranje woonde daar in een aangrenzende ruimte, maar Prins Maurits prefereerde de watermolen als dagelijks verblijf. Prins Philips Willem (1554-1618), de oudste en roomskatholieke zoon van Willem van Oranje, die vele jaren in Spaanse ballingschap verbleef en in Diest werd begraven, is de eerste Oranje geweest, die met zijn vrouw ook in het Kasteel ging wonen. Hij liet het park Valkenberg verfraaien en het Kasteel echt als een paleis inrichten. Bij zijn dood in 1618 werden in Breda tweeënveertig dagen achtereen de kerkklokken geluid. Op de plaats van de vensters, links en rechts van de poort, bevonden zich in de zestiende en zeventiende eeuw sierlijke open galerijen. Het muisgrijze gebouw links van de kasteelpoort werd gebouwd in 1867. Het maakt thans ook deel uit van het KMA gebouwen complex. Meer geschiedenis schuilt et achter de witte pui van het gebouw"
 	},
 	{
 		"Nummer": "9",
 		"NB": "51.353817",
 		"OL": "4.465683",
 		"Naam": "Stadhouderspoort",
-		"Opmerking": ""
+		"Opmerkingen": "",
+		"Foto": "11",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "10",
 		"NB": "51.354200",
 		"OL": "4.465600",
 		"Naam": "",
-		"Opmerking": "Kruising Kasteelplein/Cingelstraat"
+		"Opmerkingen": "Kruising Kasteelplein/Cingelstraat",
+		"Foto": "12",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "11",
 		"NB": "51.354233",
 		"OL": "4.465000",
 		"Naam": "",
-		"Opmerking": "Bocht Cingelstraat"
+		"Opmerkingen": "Bocht Cingelstraat",
+		"Foto": "8",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "12",
 		"NB": "51.354017",
 		"OL": "4.464617",
 		"Naam": "Huis van Brecht (rechter zijde)",
-		"Opmerking": ""
+		"Opmerkingen": "",
+		"Foto": "7",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "13",
 		"NB": "51.354117",
 		"OL": "4.464067",
 		"Naam": "Spanjaardsgat (rechter zijde)",
-		"Opmerking": ""
+		"Opmerkingen": "",
+		"Foto": "6",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "14",
 		"NB": "51.353900’",
 		"OL": "4.464000",
 		"Naam": "Begin Vismarkt",
-		"Opmerking": ""
+		"Opmerkingen": "",
+		"Foto": "20",
+		"Tekst": "10. Bij de Vishal gaat u de Vismarktstraat in; deze straat komt uit op de Havermarkt. Van de plaats waar de vishal (1725) nog aangeeft dat hier vroeger een levendige handel in zeevis werd bedreven, wandelen we door de Vismarktstraat naar de Havermarkt. Deze markt is vanaf de jaren zestig tot op de dag van vandaag het uitgaanscentrum van Breda. De naam Havermarkt ten spijt moet worden vastgesteld, dat de granen niet hier; maar op de Grote Markt werden verhandeld. Wel werden hier door de boeren uit de omtrek groenten, eieren en boter aangevoerd en verkocht. In de zeventiende eeuw werd hier ook een leermarkt gehouden. De oude benamingen van dit pleintje luidden Groenmarkt, Botermarkt en Korenmarkt hetgeen de vroegere functies iets beter aanduidt. Rond 1490 werd dit aangelegd, als een verbreding van de Visserstraat. Wie op dit verrukkelijke pleintje in de zomer op een terrasje een pilsje pakt, ontdekt (overigens ook zonder dat pilsje) al heel gauw, dat dit plein het mooiste uitzicht biedt op de grote toren van de Grote Kerk. Vanaf deze plek kunt u ook de mooie brede onderbouw van die toren bewonderen. Er is veel te zien op dit pleintje. Links op de hoek van de Havermarkt en Reigerstraat ziet u het huis 'De Arent', gebouwd rond ca. 1490. Het heeft nu een zeventiende eeuwse trapgevel en is in 1966 geheel gerestaureerd en verbouwd tot restaurant. Tegenover u op de Havermarkt bevinden zich nog twee panden die uw aandacht verdienen. Havermarkt nummer 5 dateert uit de zestiende en zeventiend eeuw. 'De Vogelstruys' op Havermarkt 21 is een opmerkelijk zeventiende eeuws monument met een hoge, niet symmetrische trapgevel. Ook dit huis heeft in de loop de eeuwen allerlei functies en bestemmingen gehad. Het was onder meer refugiehuis voor de zusters van Catharinadal in de zeventiende eeuw. Voor het beeldje 'De Troubadour', dat aan het eind van de Havermarkt prijkt, zijn vier exemplaren vervaardigd. De andere drie werden onthuld in Diest, Orange en Dillenburg, de zustersteden van Breda in de in 1963 tot stand gekomen Unie van Oranjesteden. Een stukje verder in de Visserstraat (nr. 31), aan de rechterkant, staat een fraai bakstenen huis uit de 17e eeuw met overblijfselen van een zestiende eeuwse gothische woning, de Drie Moren geheten."
 	},
 	{
 		"Nummer": "15",
 		"NB": "51.353617",
 		"OL": "4.464667",
 		"Naam": "Begin Havermarkt",
-		"Opmerking": ""
+		"Opmerkingen": "",
+		"Foto": "19",
+		"Tekst": "11. Vanaf de Havermarkt gaat u rechtdoor de Torenstraat in. Meteen voorbij de kerk links het Kerkplein op. In 1969 werden in Breda de Torenfeesten gehouden uit vreugde over de afsluiting van de restauratieperiode van de Grote Toren, die 25 jaar in beslag nam. Al die tijd hebben de Bredanaars, maar zij niet alleen, tegen een toren aangekeken die zijn schoonheid achter een netwerk van steigers verborgen hield. Ook tussen 1995 en 1997 werd de schoonheid van de Grote of Onze Lieve Vrouwe Kerk tijdelijk verborgen gehouden achter steigers. In bijna drie jaar tijd werd de kerk wederom van binnen gerestaureerd. De restauratie was onderverdeeld in drie fasen. In de eerste fase stonden onder andere werkzaamheden als het schoonspuiten van de buitenzijde, het repareren van het voegwerk en de glas-in-loodramen en het schilderen van de binnenzijde centraal. In de tweede fase werd de vloerverwarming aangelegd; In de derde fase is de rest van de kerk gerestaureerd. Uit onderzoek is vast komen te staan dat in 1410 de bouw van de kerk is begonnen. In de zestiende eeuw is de kerk aan de zuidzijde en aan de noordzijde uitgebreid met enkele kapellen, de huidige consistoriekamer en de kootomgang. De toren kwam in 1509 gereed; In 1468 was daarvoor de eerste steen gelegd,zodat de bouwperiode alles bij elkaar toch wel veertig jaar heeft geduurd. De torenspits brandde in 1694 af. In de jaren daarna werd hij herbouwd, onder andere met hout dat door stadhouderkoning Willem de derde uit zijn bossen was geschonken. In 1702 kon de haan er weer op worden geplaatst. Het is duidelijk dat de Heren van Breda, met name de Nassaufs, een belangrijke bijdrage hebben geleverd aan de wordingsgeschiedenis van de Grote Kerk. Die Heren van Breda liggen er ook begraven; Hun graftomben zijn ware kunsthistorische pronkstukken. Prins Willem van Oranje, die in 1584 in Delft werd vermoord, had in de Grote Kerk onder het prachtige grafmonument van Graaf Engelbert de Tweede een laatste rustplaats gereserveerd, maar zijn stoffelijk overschot en die van de na hem komende Oranjevorsten werden voortaan in Delft te aarde besteld. U loopt vanaf het Kerkplein terug naar de Torenstraat en gaat linksaf. De eerste zijstraat aan uw rechterhand is de Lange Brugstraat. Op de hoek van Torenstraat en de Lange Brugstraat bevindt zich nog een zeventiende eeuwse trapgevel uit ca. 1600 en het uithangbord geeft de oude naam ft schaekbort (voor 1727 eHet Dambordf) van dit pand aan. Let u eens op de mooie muurankers."
 	},
 	{
 		"Nummer": "16",
 		"NB": "51.353267",
 		"OL": "4.464933",
 		"Naam": "",
-		"Opmerking": "Kruising Torenstraat/Kerkplein"
+		"Opmerkingen": "Kruising Torenstraat/Kerkplein",
+		"Foto": ""
 	},
 	{
 		"Nummer": "17",
 		"NB": "51.353300",
 		"OL": "4.465167",
 		"Naam": "Grote Kerk",
-		"Opmerking": ""
+		"Opmerkingen": "",
+		"Foto": "10",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "18",
 		"NB": "51.353267",
 		"OL": "4.464933",
 		"Naam": "",
-		"Opmerking": "Kruising Torenstraat/Kerkplein"
+		"Opmerkingen": "Kruising Torenstraat/Kerkplein",
+		"Foto": "",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "19",
 		"NB": "51.352917",
 		"OL": "4.465083",
 		"Naam": "Het Poortje",
-		"Opmerking": ""
+		"Opmerkingen": "",
+		"Foto": "",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "20",
 		"NB": "51.352250",
 		"OL": "4.465450",
 		"Naam": "Ridderstraat",
-		"Opmerking": ""
+		"Opmerkingen": "",
+		"Foto": "",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "21",
 		"NB": "51.352450",
 		"OL": "4.465933",
 		"Naam": "Grote Markt",
-		"Opmerking": "Zuidpunt Grote Markt"
+		"Opmerkingen": "Zuidpunt Grote Markt",
+		"Foto": "17",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "22",
 		"NB": "51.352817",
 		"OL": "4.465800",
 		"Naam": "Bevrijdingsmonument",
-		"Opmerking": ""
+		"Opmerkingen": "",
+		"Foto": "24",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "23",
@@ -169,14 +210,18 @@
 		"NB": "51.352783",
 		"OL": "4.465817",
 		"Naam": "",
-		"Opmerking": "Terug naar begin Grote Markt"
+		"Opmerkingen": "Terug naar begin Grote Markt",
+		"Foto": "",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "25",
 		"NB": "51.352500",
 		"OL": "4.465933",
 		"Naam": "",
-		"Opmerking": "Zuidpunt Grote Markt"
+		"Opmerkingen": "Zuidpunt Grote Markt",
+		"Foto": "",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "26",
@@ -192,135 +237,169 @@
 		"NB": "51.352967",
 		"OL": "4.467100",
 		"Naam": "",
-		"Opmerking": "Kruising St.Janstraat/Molenstraat"
+		"Opmerkingen": "Kruising St.Janstraat/Molenstraat",
+		"Foto": ""
 	},
 	{
 		"Nummer": "28",
 		"NB": "51.352800",
 		"OL": "4.467367",
 		"Naam": "Bibliotheek",
-		"Opmerking": ""
+		"Opmerkingen": "",
+		"Foto": "",
+		"Tekst": "19. Aan het eind van de St. Jansstraat gaat u rechtsaf de Molenstraat in. In de Molenstraat ziet u recht de Bibliotheek, ontworpen door architect Herman Hertzberger. Omdat de Molenstraat vrij smal is, heeft de architect ruimte gecreëerd door de bibliotheek schuin oplopende wanden te geven. Op de plaats van de bibliotheek (op de hoek met de Oude Vest) bevond zich vroeger een poort. Boven deze poort bevond zich 's Heeren Gevangenhuys, waar de zwaarst gestraften werden ondergebracht. De plaats is nog met keitjes in het asfalt aangegeven; de asfaltweg is de plaats van de oude stadsgracht."
 	},
 	{
 		"Nummer": "29",
 		"NB": "51.352417",
 		"OL": "4.468133",
 		"Naam": "",
-		"Opmerking": "Kruising Molenstraat/Kloosterplein"
+		"Opmerkingen": "Kruising Molenstraat/Kloosterplein",
+		"Foto": "",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "30",
 		"NB": "51.352633",
 		"OL": "4.468617",
 		"Naam": "Kloosterkazerne",
-		"Opmerking": ""
+		"Opmerkingen": "",
+		"Foto": "",
+		"Tekst": "20. Op de hoek Molenstraat en de Oude Vest gaat u linksaf. Op deze hoek ziet u aan de overkant een voornaam monument uit de geschiedenis van Breda: de kloosterkazerne. Het is een deel van het vroegere zusterklooster St. Catharinadal, dat hier sinds 1295 gevestigd was. Het huidige gebouw dateert uit 1504. In 1645 werden de zusters Norbertinessen vanuit Breda naar Oosterhout verdreven."
 	},
 	{
 		"Nummer": "31",
 		"NB": "51.352650",
 		"OL": "4.469200",
 		"Naam": "Chasse theater",
-		"Opmerking": ""
+		"Opmerkingen": "",
+		"Foto": "",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "32",
 		"NB": "51.352650",
 		"OL": "4.468750",
 		"Naam": "",
-		"Opmerking": "Kruising Kloosterplein/Vlaszak"
+		"Opmerkingen": "Kruising Kloosterplein/Vlaszak",
+		"Foto": "",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "33",
 		"NB": "51.353167",
 		"OL": "4.468533",
 		"Naam": "Binding van Isaac",
-		"Opmerking": ""
+		"Opmerkingen": "",
+		"Foto": "",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "34",
 		"NB": "51.353700",
 		"OL": "4.468267",
 		"Naam": "",
-		"Opmerking": "Kruising Vlaszak/Boschstraat"
+		"Opmerkingen": "Kruising Vlaszak/Boschstraat",
+		"Foto": "",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "35",
 		"NB": "51.353800",
 		"OL": "4.468600",
 		"Naam": "Beyerd",
-		"Opmerking": ""
+		"Opmerkingen": "",
+		"Foto": "",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "36",
 		"NB": "51.353700",
 		"OL": "4.468267",
 		"Naam": "",
-		"Opmerking": "Kruising Vlaszak/Boschstraat"
+		"Opmerkingen": "Kruising Vlaszak/Boschstraat",
+		"Foto": "",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "37",
 		"NB": "51.353733",
 		"OL": "4.468000",
 		"Naam": "Gasthuispoort",
-		"Opmerking": ""
+		"Opmerkingen": "",
+		"Foto": "",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "38",
 		"NB": "51.353650",
 		"OL": "4.467917",
 		"Naam": "",
-		"Opmerking": "Ingang Veemarktstraat"
+		"Opmerkingen": "Ingang Veemarktstraat",
+		"Foto": "",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "39",
 		"NB": "51.353417",
 		"OL": "4.467817",
 		"Naam": "",
-		"Opmerking": "1e bocht Veemarktstraat"
+		"Opmerkingen": "1e bocht Veemarktstraat",
+		"Foto": "",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "40",
 		"NB": "51.353133",
 		"OL": "4.467000",
 		"Naam": "",
-		"Opmerking": "Kruising Veemarktstraat/St.Annastraat"
+		"Opmerkingen": "Kruising Veemarktstraat/St.Annastraat",
+		"Foto": "",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "41",
 		"NB": "51.353467",
 		"OL": "4.466767",
 		"Naam": "Willem Merkxtuin",
-		"Opmerking": "Ingang Willem Merkxtuin"
+		"Opmerkingen": "Ingang Willem Merkxtuin",
+		"Foto": "",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "42",
 		"NB": "51.353800",
 		"OL": "4.466683",
 		"Naam": "",
-		"Opmerking": "Kruising St.Annastraat/Catharinastraat"
+		"Opmerkingen": "Kruising St.Annastraat/Catharinastraat",
+		"Foto": "",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "43",
 		"NB": "51.353817",
 		"OL": "4.467017",
 		"Naam": "Begijnenhof",
-		"Opmerking": "Ingang Begijnenhof"
+		"Opmerkingen": "Ingang Begijnenhof",
+		"Foto": "",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "44",
 		"NB": "51.353800",
 		"OL": "4.466683",
 		"Naam": "",
-		"Opmerking": "Kruising St.Annastraat/Catharinastraat"
+		"Opmerkingen": "Kruising St.Annastraat/Catharinastraat",
+		"Foto": "",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "45",
 		"NB": "51.353700",
 		"OL": "4.465750",
 		"Naam": "Einde stadswandeling",
-		"Opmerking": "Eindpunt"
-	},
-	{
-		"Nummer": ""
+		"Opmerkingen": "Eindpunt",
+		"Foto": "",
+		"Tekst": ""
 	}
 ]
