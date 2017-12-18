@@ -23,8 +23,6 @@ public class MonumentSelectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_monument_selection);
 
         // TODO: 11-12-2017 replace null with poi from mapController
-
-
         monuments = new JsonParser().getAllPOIs(getJsonArray("pois_historic_route"));
 
         findViewById(R.id.activity_monument_selection_btn_continue).setOnClickListener(this::btnContinueOnClick);
