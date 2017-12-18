@@ -2,7 +2,9 @@ package com.ags.projectseelion;
 
 import android.app.AlertDialog;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -22,8 +24,17 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.Task;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,6 +116,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         for (POI poi : pois) {
             addMarker(poi);
         }
+
+        LatLng origin = new LatLng(51.571915,4.768323);
+        LatLng dest = new LatLng(50.000000,4.000000);
+//        LatLng origin = new LatLng(pois.get(0).getLatitude(),pois.get(0).getLongitude());
+//        LatLng dest = new LatLng(pois.get(pois.size()-1).getLatitude(),pois.get(pois.size()-1).getLongitude());
+        String url = getUrl(origin,dest);
+        FetchUrl fetch = new FetchUrl();
+        fetch.execute(url);
+
     }
 
     private void addMarker(POI poi) {
@@ -192,5 +212,158 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         new AlertDialog.Builder(this).setMessage(pois.get((Integer) marker.getTag()).getDescription().get(getResources().getConfiguration()
                 .locale.getLanguage())).create().show();
         return true;
+    }
+
+    private String getUrl(LatLng origin, LatLng dest) {
+        // Origin of route
+        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
+
+        // Detination of route
+        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
+
+        String trafficMode = "mode=walking";
+//        String trafficMode = "mode=driving";
+
+        // Building the parameters to the web service
+        String parameters = str_origin + "&" + str_dest + "&" + trafficMode;
+
+        // Output format
+        String output = "json";
+
+        // Building the url to the web service
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
+
+
+        return url;
+    }
+
+    /**
+     * A method to download json data from url
+     */
+    private String downloadUrl(String strUrl) throws IOException {
+        String data = "";
+        InputStream iStream = null;
+        HttpURLConnection urlConnection = null;
+        try {
+            URL url = new URL(strUrl);
+
+            // Creating an http connection to communicate with url
+            urlConnection = (HttpURLConnection) url.openConnection();
+
+            // Connecting to url
+            urlConnection.connect();
+
+            // Reading data from url
+            iStream = urlConnection.getInputStream();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
+
+            StringBuffer sb = new StringBuffer();
+
+            String line = "";
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+
+            data = sb.toString();
+            Log.d("downloadUrl", data.toString());
+            br.close();
+
+        } catch (Exception e) {
+            Log.d("Exception", e.toString());
+        } finally {
+            iStream.close();
+            urlConnection.disconnect();
+        }
+        return data;
+    }
+
+    // Fetches data from url passed
+    private class FetchUrl extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... url) {
+
+            // For storing data from web service
+            String data = "";
+
+            try {
+                // Fetching the data from web service
+                data = downloadUrl(url[0]);
+                Log.d("Background Task data", data.toString());
+            } catch (Exception e) {
+                Log.d("Background Task", e.toString());
+            }
+            return data;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            ParserTask parserTask = new ParserTask();
+
+            // Invokes the thread for parsing the JSON data
+            parserTask.execute(result);
+        }
+    }
+
+    private class ParserTask extends AsyncTask<String, Integer, List<List<LatLng>>> {
+
+        // Parsing the data in non-ui thread
+        @Override
+        protected List<List<LatLng>> doInBackground(String... jsonData) {
+
+            JSONObject jObject;
+            List<List<LatLng>> routeData = null;
+
+            try {
+                jObject = new JSONObject(jsonData[0]);
+
+                Log.d("ParserTask", jsonData[0]);
+                RouteDataParser parser = new RouteDataParser();
+                Log.d("ParserTask", parser.toString());
+
+                // Starts parsing routes data
+                routeData = parser.parseRoutesInfo(jObject);
+                Log.d("ParserTask", "Executing routes");
+                Log.d("ParserTask-routes: ", routeData.toString());
+
+            } catch (Exception e) {
+                Log.d("ParserTask", e.toString());
+                e.printStackTrace();
+            }
+            return routeData;
+        }
+
+        // Executes in UI thread, after the parsing process
+        @Override
+        protected void onPostExecute(List<List<LatLng>> result) {
+            PolylineOptions lineOptions = new PolylineOptions();
+
+            LatLng northEast = result.get(0).get(0);
+            LatLng southWest = result.get(0).get(1);
+            // The first list contained the bounds of the route and is not part of the route:
+            result.remove(0);
+
+            for (List<LatLng> leg : result) {
+                lineOptions.addAll(leg);
+            }
+
+            lineOptions.width(10);
+            lineOptions.color(Color.RED);
+
+            Log.d("onPostExecute", "onPostExecute lineoptions decoded");
+
+            // Drawing polyline in the Google Map for the i-th route
+            if (lineOptions != null) {
+                mMap.addPolyline(lineOptions);
+                LatLngBounds bounds = new LatLngBounds(southWest, northEast);
+                int padding = 80;
+                mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding));
+            } else {
+                Log.d("onPostExecute", "without Polylines drawn");
+            }
+        }
     }
 }
