@@ -39,8 +39,8 @@ public class JsonParser {
                     json.getString("Naam"),                 //name
                     getDescription(json.getString("Tekst")),//description
                     json.getString("Foto"),                 //imagename
-                    Location.convert(json.getString("OL")), //longitude
-                    Location.convert(json.getString("NB")), //latitude
+                    json.getDouble("OL"), //longitude
+                    json.getDouble("NB"), //latitude
                     getCategory(json.getString("Naam"))     //Category
             );
         } catch (JSONException e) {

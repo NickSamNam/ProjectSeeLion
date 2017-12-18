@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import org.json.JSONArray;
@@ -39,15 +40,21 @@ public class MonumentSelectionActivity extends AppCompatActivity {
     public JSONArray getJsonArray(String fileName){
         JSONArray jsonArray = null;
         try {
-            InputStream ins = this.getResources().openRawResource(
-                    this.getResources().getIdentifier(fileName,
-                            "raw", this.getPackageName()));
+            InputStream ins = this.getResources().openRawResource(this.getResources().getIdentifier(fileName,"raw", this.getPackageName()));
             int size = 0;
+            Log.i("JSON","1");
             size = ins.available();
+            Log.i("JSON","2");
             byte[] buffer = new byte[size];
+            Log.i("JSON","3");
             ins.read(buffer);
+            Log.i("JSON","4");
             ins.close();
-            jsonArray = new JSONArray(new String(buffer, "UTF-8"));
+            Log.i("JSON","5");
+            String textJson = new String(buffer, "UTF-8");
+            Log.i("JSON",textJson);
+            jsonArray = new JSONArray(textJson);
+            Log.i("JSON",jsonArray.toString());
         } catch (IOException e) {
             e.printStackTrace();
             return null;
