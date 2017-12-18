@@ -27,6 +27,12 @@ public class MainActivity extends AppCompatActivity {
         continueButton.setOnClickListener(v->{
             OnContinueButtonClicked();
         });
+
+        MapController mc = MapController.getInstance();
+
+        if (!mc.isInit()) {
+            mc.init(this.getResources().openRawResource(this.getResources().getIdentifier("pois_historic_route","raw", this.getPackageName())));
+        }
     }
 
     private void SetCheckedBox(String language) {

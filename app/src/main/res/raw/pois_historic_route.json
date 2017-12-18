@@ -1,316 +1,322 @@
 [
 	{
 		"Nummer": "1",
-		"Lat": "51°35.6467’",
-		"Long": "4°46.7650’ ",
+		"NB": "51.356467",
+		"OL": "4.467650",
 		"Naam": "VVV",
 		"Opmerking": "Beginpunt"
 	},
 	{
 		"Nummer": "2",
-		"Lat": "51°35.5967’",
-		"Long": "4°46.7633’",
+		"NB": "51.355967",
+		"OL": "4.467633",
 		"Naam": "Liefdeszuster",
 		"Opmerking": ""
 	},
 	{
 		"Nummer": "3",
-		"Lat": "51°35.5500’",
-		"Long": "4°46.7817’",
+		"NB": "51.355500",
+		"OL": "4.467817",
 		"Naam": "Nassau Baronie Monument",
 		"Opmerking": ""
 	},
 	{
 		"Nummer": "4",
-		"Lat": "51°35.5500’",
-		"Long": "4°46.7633’",
+		"NB": "51.355500",
+		"OL": "4.467633",
 		"Naam": "",
-		"Opmerking": "Pad ten westen van monument "
+		"Opmerkingen": "Pad ten westen van monument ",
+		"Foto": "",
+		"Tekst": "5. U duikt meteen al in de vroege historie van Breda, als u het pad rechts over het bruggetje neemt en verder door het stadspark, het Valkenberg, wandelt. Tot 1812 deed dit park dienst als kasteeltuin voor de Heren van Breda. Het park dankt zijn naam aan een valkenhuis, dat aan de rand ervan stond en van waaruit de kasteelbewoners en hun gasten de valkenjacht bedreven. Het park was van orgine een echt bos met hoge bomen. In de zeventiende eeuw verdween dat karakter door de aanleg van een tuin naar Franse stijl. Eén replica van de 17 beelden staat verderop in het park, in een speciaal aangelegd perkje. Dit perkje is een herinnering aan de Franse stijltuin. Het originele beeld is te bezichtigen in het Breda's Museum. In 1995 is het Valkenberg in een nieuw jasje gestoken. In het hele park zijn paden verlegd, struiken en bosschages weggehaald en nieuwe verlichting aangebracht. Daarnaast zijn er nieuwe banken in het park geplaatst en speelvoorzieningen voor de kinderen gemaakt. Bij opgravingen in het park zijn de fundamenten van een middeleeuwse muurtoren en van de stenen muur gevonden, die tot 1537 klein Breda omringde. Van twee muurtorens is een klein stukje opgebouwd."
 	},
 	{
 		"Nummer": "5",
-		"Lat": "51°35.5700’",
-		"Long": "4°46.7083’",
+		"NB": "51.355700",
+		"OL": "4.467083",
 		"Naam": "The Light House",
 		"Opmerking": ""
 	},
 	{
 		"Nummer": "6",
-		"Lat": "51°35.5600’",
-		"Long": "4°46.6750’",
+		"NB": "51.355600",
+		"OL": "4.466750",
 		"Naam": "",
 		"Opmerking": ""
 	},
 	{
 		"Nummer": "7",
-		"Lat": "51°35.4367’",
-		"Long": "4°46.6200’",
+		"NB": "51.354367",
+		"OL": "4.466200",
 		"Naam": "",
 		"Opmerking": "Einde park"
 	},
 	{
 		"Nummer": "8",
-		"Lat": "51°35.4367’",
-		"Long": "4°46.5700’",
+		"NB": "51.354367",
+		"OL": "4.465700",
 		"Naam": "Kasteel van Breda",
 		"Opmerking": "Kasteelplein"
 	},
 	{
 		"Nummer": "9",
-		"Lat": "51°35.3817’",
-		"Long": "4°46.5683’",
+		"NB": "51.353817",
+		"OL": "4.465683",
 		"Naam": "Stadhouderspoort",
 		"Opmerking": ""
 	},
 	{
 		"Nummer": "10",
-		"Lat": "51°35.4200’",
-		"Long": "4°46.5600’",
+		"NB": "51.354200",
+		"OL": "4.465600",
 		"Naam": "",
 		"Opmerking": "Kruising Kasteelplein/Cingelstraat"
 	},
 	{
 		"Nummer": "11",
-		"Lat": "51°35.4233’",
-		"Long": "4°46.5000’",
+		"NB": "51.354233",
+		"OL": "4.465000",
 		"Naam": "",
 		"Opmerking": "Bocht Cingelstraat"
 	},
 	{
 		"Nummer": "12",
-		"Lat": "51°35.4017’",
-		"Long": "4°46.4617’",
+		"NB": "51.354017",
+		"OL": "4.464617",
 		"Naam": "Huis van Brecht (rechter zijde)",
 		"Opmerking": ""
 	},
 	{
 		"Nummer": "13",
-		"Lat": "51°35.4117’",
-		"Long": "4°46.4067’",
+		"NB": "51.354117",
+		"OL": "4.464067",
 		"Naam": "Spanjaardsgat (rechter zijde)",
 		"Opmerking": ""
 	},
 	{
 		"Nummer": "14",
-		"Lat": "51°35.3900’",
-		"Long": "4°46.4000’",
+		"NB": "51.353900’",
+		"OL": "4.464000",
 		"Naam": "Begin Vismarkt",
 		"Opmerking": ""
 	},
 	{
 		"Nummer": "15",
-		"Lat": "51°35.3617’",
-		"Long": "4°46.4667’",
+		"NB": "51.353617",
+		"OL": "4.464667",
 		"Naam": "Begin Havermarkt",
 		"Opmerking": ""
 	},
 	{
 		"Nummer": "16",
-		"Lat": "51°35.3267’",
-		"Long": "4°46.4933’",
+		"NB": "51.353267",
+		"OL": "4.464933",
 		"Naam": "",
 		"Opmerking": "Kruising Torenstraat/Kerkplein"
 	},
 	{
 		"Nummer": "17",
-		"Lat": "51°35.3300’",
-		"Long": "4°46.5167’",
+		"NB": "51.353300",
+		"OL": "4.465167",
 		"Naam": "Grote Kerk",
 		"Opmerking": ""
 	},
 	{
 		"Nummer": "18",
-		"Lat": "51°35.3267’",
-		"Long": "4°46.4933’",
+		"NB": "51.353267",
+		"OL": "4.464933",
 		"Naam": "",
 		"Opmerking": "Kruising Torenstraat/Kerkplein"
 	},
 	{
 		"Nummer": "19",
-		"Lat": "51°35.2917’",
-		"Long": "4°46.5083’",
+		"NB": "51.352917",
+		"OL": "4.465083",
 		"Naam": "Het Poortje",
 		"Opmerking": ""
 	},
 	{
 		"Nummer": "20",
-		"Lat": "51°35.2250’",
-		"Long": "4°46.5450’",
+		"NB": "51.352250",
+		"OL": "4.465450",
 		"Naam": "Ridderstraat",
 		"Opmerking": ""
 	},
 	{
 		"Nummer": "21",
-		"Lat": "51°35.2450’",
-		"Long": "4°46.5933’",
+		"NB": "51.352450",
+		"OL": "4.465933",
 		"Naam": "Grote Markt",
 		"Opmerking": "Zuidpunt Grote Markt"
 	},
 	{
 		"Nummer": "22",
-		"Lat": "51°35.2817’",
-		"Long": "4°46.5800’",
+		"NB": "51.352817",
+		"OL": "4.465800",
 		"Naam": "Bevrijdingsmonument",
 		"Opmerking": ""
 	},
 	{
 		"Nummer": "23",
-		"Lat": "51°35.3250’",
-		"Long": "4°46.5667’",
+		"NB": "51.353250",
+		"OL": "4.465667",
 		"Naam": "Stadhuis",
-		"Opmerking": ""
+		"Opmerkingen": "",
+		"Foto": "",
+		"Tekst": "17. Schuin aan de overkant op de Grote Markt vindt u het stadhuis van Breda en tevens de dependance van de VVV. De hoofdingang van het standhuis bevindt zich boven het bordes, dat bewaakt  wordt door twee zandstenen leeuwen. Het stadhuis, zoals dat er nu uitziet, kwam pas in 1767 tot stand. Het zijn eigenlijk vier huizen, die toen door de bouwmeester van Oranje, Philips Willem Schonck, achter één gevel werden verborgen. Het oudste deel is de grote hal. Al in de vijftiende eeuw werd daarnaast ook een zgn. 'Cleyn raedthuys' in gebruik genomen. In 1898 kwam het meest rechtse huis, het 'Liggend Hert' erbij, dat nog steeds een aparte gevel heeft. Ondanks het feit dat het stadhuis slechts beperkt geopend is voor het publiek, willen we u de volgende informatie over de binnen zijde ervan toch niet onthouden. Vrouwe Justitia boven de hoofdingang en het houten beeld achter in de hal geven aan dat in het stadhuis vroeger ook recht gesproken werd.De balie van de vroegere rechtbank, eens staande tegen de achtermuur van de hal, wordt nu in het Breda's Museum bewaard.Links hangt een grote kopie van het beroemde schilderij van Velasques Las Lanzas, dat de overgave van Breda aan de Spaanse bevelhebber Spinola (1625) in beeld brengt. Het oorspronkelijke schilderij hangt in het Prado te Madrid. Het stadhuis wordt nog gebruikt voor openbare raadsvergaderingen en voor het sluiten van huwelijken. De burgemeester, wethouders en gemeete-ambtenaren huizen sinds februari 1992 in het nieuwe Stadskantoor aan de Claudius Prinsenlaan in Breda. Door het poortgebouw rechts van het stadhuis lopen we het Stadserf op. Midden op dit pleintje herinnert het beeldje De Turfschipper van Gerarda Rueb, aan de legendarische overval in 1590 van Adriaan van Bergen met zijn Turfschip. (De VVV Breda verkoopt hiervan een replica)."
 	},
 	{
 		"Nummer": "24",
-		"Lat": "51°35.2783’",
-		"Long": "4°46.5817’",
+		"NB": "51.352783",
+		"OL": "4.465817",
 		"Naam": "",
 		"Opmerking": "Terug naar begin Grote Markt"
 	},
 	{
 		"Nummer": "25",
-		"Lat": "51°35.2500’",
-		"Long": "4°46.5933’",
+		"NB": "51.352500",
+		"OL": "4.465933",
 		"Naam": "",
 		"Opmerking": "Zuidpunt Grote Markt"
 	},
 	{
 		"Nummer": "26",
-		"Lat": "51°35.2583’",
-		"Long": "4°46.6350’",
+		"NB": "51.352583",
+		"OL": "4.466350",
 		"Naam": "Antonius van Paduakerk",
-		"Opmerking": ""
+		"Opmerkingen": "",
+		"Foto": "",
+		"Tekst": "18. U loopt via het poortje weer terug naar de Grote Markt en gaat linksaf.De tweede straat links is de St. Janstraat. Hier gaat u in.Op de hoek van de Halstraat / St. Janstraat staan we voor het gebouw met de pilaren: het garnizoenscommando. Vroeger werd het gebouwtje hoofdwacht genoemd. Voordat die hoofdwacht daar introk, stond op deze plaats de St. Janskapel met daar weer achter de gebouwen van de Ridderorde van St. Jan.De leden van deze orde verzorgden hier zieken en armen.De straatnaam herinnert aan deze ridders van St. Jan. in de kapel begon de grote stadsbrand van 1534.De St. Janstraat heeft ooit ook de Veterstraat geheten, waarschijnlijk naar de huydvetters of leerlooiers, die in de St. Janstraat hun beroep uitoefenden.Aan uw rechterhand in de St. Janstraat staat de Antonius van Paduakerk, een opvallend rijk uitgevoerde waterstaatskerk. Deze kerk is in 1836 gebouwd als eerste katholieke kerk na de schuilkerkenperiode, die officieel gebouwd mocht worden. In 1853 werd het de eerste bisschopskerk (kathedraal) van het nieuwe bisdom in Breda. De zetel van de bisschop van Breda keerde na een afwezigheid van 32 jaar aan het begin van 2001 terug naar de Antoniuskerk die daarmee de status van kathedraal opnieuw verwierf. Aan de voorgevel zijn duidelijk de drie soorten antieke zuilen te zien. Van onder naar boven: Dorische, Ionische en Corinthische zuilen. Het beeld boven de ingang stelt 'de Godsdienst' voor. Binnen valt direct de schitterende houten preekstoel op. Hierin is in verschillende panelen het leven van H. Antonius uitgebeeld.Even verder bevinden zich restanten of alleen maar herinneringen aan twee zeer voorname hofhuizen, het Huis Ocrum, waarin tot 1994 de Kunstacademie St. Joost was gevestigd en het Huis Hersbeeck, thans pastorie. In 1667 verbleven in beide huizen de Engelse gezanten, die deelnamen aan de Vredesonderhandelingen van Breda. De afgevaardigden van de Raad van State gebruikten het pand (nr. 16) wanneer zij in de stad op dienstreis waren, maar ook koning Lodewijk Napoleon heeft er gelogeerd. De erker van dit pand had een controlerende functie: de pastoor kon goed in de gaten houden wie er naar de kerk ging. Het Huis Ocrum (nr. 18) was van 1848 tot 1952 rooms burgerweeshuis. Dat kunt u nog zien aan de kinderkopjes die aan de 19e eeuwse voorgevel van het academiegebouw zijn aangebracht. De rode kleur van dit huis (na de restauratie aangebracht) zal door de loop der jaren een mooie grijs rode kleur van dit huis (na de restauratie aangebracht) zal door de loop der jaren een mooie grijs rode kleur krijgen."
 	},
 	{
 		"Nummer": "27",
-		"Lat": "51°35.2967’",
-		"Long": "4°46.7100’",
+		"NB": "51.352967",
+		"OL": "4.467100",
 		"Naam": "",
 		"Opmerking": "Kruising St.Janstraat/Molenstraat"
 	},
 	{
 		"Nummer": "28",
-		"Lat": "51°35.2800’",
-		"Long": "4°46.7367’",
+		"NB": "51.352800",
+		"OL": "4.467367",
 		"Naam": "Bibliotheek",
 		"Opmerking": ""
 	},
 	{
 		"Nummer": "29",
-		"Lat": "51°35.2417’",
-		"Long": "4°46.8133’",
+		"NB": "51.352417",
+		"OL": "4.468133",
 		"Naam": "",
 		"Opmerking": "Kruising Molenstraat/Kloosterplein"
 	},
 	{
 		"Nummer": "30",
-		"Lat": "51°35.2633’",
-		"Long": "4°46.8617’",
+		"NB": "51.352633",
+		"OL": "4.468617",
 		"Naam": "Kloosterkazerne",
 		"Opmerking": ""
 	},
 	{
 		"Nummer": "31",
-		"Lat": "51°35.2650’",
-		"Long": "4°46.9200’",
+		"NB": "51.352650",
+		"OL": "4.469200",
 		"Naam": "Chasse theater",
 		"Opmerking": ""
 	},
 	{
 		"Nummer": "32",
-		"Lat": "51°35.2650’",
-		"Long": "4°46.8750’",
+		"NB": "51.352650",
+		"OL": "4.468750",
 		"Naam": "",
 		"Opmerking": "Kruising Kloosterplein/Vlaszak"
 	},
 	{
 		"Nummer": "33",
-		"Lat": "51°35.3167’",
-		"Long": "4°46.8533’",
+		"NB": "51.353167",
+		"OL": "4.468533",
 		"Naam": "Binding van Isaac",
 		"Opmerking": ""
 	},
 	{
 		"Nummer": "34",
-		"Lat": "51°35.3700’",
-		"Long": "4°46.8267’",
+		"NB": "51.353700",
+		"OL": "4.468267",
 		"Naam": "",
 		"Opmerking": "Kruising Vlaszak/Boschstraat"
 	},
 	{
 		"Nummer": "35",
-		"Lat": "51°35.3800’",
-		"Long": "4°46.8600’",
+		"NB": "51.353800",
+		"OL": "4.468600",
 		"Naam": "Beyerd",
 		"Opmerking": ""
 	},
 	{
 		"Nummer": "36",
-		"Lat": "51°35.3700’",
-		"Long": "4°46.8267’",
+		"NB": "51.353700",
+		"OL": "4.468267",
 		"Naam": "",
 		"Opmerking": "Kruising Vlaszak/Boschstraat"
 	},
 	{
 		"Nummer": "37",
-		"Lat": "51°35.3733’",
-		"Long": "4°46.8000’",
+		"NB": "51.353733",
+		"OL": "4.468000",
 		"Naam": "Gasthuispoort",
 		"Opmerking": ""
 	},
 	{
 		"Nummer": "38",
-		"Lat": "51°35.3650’",
-		"Long": "4°46.7917’",
+		"NB": "51.353650",
+		"OL": "4.467917",
 		"Naam": "",
 		"Opmerking": "Ingang Veemarktstraat"
 	},
 	{
 		"Nummer": "39",
-		"Lat": "51°35.3417’",
-		"Long": "4°46.7817’",
+		"NB": "51.353417",
+		"OL": "4.467817",
 		"Naam": "",
 		"Opmerking": "1e bocht Veemarktstraat"
 	},
 	{
 		"Nummer": "40",
-		"Lat": "51°35.3133’",
-		"Long": "4°46.7000’",
+		"NB": "51.353133",
+		"OL": "4.467000",
 		"Naam": "",
 		"Opmerking": "Kruising Veemarktstraat/St.Annastraat"
 	},
 	{
 		"Nummer": "41",
-		"Lat": "51°35.3467’",
-		"Long": "4°46.6767’",
+		"NB": "51.353467",
+		"OL": "4.466767",
 		"Naam": "Willem Merkxtuin",
 		"Opmerking": "Ingang Willem Merkxtuin"
 	},
 	{
 		"Nummer": "42",
-		"Lat": "51°35.3800’",
-		"Long": "4°46.6683’",
+		"NB": "51.353800",
+		"OL": "4.466683",
 		"Naam": "",
 		"Opmerking": "Kruising St.Annastraat/Catharinastraat"
 	},
 	{
 		"Nummer": "43",
-		"Lat": "51°35.3817’",
-		"Long": "4°46.7017’",
+		"NB": "51.353817",
+		"OL": "4.467017",
 		"Naam": "Begijnenhof",
 		"Opmerking": "Ingang Begijnenhof"
 	},
 	{
 		"Nummer": "44",
-		"Lat": "51°35.3800’",
-		"Long": "4°46.6683’",
+		"NB": "51.353800",
+		"OL": "4.466683",
 		"Naam": "",
 		"Opmerking": "Kruising St.Annastraat/Catharinastraat"
 	},
 	{
 		"Nummer": "45",
-		"Lat": "51°35.3700’",
-		"Long": "4°46.5750’",
+		"NB": "51.353700",
+		"OL": "4.465750",
 		"Naam": "Einde stadswandeling",
 		"Opmerking": "Eindpunt"
 	},
