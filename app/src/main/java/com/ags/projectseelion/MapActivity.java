@@ -1,6 +1,5 @@
 package com.ags.projectseelion;
 
-import android.app.AlertDialog;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -124,10 +123,16 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
     }
 
-    private void addMarkerForRoute(POI poi){
-        switch (route){
-            case Custom: if(poi.isToVisit()) addMarker(poi); break;
-            case Historic: if(poi.getCategory().equals(Category.Building))addMarker(poi);break;
+    private void addMarkerForRoute(POI poi) {
+        if (poi.getCategory() == Category.Building) {
+            switch (route) {
+                case Custom:
+                    if (poi.isToVisit()) addMarker(poi);
+                    break;
+                case Historic:
+                    if (poi.getCategory().equals(Category.Building)) addMarker(poi);
+                    break;
+            }
         }
     }
 
