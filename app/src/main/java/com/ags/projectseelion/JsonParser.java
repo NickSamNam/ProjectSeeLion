@@ -1,5 +1,7 @@
 package com.ags.projectseelion;
 
+import android.location.Location;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,8 +37,8 @@ public class JsonParser {
                     json.getString("Naam"),                 //name
                     getDescription(json.getString("Tekst")),//description
                     json.getString("Foto"),                 //imagename
-                    json.getDouble("OL"), //longitude
-                    json.getDouble("NB"), //latitude
+                    Location.convert(json.getString("OL")), //longitude
+                    Location.convert(json.getString("NB")), //latitude
                     getCategory(json.getString("Naam"))     //Category
             );
         } catch (JSONException e) {
