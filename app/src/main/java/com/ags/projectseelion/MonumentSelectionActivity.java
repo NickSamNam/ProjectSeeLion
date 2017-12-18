@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MonumentSelectionActivity extends AppCompatActivity {
@@ -17,7 +18,7 @@ public class MonumentSelectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_monument_selection);
 
         // TODO: 11-12-2017 replace null with poi from mapController
-        monuments = null;
+        monuments = new ArrayList<>();
 
         findViewById(R.id.activity_monument_selection_btn_continue).setOnClickListener(this::btnContinueOnClick);
         ((RecyclerView) findViewById(R.id.activity_monument_selection_rv_monuments)).setAdapter(new MonumentAdapter(monuments));
@@ -25,7 +26,6 @@ public class MonumentSelectionActivity extends AppCompatActivity {
 
     private void btnContinueOnClick(View view) {
         Intent intent = new Intent(getApplicationContext(), HistorischeKilometer.class);
-        intent.putExtra("monuments", monuments.toArray());
         startActivity(intent);
     }
 }
