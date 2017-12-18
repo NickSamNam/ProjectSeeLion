@@ -5,6 +5,6 @@ package com.ags.projectseelion;
  */
 
 public enum Route {
-    Standard,
+    Historic,
     Custom
 }
