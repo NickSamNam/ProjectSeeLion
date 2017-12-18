@@ -5,5 +5,5 @@ package com.ags.projectseelion;
  */
 
 public enum Category {
-    Building
+    Intersection, Building
 }
