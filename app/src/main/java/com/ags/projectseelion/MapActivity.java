@@ -89,7 +89,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         mMap.addMarker(new MarkerOptions().position(defaultLocation).title("Marker in Sydney"));
         mMap.setOnCameraIdleListener(() -> {
             for (POI poi : pois) {
-                addMarker(poi);
+                addMarkerForRoute(poi);
             }
         });
 
@@ -101,7 +101,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         getDeviceLocation();
 
         for (POI poi : pois) {
-            addMarker(poi);
+            addMarkerForRoute(poi);
         }
     }
 
@@ -122,6 +122,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 visibleMarkers.get(poi.getNumber()).remove();
                 visibleMarkers.remove(poi.getNumber());
             }
+        }
+    }
+
+    private void addMarkerForRoute(POI poi){
+        switch (route){
+            case Custom: if(poi.isToVisit()) addMarker(poi); break;
+            case Historic: addMarker(poi);break;
         }
     }
 
