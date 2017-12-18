@@ -24,7 +24,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Task;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -44,8 +43,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private Route route;
     private SparseArray<Marker> visibleMarkers = new SparseArray<>();
 
-    // TODO: 11-12-2017 replace null with poi from mapController
-    List<POI> pois = new ArrayList<>();
+    List<POI> pois = MapController.getInstance().getPOIs();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,8 +118,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 visibleMarkers.put(poi.getNumber(), marker);
             }
         } else {
-            visibleMarkers.get(poi.getNumber()).remove();
-            visibleMarkers.remove(poi.getNumber());
+            if (visibleMarkers.get(poi.getNumber()) != null) {
+                visibleMarkers.get(poi.getNumber()).remove();
+                visibleMarkers.remove(poi.getNumber());
+            }
         }
     }
 
