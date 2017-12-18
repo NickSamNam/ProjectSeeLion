@@ -41,7 +41,8 @@ public class MonumentSelectionActivity extends AppCompatActivity {
     }
 
     private void btnContinueOnClick(View view) {
-        Intent intent = new Intent(getApplicationContext(), HistorischeKilometer.class);
+        Intent intent = new Intent(getApplicationContext(), MapActivity.class);
+        intent.putExtra(MapActivity.KEY_ROUTE, Route.Custom.ordinal());
         startActivity(intent);
     }
 }

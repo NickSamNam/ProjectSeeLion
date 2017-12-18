@@ -18,7 +18,7 @@ public class HistorischeKilometer extends AppCompatActivity {
 
         findViewById(R.id.activity_historische_kilometer_button_startroute).setOnClickListener((view) -> {
             Intent intent = new Intent(this, MapActivity.class);
-            intent.putExtra(MapActivity.KEY_ROUTE, Route.Custom);
+            intent.putExtra(MapActivity.KEY_ROUTE, Route.Historic);
             startActivity(intent);
         });
     }
