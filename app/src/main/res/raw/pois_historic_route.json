@@ -118,7 +118,7 @@
 	},
 	{
 		"Nummer": "14",
-		"NB": "51.353900’",
+		"NB": "51.353900",
 		"OL": "4.464000",
 		"Naam": "Begin Vismarkt",
 		"Opmerkingen": "",
@@ -140,7 +140,8 @@
 		"OL": "4.464933",
 		"Naam": "",
 		"Opmerkingen": "Kruising Torenstraat/Kerkplein",
-		"Foto": ""
+		"Foto": "",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "17",
@@ -238,7 +239,8 @@
 		"OL": "4.467100",
 		"Naam": "",
 		"Opmerkingen": "Kruising St.Janstraat/Molenstraat",
-		"Foto": ""
+		"Foto": "",
+		"Tekst": ""
 	},
 	{
 		"Nummer": "28",
