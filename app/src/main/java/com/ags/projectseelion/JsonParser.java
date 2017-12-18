@@ -18,35 +18,8 @@ import java.util.Map;
  */
 
 public class JsonParser {
-    private Context context;
-    public JsonParser(Context context){
-        this.context = context;
-    }
-
-    public JSONArray getJsonArray(String fileName){
-        JSONArray jsonArray = null;
-        try {
-            InputStream ins = context.getResources().openRawResource(
-                    context.getResources().getIdentifier(fileName,
-                            "raw", context.getPackageName()));
-            int size = 0;
-            size = ins.available();
-            byte[] buffer = new byte[size];
-            ins.read(buffer);
-            ins.close();
-            jsonArray = new JSONArray(new String(buffer, "UTF-8"));
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return jsonArray;
-    }
-
-    public List<POI> getAllPOIs(){
-        JSONArray array = getJsonArray("pois_historic_route");
+    public List<POI> getAllPOIs(JSONArray array){
+        //JSONArray array = getJsonArray("pois_historic_route");
         ArrayList<POI> POIList = new ArrayList<>();
         for (int i = 0; i < array.length();i++){
             try {
