@@ -127,7 +127,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         if (poi.getCategory() == Category.Building) {
             switch (route) {
                 case Custom:
-                    if (poi.isToVisit()) addMarker(poi);
+                    if (poi.isChosen()) addMarker(poi);
                     break;
                 case Historic:
                     if (poi.getCategory().equals(Category.Building)) addMarker(poi);

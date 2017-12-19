@@ -3,13 +3,14 @@ package com.ags.projectseelion;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
  * Created by robin on 11-12-2017.
  */
 
-public class POI implements Parcelable {
+public class POI implements Parcelable, Serializable {
     private int number;
     private String name;
     private Map<String, String> description;
@@ -17,7 +18,8 @@ public class POI implements Parcelable {
     private double longitude;
     private double latitude;
     private Category category;
-    private boolean toVisit;
+    private boolean visited;
+    private boolean chosen;
 
     public POI(int number, String name, Map<String, String> description, String imageName, double longitude, double latitude, Category category) {
         this.name = name;
@@ -27,7 +29,8 @@ public class POI implements Parcelable {
         this.latitude = latitude;
         this.category = category;
         this.number = number;
-        toVisit = true;
+        visited = false;
+        chosen = true;
     }
 
     public Category getCategory() {
@@ -58,12 +61,12 @@ public class POI implements Parcelable {
         return number;
     }
 
-    public boolean isToVisit() {
-        return toVisit;
+    public boolean isVisited() {
+        return visited;
     }
 
-    public void setToVisit(boolean toVisit) {
-        this.toVisit = toVisit;
+    public void setVisited(boolean visited) {
+        this.visited = visited;
     }
 
     protected POI(Parcel in) {
@@ -73,7 +76,8 @@ public class POI implements Parcelable {
         longitude = in.readFloat();
         latitude = in.readFloat();
         category = (Category) in.readValue(Category.class.getClassLoader());
-        toVisit = in.readByte() != 0x00;
+        visited = in.readByte() != 0x00;
+        chosen = in.readByte() != 0x00;
     }
 
     @Override
@@ -89,7 +93,8 @@ public class POI implements Parcelable {
         dest.writeDouble(longitude);
         dest.writeDouble(latitude);
         dest.writeValue(category);
-        dest.writeByte((byte) (toVisit ? 0x01 : 0x00));
+        dest.writeByte((byte) (visited ? 0x01 : 0x00));
+        dest.writeByte((byte) (chosen ? 0x01 : 0x00));
     }
 
     @SuppressWarnings("unused")
@@ -104,4 +109,12 @@ public class POI implements Parcelable {
             return new POI[size];
         }
     };
+
+    public boolean isChosen() {
+        return chosen;
+    }
+
+    public void setChosen(boolean chosen) {
+        this.chosen = chosen;
+    }
 }
