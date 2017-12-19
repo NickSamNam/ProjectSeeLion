@@ -34,8 +34,8 @@ class MonumentAdapter extends RecyclerView.Adapter<MonumentAdapter.MonumentHolde
     public void onBindViewHolder(MonumentHolder holder, int position) {
         POI m = monuments.get(position);
         holder.tvName.setText(m.getName());
-        holder.checkBoxVisit.setChecked(m.isVisited());
-        holder.checkBoxVisit.setOnClickListener((View view) -> m.setVisited(!m.isVisited()));
+        holder.checkBoxVisit.setChecked(m.isChosen());
+        holder.checkBoxVisit.setOnClickListener((View view) -> m.setChosen(!m.isChosen()));
         holder.root.setOnClickListener((view -> {
             if (onItemClickListener != null)
                 onItemClickListener.onItemClick(holder.getAdapterPosition());
