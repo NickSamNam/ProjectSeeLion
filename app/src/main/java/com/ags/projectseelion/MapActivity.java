@@ -1,6 +1,5 @@
 package com.ags.projectseelion;
 
-import android.app.AlertDialog;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -128,9 +127,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             addMarkerForRoute(poi);
         }
 
-        String url = getUrl();
-        FetchUrl fetch = new FetchUrl();
-        fetch.execute(url);
+        createRoute();
+
 
     }
 
@@ -236,7 +234,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         return true;
     }
 
-    private String getUrl(LatLng origin, LatLng dest) {
+    private void createRoute(LatLng origin, LatLng dest) {
         // Origin of route
         String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
 
@@ -255,10 +253,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         // Building the url to the web service
         String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
 
-        return url;
+        FetchUrl fetch = new FetchUrl();
+        fetch.execute(url);
     }
 
-    private String getUrl() {
+    private void createRoute() {
+        List<String> urls = new ArrayList<>();
 
         // Origin of route
         LatLng originLatLng = new LatLng(toVisitList.get(0).getLatitude(), toVisitList.get(0).getLongitude());
@@ -272,25 +272,73 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         String trafficMode = "mode=walking";
 
         // Waypoints of route
-        String wayPoints = "waypoints=optimize:true|";
+        StringBuilder wayPoints = new StringBuilder("waypoints=optimize:true");
         if (toVisitList.size() < 24) {
             for (int i = 1; i < toVisitList.size(); i++) {
                 LatLng wayPointLatLng = new LatLng(toVisitList.get(i).getLatitude(), toVisitList.get(i).getLongitude());
-                wayPoints += wayPointLatLng.latitude + "," + originLatLng.longitude;
+                wayPoints.append(wayPointLatLng.latitude).append(",").append(originLatLng.longitude);
                 if (i < toVisitList.size() - 1)
-                    wayPoints += "|";
+                    wayPoints.append("|");
+            }
+            // Url building
+            String parameters = str_origin + "&" + str_dest + "&" + wayPoints + "&" + trafficMode;
+
+            String output = "json";
+
+            String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_key);
+            urls.add(url);
+        } else {
+            int amountDone = 0;
+            int amountLeft;
+
+            while (amountDone < toVisitList.size() - 1) {
+                Log.d("ToVisitListSize", "createRoute: " + toVisitList.size());
+
+                if (toVisitList.size() - amountDone > 23)
+                    amountLeft = 22;
+                else
+                    amountLeft = toVisitList.size() - amountDone - 1;
+
+                Log.d("AMOUNTDONE", "createRoute: " + amountDone);
+                Log.d("AMOUNTLEFT", "createRoute: " + amountLeft);
+
+                originLatLng = new LatLng(toVisitList.get(amountDone).getLatitude(), toVisitList.get(amountDone).getLongitude());
+                str_origin = "origin=" + originLatLng.latitude + "," + originLatLng.longitude;
+
+                Log.d("Start of route poi name", "createRoute: " + toVisitList.get(amountDone).getName());
+
+                destLatLng = new LatLng(toVisitList.get(amountDone + amountLeft).getLatitude(), toVisitList.get(amountDone + amountLeft).getLongitude());
+                str_dest = "destination=" + destLatLng.latitude + "," + destLatLng.longitude;
+
+                Log.d("End of route poi name", "createRoute: " + toVisitList.get(amountDone + amountLeft).getName());
+
+                for (int j = 0; j < amountLeft; j++) {
+                    LatLng wayPointLatLng = new LatLng(toVisitList.get(amountDone).getLatitude(), toVisitList.get(amountDone).getLongitude());
+                    wayPoints.append(wayPointLatLng.latitude).append(",").append(originLatLng.longitude);
+                    if (j < amountLeft) {
+                        wayPoints.append("|");
+                    }
+
+                    amountDone++;
+                }
+
+                // Url building
+                String parameters = str_origin + "&" + str_dest + "&" + wayPoints + "&" + trafficMode;
+
+                String output = "json";
+
+                String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_key);
+                wayPoints.delete(0, wayPoints.length() - 1);
+                urls.add(url);
             }
         }
 
-        // Url building
-        String parameters = str_origin + "&" + str_dest + "&" + wayPoints + "&" + trafficMode;
 
-        String output = "json";
-
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_key);
-        Log.d("REQUESTURL", "getUrl: " + url);
-
-        return url;
+        FetchUrl fetch;
+        for (String url : urls) {
+            fetch = new FetchUrl();
+            fetch.execute(url);
+        }
     }
 
 
@@ -315,25 +363,30 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
             BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
 
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
 
-            String line = "";
+            String line;
             while ((line = br.readLine()) != null) {
                 sb.append(line);
             }
 
             data = sb.toString();
-            Log.d("downloadUrl", data.toString());
+            Log.d("downloadUrl", data);
             br.close();
 
         } catch (Exception e) {
             Log.d("Exception", e.toString());
         } finally {
-            iStream.close();
-            urlConnection.disconnect();
+            if (iStream != null) {
+                iStream.close();
+            }
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
         }
         return data;
     }
+
 
     // Fetches data from url passed
     private class FetchUrl extends AsyncTask<String, Void, String> {
@@ -347,7 +400,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             try {
                 // Fetching the data from web service
                 data = downloadUrl(url[0]);
-                Log.d("Background Task data", data.toString());
+                Log.d("Background Task data", data);
             } catch (Exception e) {
                 Log.d("Background Task", e.toString());
             }
@@ -413,14 +466,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             Log.d("onPostExecute", "onPostExecute lineoptions decoded");
 
             // Drawing polyline in the Google Map for the i-th route
-            if (lineOptions != null) {
-                mMap.addPolyline(lineOptions);
-                LatLngBounds bounds = new LatLngBounds(southWest, northEast);
-                int padding = 80;
-                mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding));
-            } else {
-                Log.d("onPostExecute", "without Polylines drawn");
-            }
+            mMap.addPolyline(lineOptions);
+            LatLngBounds bounds = new LatLngBounds(southWest, northEast);
+            int padding = 80;
+            mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding));
         }
     }
 }
