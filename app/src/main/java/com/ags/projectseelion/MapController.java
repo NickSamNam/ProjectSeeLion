@@ -1,12 +1,20 @@
 package com.ags.projectseelion;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Parcelable;
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,6 +24,9 @@ import java.util.List;
 
 public class MapController {
     private static MapController instance = new MapController();
+    public final static String KEY_PREFERENCES = "myPreferences";
+    public final static String KEY_SAVENAME = "poidata";
+    public final static String LOG_SHAREDPREF = "SharedPreferences";
     private List<POI> pois;
     private boolean init = false;
 
@@ -75,11 +86,33 @@ public class MapController {
         return null;
     }
 
-    public void resetCurrentData(){
-
+    public void resetCurrentData(Context context){
+        SharedPreferences mPrefs = context.getSharedPreferences(KEY_PREFERENCES, context.MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+        prefsEditor.putString(KEY_SAVENAME, null);
+        prefsEditor.commit();
     }
 
-    public void saveCurrentData(){
+    public void saveCurrentData(Context context){
+        SharedPreferences mPrefs = context.getSharedPreferences(KEY_PREFERENCES, context.MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(pois);
+        prefsEditor.putString(KEY_SAVENAME, json);
+        prefsEditor.commit();
+    }
 
+    public void loadSavedData(Context context){
+        SharedPreferences mPrefs = context.getSharedPreferences(KEY_PREFERENCES, context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = mPrefs.getString(KEY_SAVENAME, "");
+        if (json.isEmpty()) {
+            Log.i(LOG_SHAREDPREF,"file is empty.");
+        } else {
+            Type type = new TypeToken<List<POI>>() {
+            }.getType();
+            pois = gson.fromJson(json, type);
+            Log.i(LOG_SHAREDPREF,"file loaded.");
+        }
     }
 }
