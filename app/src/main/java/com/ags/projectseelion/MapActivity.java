@@ -403,7 +403,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             for (int i = 1; i < toVisitList.size(); i++) {
                 LatLng wayPointLatLng = new LatLng(toVisitList.get(i).getLatitude(), toVisitList.get(i).getLongitude());
                 wayPoints.append(wayPointLatLng.latitude).append(",").append(originLatLng.longitude);
-                if (i < toVisitList.size() - 1)
+                if (i < toVisitList.size() - 1 || toVisitList.size() == 2)
                     wayPoints.append("|");
             }
             // Url building
