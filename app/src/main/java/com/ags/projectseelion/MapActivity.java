@@ -1,6 +1,5 @@
 package com.ags.projectseelion;
 
-import android.app.AlertDialog;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -396,25 +395,43 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         // Executes in UI thread, after the parsing process
         @Override
         protected void onPostExecute(List<List<LatLng>> result) {
-            PolylineOptions lineOptions = new PolylineOptions();
+            PolylineOptions lineOptionsVisited = new PolylineOptions();
+            PolylineOptions lineOptionsToVisit = new PolylineOptions();
 
             LatLng northEast = result.get(0).get(0);
             LatLng southWest = result.get(0).get(1);
             // The first list contained the bounds of the route and is not part of the route:
             result.remove(0);
 
+            LatLng start = result.get(0).get(0);
+            LatLng finish = result.get(result.size() - 1).get(result.get(result.size() - 1).size() - 1);
+
+            String direction;
+            if (Math.abs(northEast.latitude - start.latitude) + Math.abs(northEast.longitude - start.longitude) < Math.abs(northEast.latitude - finish.latitude) + Math.abs(northEast.longitude - finish.longitude)) {
+                direction = "SW";
+            } else direction = "NE";
+
             for (List<LatLng> leg : result) {
-                lineOptions.addAll(leg);
+                for (LatLng p : leg) {
+                    if ((direction.equals("SW") && (Math.abs(finish.latitude - lastKnownLocation.getLatitude()) + Math.abs(finish.longitude - lastKnownLocation.getLongitude()) < Math.abs(finish.latitude - p.latitude) + Math.abs(finish.longitude - p.longitude))) || (direction.equals("NE") && (Math.abs(finish.latitude - lastKnownLocation.getLatitude()) + Math.abs(finish.longitude - lastKnownLocation.getLongitude()) < Math.abs(finish.latitude - p.latitude) + Math.abs(finish.longitude - p.longitude)))) {
+                        lineOptionsVisited.add(p);
+                    } else {
+                        lineOptionsToVisit.add(p);
+                    }
+                }
             }
 
-            lineOptions.width(10);
-            lineOptions.color(Color.RED);
+            lineOptionsToVisit.width(10);
+            lineOptionsToVisit.color(Color.RED);
+            lineOptionsVisited.width(10);
+            lineOptionsVisited.color(Color.GRAY);
 
             Log.d("onPostExecute", "onPostExecute lineoptions decoded");
 
             // Drawing polyline in the Google Map for the i-th route
-            if (lineOptions != null) {
-                mMap.addPolyline(lineOptions);
+            if (lineOptionsToVisit != null && lineOptionsVisited != null) {
+                mMap.addPolyline(lineOptionsToVisit);
+                mMap.addPolyline(lineOptionsVisited);
                 LatLngBounds bounds = new LatLngBounds(southWest, northEast);
                 int padding = 80;
                 mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding));
