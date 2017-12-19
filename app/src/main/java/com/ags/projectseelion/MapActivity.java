@@ -346,7 +346,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 southWestBound = southWest;
             }
 
-        LatLng start = route.get(1).get(1);
+        LatLng start = route.get(1).get(0);
         LatLng finish = route.get(route.size() - 1).get(route.get(route.size() - 1).size() - 1);
 
         String direction;
