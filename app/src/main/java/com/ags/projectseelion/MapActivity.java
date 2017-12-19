@@ -489,11 +489,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         String trafficMode = "mode=walking";
 
         // Waypoints of route
-        StringBuilder wayPoints = new StringBuilder("waypoints=optimize:true");
+        StringBuilder wayPoints = new StringBuilder("waypoints=optimize:true|");
         if (toVisitList.size() < 24) {
-            for (int i = 1; i < toVisitList.size(); i++) {
+            for (int i = 1; i < toVisitList.size() - 1; i++) {
                 LatLng wayPointLatLng = new LatLng(toVisitList.get(i).getLatitude(), toVisitList.get(i).getLongitude());
-                wayPoints.append(wayPointLatLng.latitude).append(",").append(originLatLng.longitude);
+                wayPoints.append(wayPointLatLng.latitude).append(",").append(wayPointLatLng.longitude);
                 if (i < toVisitList.size() - 1 || toVisitList.size() == 2)
                     wayPoints.append("|");
             }
@@ -524,7 +524,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
                 for (int j = 0; j < amountLeft; j++) {
                     LatLng wayPointLatLng = new LatLng(toVisitList.get(amountDone).getLatitude(), toVisitList.get(amountDone).getLongitude());
-                    wayPoints.append(wayPointLatLng.latitude).append(",").append(originLatLng.longitude);
+                    wayPoints.append(wayPointLatLng.latitude).append(",").append(wayPointLatLng.longitude);
                     if (j < amountLeft) {
                         wayPoints.append("|");
                     }
