@@ -1,7 +1,11 @@
 package com.ags.projectseelion;
 
+import android.app.Activity;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -9,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.util.SparseArray;
 
@@ -78,6 +83,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         mGeofencingClient = LocationServices.getGeofencingClient(this);
 
+        LocalBroadcastManager lbc = LocalBroadcastManager.getInstance(this);
+        GoogleReceiver receiver = new GoogleReceiver(this);
+        lbc.registerReceiver(receiver, new IntentFilter("googlegeofence"));
     }
 
     @Override
@@ -118,6 +126,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         for (POI poi : pois) {
             addMarkerForRoute(poi);
         }
+
         try {
             if (hasLocationPermission()) {
                 mGeofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent())
@@ -272,12 +281,22 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         return mGeofencePendingIntent;
     }
 
-    public void onGeofenceEnter(int id){
+    class GoogleReceiver extends BroadcastReceiver {
 
-        Bundle args = new Bundle();
-        args.putInt(POIFragment.KEY_POI, id);
-        POIFragment poiFragment = new POIFragment();
-        poiFragment.setArguments(args);
-        poiFragment.show(getSupportFragmentManager(), "POI");
+        MapActivity mActivity;
+
+        public GoogleReceiver(Activity activity){
+            mActivity = (MapActivity) activity;
+        }
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Bundle args = new Bundle();
+            args.putInt(POIFragment.KEY_POI, intent.getIntExtra("ID", 0));
+            POIFragment poiFragment = new POIFragment();
+            poiFragment.setArguments(args);
+            poiFragment.show(getSupportFragmentManager(), "POI");
+        }
     }
 }
+

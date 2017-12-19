@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.google.android.gms.location.Geofence;
@@ -18,19 +19,18 @@ import static android.content.ContentValues.TAG;
  */
 
 public class GeofenceTransitionsIntentService extends IntentService {
-    public GeofenceTransitionsIntentService(String name) {
-        super(name);
+public int id;
 
+    public GeofenceTransitionsIntentService() {
+        super(TAG);
     }
 
     protected void onHandleIntent(Intent intent) {
-        MapActivity mapActivity = new MapActivity();
         GeofencingEvent geofencingEvent = GeofencingEvent.fromIntent(intent);
         if (geofencingEvent.hasError()) {
             Log.e(TAG, "intent error");
             return;
         }
-
         // Get the transition type.
         int geofenceTransition = geofencingEvent.getGeofenceTransition();
 
@@ -42,9 +42,12 @@ public class GeofenceTransitionsIntentService extends IntentService {
             List<Geofence> triggeringGeofences = geofencingEvent.getTriggeringGeofences();
 
             // Send notification and log the transition details.
-            Log.d("GEO", "entered");
-            mapActivity.onGeofenceEnter(Integer.valueOf(triggeringGeofences.get(0).getRequestId()));
 
+            Intent lbcIntent = new Intent("googlegeofence"); //Send to any reciever listening for this
+
+            lbcIntent.putExtra("ID", Integer.valueOf(triggeringGeofences.get(0).getRequestId()));  //Put whatever it is you want the activity to handle
+
+            LocalBroadcastManager.getInstance(this).sendBroadcast(lbcIntent);  //Send the intent
 
         } else {
             // Log the error.
