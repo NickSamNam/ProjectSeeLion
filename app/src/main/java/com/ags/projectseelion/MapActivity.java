@@ -1,5 +1,7 @@
 package com.ags.projectseelion;
 
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -11,6 +13,9 @@ import android.util.Log;
 import android.util.SparseArray;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.Geofence;
+import com.google.android.gms.location.GeofencingClient;
+import com.google.android.gms.location.GeofencingRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -21,9 +26,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.google.android.gms.location.Geofence.NEVER_EXPIRE;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
     private final static int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0;
@@ -41,18 +51,21 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private LatLng defaultLocation = new LatLng(32.676149, -117.157703);
     private Route route;
     private SparseArray<Marker> visibleMarkers = new SparseArray<>();
+    private GeofencingClient mGeofencingClient;
+    private ArrayList<Geofence> mGeofenceList;
+    private PendingIntent mGeofencePendingIntent;
 
     List<POI> pois = MapController.getInstance().getPOIs();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (savedInstanceState != null) {
             fresh = false;
             lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
             cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
         }
+        mGeofenceList = new ArrayList<>();
 
         route = Route.values()[(getIntent().getIntExtra(KEY_ROUTE, 0))];
 
@@ -62,6 +75,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        mGeofencingClient = LocationServices.getGeofencingClient(this);
+
     }
 
     @Override
@@ -102,7 +118,21 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         for (POI poi : pois) {
             addMarkerForRoute(poi);
         }
+        try {
+            if (hasLocationPermission()) {
+                mGeofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent())
+                        .addOnSuccessListener(this, aVoid -> {
+                            Log.d("SUC","succes");
+                        })
+                        .addOnFailureListener(this, e -> {
+                            Log.d("FAI", "failure");
+                        });
+            }
+        } catch (SecurityException e) {
+            Log.e("Exception: %s", e.getMessage());
+        }
     }
+
 
     private void addMarker(POI poi) {
         LatLngBounds bounds = mMap.getProjection().getVisibleRegion().latLngBounds;
@@ -114,6 +144,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                         .position(new LatLng(poi.getLatitude(), poi.getLongitude())));
                 marker.setTag(poi.getNumber());
                 visibleMarkers.put(poi.getNumber(), marker);
+
             }
         } else {
             if (visibleMarkers.get(poi.getNumber()) != null) {
@@ -121,6 +152,19 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 visibleMarkers.remove(poi.getNumber());
             }
         }
+        mGeofenceList.add(new Geofence.Builder()
+                // Set the request ID of the geofence. This is a string to identify this
+                // geofence.
+                .setRequestId(String.valueOf(poi.getNumber()))
+
+                .setCircularRegion(
+                        poi.getLatitude(),
+                        poi.getLongitude(),
+                        30
+                )
+                .setExpirationDuration(NEVER_EXPIRE)
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
+                .build());
     }
 
     private void addMarkerForRoute(POI poi) {
@@ -206,5 +250,34 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         poiFragment.setArguments(args);
         poiFragment.show(getSupportFragmentManager(), "POI");
         return true;
+    }
+
+    private GeofencingRequest getGeofencingRequest() {
+        GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
+        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
+        builder.addGeofences(mGeofenceList);
+        return builder.build();
+    }
+
+    private PendingIntent getGeofencePendingIntent() {
+        // Reuse the PendingIntent if we already have it.
+        if (mGeofencePendingIntent != null) {
+            return mGeofencePendingIntent;
+        }
+        Intent intent = new Intent(this, GeofenceTransitionsIntentService.class);
+        // We use FLAG_UPDATE_CURRENT so that we get the same pending intent back when
+        // calling addGeofences() and removeGeofences().
+        mGeofencePendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.
+                FLAG_UPDATE_CURRENT);
+        return mGeofencePendingIntent;
+    }
+
+    public void onGeofenceEnter(int id){
+
+        Bundle args = new Bundle();
+        args.putInt(POIFragment.KEY_POI, id);
+        POIFragment poiFragment = new POIFragment();
+        poiFragment.setArguments(args);
+        poiFragment.show(getSupportFragmentManager(), "POI");
     }
 }
