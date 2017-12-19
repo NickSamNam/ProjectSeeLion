@@ -60,9 +60,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private ArrayList<POI> toVisitList;
     private SparseArray<Marker> visibleMarkers = new SparseArray<>();
     private LocationCallback locationCallback;
-    private List<List<LatLng>> route;
+    private List<List<LatLng>> route = ArrayList<>();
     private Polyline lineToVisit;
     private Polyline lineVisited;
+
+    private LatLng northEastBound = null;
+    private LatLng southWestBound = null;
 
     List<POI> pois = MapController.getInstance().getPOIs();
 
@@ -153,10 +156,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             addMarkerForRoute(poi);
         }
 
-        String url = getUrl();
-        FetchUrl fetch = new FetchUrl();
-        fetch.execute(url);
-
+        createRoute();
     }
 
     private void addMarker(POI poi) {
@@ -248,7 +248,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onLocationChanged(Location lastLocation) {
         Log.i("MAP", "Location Changed");
         lastKnownLocation = lastLocation;
-        if (route != null) {
+        if (route.size() > 0) {
             Log.i("Route", route.toString());
             drawRoute(route);
         }
@@ -274,8 +274,22 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         PolylineOptions lineOptionsToVisit = new PolylineOptions();
 
         LatLng northEast = route.get(0).get(0);
+            if (northEastBound != null) {
+                if (northEast.longitude > northEastBound.longitude && northEast.latitude > northEastBound.latitude) {
+                    northEastBound = northEast;
+                }
+            } else {
+                northEastBound = northEast;
+            }
+            
         LatLng southWest = route.get(0).get(1);
-        // The first list contained the bounds of the route and is not part of the route:
+            if (southWestBound != null) {
+                if (southWest.longitude < southWestBound.longitude && southWest.latitude < southWestBound.latitude) {
+                    southWestBound = southWest;
+                }
+            } else {
+                southWestBound = southWest;
+            }
 
         LatLng start = route.get(1).get(1);
         LatLng finish = route.get(route.size() - 1).get(route.get(route.size() - 1).size() - 1);
@@ -305,8 +319,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         // Drawing polyline in the Google Map for the i-th route
         if (lineOptionsToVisit != null && lineOptionsVisited != null) {
-            LatLngBounds bounds = new LatLngBounds(southWest, northEast);
-            int padding = 80;
+          LatLngBounds bounds = new LatLngBounds(southWest, northEast);
+            int padding = 150;
             mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding));
 
             if (lineToVisit != null)
@@ -344,7 +358,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         return true;
     }
 
-    private String getUrl(LatLng origin, LatLng dest) {
+    private void createRoute(LatLng origin, LatLng dest) {
         // Origin of route
         String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
 
@@ -363,10 +377,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         // Building the url to the web service
         String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
 
-        return url;
+        FetchUrl fetch = new FetchUrl();
+        fetch.execute(url);
     }
 
-    private String getUrl() {
+    private void createRoute() {
+        List<String> urls = new ArrayList<>();
 
         // Origin of route
         LatLng originLatLng = new LatLng(toVisitList.get(0).getLatitude(), toVisitList.get(0).getLongitude());
@@ -380,27 +396,65 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         String trafficMode = "mode=walking";
 
         // Waypoints of route
-        String wayPoints = "waypoints=optimize:true|";
+        StringBuilder wayPoints = new StringBuilder("waypoints=optimize:true");
         if (toVisitList.size() < 24) {
             for (int i = 1; i < toVisitList.size(); i++) {
                 LatLng wayPointLatLng = new LatLng(toVisitList.get(i).getLatitude(), toVisitList.get(i).getLongitude());
-                wayPoints += wayPointLatLng.latitude + "," + originLatLng.longitude;
+                wayPoints.append(wayPointLatLng.latitude).append(",").append(originLatLng.longitude);
                 if (i < toVisitList.size() - 1)
-                    wayPoints += "|";
+                    wayPoints.append("|");
+            }
+            // Url building
+            String parameters = str_origin + "&" + str_dest + "&" + wayPoints + "&" + trafficMode;
+
+            String output = "json";
+
+            String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_key);
+            urls.add(url);
+        } else {
+            int amountDone = 0;
+            int amountLeft;
+
+            while (amountDone < toVisitList.size() - 1) {
+
+
+                if (toVisitList.size() - amountDone > 23)
+                    amountLeft = 22;
+                else
+                    amountLeft = toVisitList.size() - amountDone - 1;
+
+                originLatLng = new LatLng(toVisitList.get(amountDone).getLatitude(), toVisitList.get(amountDone).getLongitude());
+                str_origin = "origin=" + originLatLng.latitude + "," + originLatLng.longitude;
+
+                destLatLng = new LatLng(toVisitList.get(amountDone + amountLeft).getLatitude(), toVisitList.get(amountDone + amountLeft).getLongitude());
+                str_dest = "destination=" + destLatLng.latitude + "," + destLatLng.longitude;
+
+                for (int j = 0; j < amountLeft; j++) {
+                    LatLng wayPointLatLng = new LatLng(toVisitList.get(amountDone).getLatitude(), toVisitList.get(amountDone).getLongitude());
+                    wayPoints.append(wayPointLatLng.latitude).append(",").append(originLatLng.longitude);
+                    if (j < amountLeft) {
+                        wayPoints.append("|");
+                    }
+                    amountDone++;
+                }
+
+                // Url building
+                String parameters = str_origin + "&" + str_dest + "&" + wayPoints + "&" + trafficMode;
+
+                String output = "json";
+
+                String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_key);
+                wayPoints.delete(0, wayPoints.length() - 1);
+                urls.add(url);
             }
         }
 
-        // Url building
-        String parameters = str_origin + "&" + str_dest + "&" + wayPoints + "&" + trafficMode;
-
-        String output = "json";
-
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_key);
-        Log.d("REQUESTURL", "getUrl: " + url);
-
-        return url;
+        FetchUrl fetch;
+        for (String url : urls) {
+            fetch = new FetchUrl();
+            fetch.execute(url);
+        }
     }
-
 
     /**
      * A method to download json data from url
@@ -423,25 +477,30 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
             BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
 
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
 
-            String line = "";
+            String line;
             while ((line = br.readLine()) != null) {
                 sb.append(line);
             }
 
             data = sb.toString();
-            Log.d("downloadUrl", data.toString());
+            Log.d("downloadUrl", data);
             br.close();
 
         } catch (Exception e) {
             Log.d("Exception", e.toString());
         } finally {
-            iStream.close();
-            urlConnection.disconnect();
+            if (iStream != null) {
+                iStream.close();
+            }
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
         }
         return data;
     }
+
 
     // Fetches data from url passed
     private class FetchUrl extends AsyncTask<String, Void, String> {
@@ -455,7 +514,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             try {
                 // Fetching the data from web service
                 data = downloadUrl(url[0]);
-                Log.d("Background Task data", data.toString());
+                Log.d("Background Task data", data);
             } catch (Exception e) {
                 Log.d("Background Task", e.toString());
             }
@@ -485,17 +544,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             try {
                 jObject = new JSONObject(jsonData[0]);
 
-                Log.d("ParserTask", jsonData[0]);
                 RouteDataParser parser = new RouteDataParser();
-                Log.d("ParserTask", parser.toString());
 
                 // Starts parsing routes data
                 routeData = parser.parseRoutesInfo(jObject);
-                Log.d("ParserTask", "Executing routes");
-                Log.d("ParserTask-routes: ", routeData.toString());
 
             } catch (Exception e) {
-                Log.d("ParserTask", e.toString());
                 e.printStackTrace();
             }
             return routeData;
@@ -504,7 +558,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         // Executes in UI thread, after the parsing process
         @Override
         protected void onPostExecute(List<List<LatLng>> result) {
-            route = result;
+            route.addAll(result);
             drawRoute(route);
         }
     }

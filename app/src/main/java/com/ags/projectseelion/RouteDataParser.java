@@ -14,10 +14,8 @@ import java.util.List;
  */
 
 public class RouteDataParser {
-    public List<List<LatLng>> parseRoutesInfo(JSONObject jObject) {
 
-        LatLng northEast = null;
-        LatLng southWest = null;
+    public List<List<LatLng>> parseRoutesInfo(JSONObject jObject) {
 
         List<List<LatLng>> routes = new ArrayList<>();
         JSONArray jRoutes;
@@ -30,10 +28,12 @@ public class RouteDataParser {
 
             if (jRoutes.length() > 0) {
                 JSONObject nortEastJson = ((JSONObject) jRoutes.get(0)).getJSONObject("bounds").getJSONObject("northeast");
-                northEast = new LatLng(nortEastJson.getDouble("lat"), nortEastJson.getDouble("lng"));
+                LatLng northEast = new LatLng(nortEastJson.getDouble("lat"), nortEastJson.getDouble("lng"));
                 JSONObject southWestJson = ((JSONObject) jRoutes.get(0)).getJSONObject("bounds").getJSONObject("southwest");
-                southWest = new LatLng(southWestJson.getDouble("lat"), southWestJson.getDouble("lng"));
+                LatLng southWest = new LatLng(southWestJson.getDouble("lat"), southWestJson.getDouble("lng"));
+
                 List<LatLng> bounds = new ArrayList<>();
+
                 bounds.add(northEast);
                 bounds.add(southWest);
                 routes.add(bounds);
@@ -49,7 +49,7 @@ public class RouteDataParser {
 
                     /** Traversing all steps */
                     for (int k = 0; k < jSteps.length(); k++) {
-                        String polyline = "";
+                        String polyline;
                         polyline = (String) ((JSONObject) ((JSONObject) jSteps.get(k)).get("polyline")).get("points");
                         List<LatLng> list = decodePoly(polyline);
 
