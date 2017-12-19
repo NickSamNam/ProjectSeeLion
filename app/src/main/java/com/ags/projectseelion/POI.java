@@ -3,13 +3,14 @@ package com.ags.projectseelion;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
  * Created by robin on 11-12-2017.
  */
 
-public class POI implements Parcelable {
+public class POI implements Parcelable, Serializable {
     private int number;
     private String name;
     private Map<String, String> description;

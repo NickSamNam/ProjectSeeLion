@@ -74,4 +74,12 @@ public class MapController {
             }
         return null;
     }
+
+    public void resetCurrentData(){
+
+    }
+
+    public void saveCurrentData(){
+        
+    }
 }
