@@ -80,6 +80,6 @@ public class MapController {
     }
 
     public void saveCurrentData(){
-        
+
     }
 }
