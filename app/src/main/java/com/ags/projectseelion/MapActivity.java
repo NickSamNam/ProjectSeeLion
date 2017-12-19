@@ -146,7 +146,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         toVisitList = new ArrayList<>();
         for (POI poi : pois) {
-            if (poi.isToVisit() && (poi.getCategory() == Category.Building))
+            if (poi.isChosen() && (poi.getCategory() == Category.Building))
                 toVisitList.add(poi);
         }
 
@@ -180,7 +180,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     private void addMarkerForRoute(POI poi) {
         if (poi.getCategory() == Category.Building) {
-            switch (route) {
+            switch (routeType) {
                 case Custom:
                     if (poi.isChosen()) addMarker(poi);
                     break;
