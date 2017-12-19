@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service android:name=".GeofenceTransitionsIntentService"/>
+        <service android:name=".GeofenceTransitionService" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,11 +39,11 @@
 
         <activity
             android:name=".MapActivity"
-            android:label="@string/title_activity_map"></activity>
-        <activity android:name=".MonumentSelectionActivity"></activity>
-        <activity android:name=".RouteMonumentSelectorActivity"></activity>
-        <activity android:name=".InformationActivity"></activity>
-        <activity android:name=".HistorischeKilometer"></activity>
+            android:label="@string/title_activity_map" />
+        <activity android:name=".MonumentSelectionActivity" />
+        <activity android:name=".RouteMonumentSelectorActivity" />
+        <activity android:name=".InformationActivity" />
+        <activity android:name=".HistorischeKilometer" />
     </application>
 
 </manifest>

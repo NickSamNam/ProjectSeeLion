@@ -16,4 +16,5 @@
     <string name="nederlands">Nederlands</string>
     <string name="startroute">Start Route</string>
     <string name="afstand">Afstand(kilometers):</string>
+    <string name="notification">Aangekomen bij POI.</string>
 </resources>
