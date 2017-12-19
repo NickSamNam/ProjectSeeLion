@@ -60,7 +60,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private ArrayList<POI> toVisitList;
     private SparseArray<Marker> visibleMarkers = new SparseArray<>();
     private LocationCallback locationCallback;
-    private List<List<LatLng>> route = ArrayList<>();
+    private List<List<LatLng>> route = new ArrayList<>();
     private Polyline lineToVisit;
     private Polyline lineVisited;
 
