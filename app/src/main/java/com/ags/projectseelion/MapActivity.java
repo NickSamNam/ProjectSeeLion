@@ -55,6 +55,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private ArrayList<POI> toVisitList;
     private SparseArray<Marker> visibleMarkers = new SparseArray<>();
 
+    private LatLng northEastBound = null;
+    private LatLng southWestBound = null;
+
     List<POI> pois = MapController.getInstance().getPOIs();
 
     @Override
@@ -292,25 +295,18 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             int amountLeft;
 
             while (amountDone < toVisitList.size() - 1) {
-                Log.d("ToVisitListSize", "createRoute: " + toVisitList.size());
+
 
                 if (toVisitList.size() - amountDone > 23)
                     amountLeft = 22;
                 else
                     amountLeft = toVisitList.size() - amountDone - 1;
 
-                Log.d("AMOUNTDONE", "createRoute: " + amountDone);
-                Log.d("AMOUNTLEFT", "createRoute: " + amountLeft);
-
                 originLatLng = new LatLng(toVisitList.get(amountDone).getLatitude(), toVisitList.get(amountDone).getLongitude());
                 str_origin = "origin=" + originLatLng.latitude + "," + originLatLng.longitude;
 
-                Log.d("Start of route poi name", "createRoute: " + toVisitList.get(amountDone).getName());
-
                 destLatLng = new LatLng(toVisitList.get(amountDone + amountLeft).getLatitude(), toVisitList.get(amountDone + amountLeft).getLongitude());
                 str_dest = "destination=" + destLatLng.latitude + "," + destLatLng.longitude;
-
-                Log.d("End of route poi name", "createRoute: " + toVisitList.get(amountDone + amountLeft).getName());
 
                 for (int j = 0; j < amountLeft; j++) {
                     LatLng wayPointLatLng = new LatLng(toVisitList.get(amountDone).getLatitude(), toVisitList.get(amountDone).getLongitude());
@@ -318,7 +314,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     if (j < amountLeft) {
                         wayPoints.append("|");
                     }
-
                     amountDone++;
                 }
 
@@ -333,14 +328,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             }
         }
 
-
         FetchUrl fetch;
         for (String url : urls) {
             fetch = new FetchUrl();
             fetch.execute(url);
         }
     }
-
 
     /**
      * A method to download json data from url
@@ -430,17 +423,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             try {
                 jObject = new JSONObject(jsonData[0]);
 
-                Log.d("ParserTask", jsonData[0]);
                 RouteDataParser parser = new RouteDataParser();
-                Log.d("ParserTask", parser.toString());
 
                 // Starts parsing routes data
                 routeData = parser.parseRoutesInfo(jObject);
-                Log.d("ParserTask", "Executing routes");
-                Log.d("ParserTask-routes: ", routeData.toString());
 
             } catch (Exception e) {
-                Log.d("ParserTask", e.toString());
                 e.printStackTrace();
             }
             return routeData;
@@ -452,7 +440,23 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             PolylineOptions lineOptions = new PolylineOptions();
 
             LatLng northEast = result.get(0).get(0);
+            if (northEastBound != null) {
+                if (northEast.longitude > northEastBound.longitude && northEast.latitude > northEastBound.latitude) {
+                    northEastBound = northEast;
+                }
+            } else {
+                northEastBound = northEast;
+            }
+
             LatLng southWest = result.get(0).get(1);
+            if (southWestBound != null) {
+                if (southWest.longitude < southWestBound.longitude && southWest.latitude < southWestBound.latitude) {
+                    southWestBound = southWest;
+                }
+            } else {
+                southWestBound = southWest;
+            }
+
             // The first list contained the bounds of the route and is not part of the route:
             result.remove(0);
 
@@ -463,12 +467,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             lineOptions.width(10);
             lineOptions.color(Color.RED);
 
-            Log.d("onPostExecute", "onPostExecute lineoptions decoded");
-
             // Drawing polyline in the Google Map for the i-th route
             mMap.addPolyline(lineOptions);
             LatLngBounds bounds = new LatLngBounds(southWest, northEast);
-            int padding = 80;
+            int padding = 150;
             mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding));
         }
     }
