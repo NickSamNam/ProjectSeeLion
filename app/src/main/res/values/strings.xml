@@ -19,4 +19,5 @@
     <string name="looptijd">Geschatte looptijd: </string>
     <string name="afstand">Afstand (kilometers): </string>
     <string name="startroute">Start route</string>
+    <string name="notification">Aangekomen bij POI.</string>
 </resources>

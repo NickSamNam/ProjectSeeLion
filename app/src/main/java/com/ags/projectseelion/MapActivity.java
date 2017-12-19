@@ -13,6 +13,7 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
@@ -20,6 +21,8 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.util.SparseArray;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
@@ -78,6 +81,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private GeofencingClient mGeofencingClient;
     private ArrayList<Geofence> mGeofenceList;
     private PendingIntent mGeofencePendingIntent;
+    private GoogleApiClient googleApiClient;
 
     private LatLng northEastBound = null;
     private LatLng southWestBound = null;
@@ -115,6 +119,16 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 onLocationChanged(locationResult.getLastLocation());
             }
         };
+
+        createGoogleApi();
+    }
+
+    private void createGoogleApi() {
+        if (googleApiClient == null) {
+            googleApiClient = new GoogleApiClient.Builder(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
     }
 
     @Override
@@ -122,6 +136,18 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         outState.putParcelable(KEY_CAMERA_POSITION, mMap.getCameraPosition());
         outState.putParcelable(KEY_LOCATION, lastKnownLocation);
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        googleApiClient.connect();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        googleApiClient.disconnect();
     }
 
     @Override
@@ -178,7 +204,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
 
         try {
-            if (hasLocationPermission()) {
+            if (hasLocationPermission() && fresh) {
                 mGeofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent())
                         .addOnSuccessListener(this, aVoid -> {
                             Log.d("SUC", "succes");
@@ -422,7 +448,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         if (mGeofencePendingIntent != null) {
             return mGeofencePendingIntent;
         }
-        Intent intent = new Intent(this, GeofenceTransitionsIntentService.class);
+        Intent intent = new Intent(this, GeofenceTransitionService.class);
         // We use FLAG_UPDATE_CURRENT so that we get the same pending intent back when
         // calling addGeofences() and removeGeofences().
         mGeofencePendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.

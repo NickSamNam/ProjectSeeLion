@@ -16,4 +16,5 @@
     <string name="english">English</string>
     <string name="startroute">Start Route</string>
     <string name="afstand">Distance(kilometer):</string>
+    <string name="notification">Arrived at POI.</string>
 </resources>
