@@ -87,22 +87,27 @@ public class MapController {
     }
 
     public void resetCurrentData(Context context){
+        Log.i(LOG_SHAREDPREF,"file reset started.");
         SharedPreferences mPrefs = context.getSharedPreferences(KEY_PREFERENCES, context.MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = mPrefs.edit();
         prefsEditor.putString(KEY_SAVENAME, null);
         prefsEditor.commit();
+        Log.i(LOG_SHAREDPREF,"file reset finished.");
     }
 
     public void saveCurrentData(Context context){
+        Log.i(LOG_SHAREDPREF,"file saving started.");
         SharedPreferences mPrefs = context.getSharedPreferences(KEY_PREFERENCES, context.MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = mPrefs.edit();
         Gson gson = new Gson();
         String json = gson.toJson(pois);
         prefsEditor.putString(KEY_SAVENAME, json);
         prefsEditor.commit();
+        Log.i(LOG_SHAREDPREF,"file saving finished.");
     }
 
     public void loadSavedData(Context context){
+        Log.i(LOG_SHAREDPREF,"file loading started.");
         SharedPreferences mPrefs = context.getSharedPreferences(KEY_PREFERENCES, context.MODE_PRIVATE);
         Gson gson = new Gson();
         String json = mPrefs.getString(KEY_SAVENAME, "");
@@ -112,7 +117,7 @@ public class MapController {
             Type type = new TypeToken<List<POI>>() {
             }.getType();
             pois = gson.fromJson(json, type);
-            Log.i(LOG_SHAREDPREF,"file loaded.");
+            Log.i(LOG_SHAREDPREF,"file loading finished.");
         }
     }
 }
