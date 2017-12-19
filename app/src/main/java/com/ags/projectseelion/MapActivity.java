@@ -21,12 +21,12 @@ import android.util.Log;
 import android.util.SparseArray;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
 import com.google.android.gms.location.GeofencingRequest;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -37,13 +37,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.Task;
 
-import java.util.ArrayList;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -184,7 +181,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             if (hasLocationPermission()) {
                 mGeofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent())
                         .addOnSuccessListener(this, aVoid -> {
-                            Log.d("SUC","succes");
+                            Log.d("SUC", "succes");
                         })
                         .addOnFailureListener(this, e -> {
                             Log.d("FAI", "failure");
@@ -251,7 +248,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 locationResult.addOnCompleteListener(this, (task) -> {
                     if (task.isSuccessful()) {
                         lastKnownLocation = task.getResult();
-                        if (cameraPosition == null)
+                        if (cameraPosition == null && lastKnownLocation != null)
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                     new LatLng(lastKnownLocation.getLatitude(),
                                             lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
@@ -329,22 +326,22 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         PolylineOptions lineOptionsToVisit = new PolylineOptions();
 
         LatLng northEast = route.get(0).get(0);
-            if (northEastBound != null) {
-                if (northEast.longitude > northEastBound.longitude && northEast.latitude > northEastBound.latitude) {
-                    northEastBound = northEast;
-                }
-            } else {
+        if (northEastBound != null) {
+            if (northEast.longitude > northEastBound.longitude && northEast.latitude > northEastBound.latitude) {
                 northEastBound = northEast;
             }
-            
+        } else {
+            northEastBound = northEast;
+        }
+
         LatLng southWest = route.get(0).get(1);
-            if (southWestBound != null) {
-                if (southWest.longitude < southWestBound.longitude && southWest.latitude < southWestBound.latitude) {
-                    southWestBound = southWest;
-                }
-            } else {
+        if (southWestBound != null) {
+            if (southWest.longitude < southWestBound.longitude && southWest.latitude < southWestBound.latitude) {
                 southWestBound = southWest;
             }
+        } else {
+            southWestBound = southWest;
+        }
 
         LatLng start = route.get(1).get(0);
         LatLng finish = route.get(route.size() - 1).get(route.get(route.size() - 1).size() - 1);
@@ -357,7 +354,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         for (int i = 1; i < route.size(); i++) {
             List<LatLng> leg = route.get(i);
             for (LatLng p : leg) {
-                if ((direction.equals("SW") && (Math.abs(finish.latitude - lastKnownLocation.getLatitude()) + Math.abs(finish.longitude - lastKnownLocation.getLongitude()) < Math.abs(finish.latitude - p.latitude) + Math.abs(finish.longitude - p.longitude))) || (direction.equals("NE") && (Math.abs(finish.latitude - lastKnownLocation.getLatitude()) + Math.abs(finish.longitude - lastKnownLocation.getLongitude()) < Math.abs(finish.latitude - p.latitude) + Math.abs(finish.longitude - p.longitude)))) {
+                if (lastKnownLocation != null && ((direction.equals("SW") && (Math.abs(finish.latitude - lastKnownLocation.getLatitude()) + Math.abs(finish.longitude - lastKnownLocation.getLongitude()) < Math.abs(finish.latitude - p.latitude) + Math.abs(finish.longitude - p.longitude))) || (direction.equals("NE") && (Math.abs(finish.latitude - lastKnownLocation.getLatitude()) + Math.abs(finish.longitude - lastKnownLocation.getLongitude()) < Math.abs(finish.latitude - p.latitude) + Math.abs(finish.longitude - p.longitude))))) {
                     lineOptionsVisited.add(p);
                 } else {
                     lineOptionsToVisit.add(p);
@@ -374,7 +371,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         // Drawing polyline in the Google Map for the i-th route
         if (lineOptionsToVisit != null && lineOptionsVisited != null) {
-          LatLngBounds bounds = new LatLngBounds(southWest, northEast);
+            LatLngBounds bounds = new LatLngBounds(southWest, northEast);
             int padding = 150;
             mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding));
 
@@ -437,7 +434,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         MapActivity mActivity;
 
-        public GoogleReceiver(Activity activity){
+        public GoogleReceiver(Activity activity) {
             mActivity = (MapActivity) activity;
         }
 
