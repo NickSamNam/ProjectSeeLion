@@ -1,6 +1,5 @@
 package com.ags.projectseelion;
 
-import android.app.AlertDialog;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -112,8 +111,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             if (visibleMarkers.get(poi.getNumber()) == null) {
                 Marker marker = mMap.addMarker(new MarkerOptions()
                         .title(poi.getName())
-                        .position(new LatLng(poi.getLatitude(), poi.getLongitude()))
-                        .snippet(poi.getDescription().get(getResources().getConfiguration().locale.getLanguage())));
+                        .position(new LatLng(poi.getLatitude(), poi.getLongitude())));
                 marker.setTag(poi.getNumber());
                 visibleMarkers.put(poi.getNumber(), marker);
             }
@@ -125,10 +123,16 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
     }
 
-    private void addMarkerForRoute(POI poi){
-        switch (route){
-            case Custom: if(poi.isToVisit()) addMarker(poi); break;
-            case Historic: if(poi.getCategory().equals(Category.Building))addMarker(poi);break;
+    private void addMarkerForRoute(POI poi) {
+        if (poi.getCategory() == Category.Building) {
+            switch (route) {
+                case Custom:
+                    if (poi.isToVisit()) addMarker(poi);
+                    break;
+                case Historic:
+                    if (poi.getCategory().equals(Category.Building)) addMarker(poi);
+                    break;
+            }
         }
     }
 
@@ -196,8 +200,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
     public boolean onMarkerClick(Marker marker) {
-        new AlertDialog.Builder(this).setMessage(pois.get((Integer) marker.getTag()).getDescription().get(getResources().getConfiguration()
-                .locale.getLanguage())).create().show();
+        Bundle args = new Bundle();
+        args.putInt(POIFragment.KEY_POI, (Integer) marker.getTag());
+        POIFragment poiFragment = new POIFragment();
+        poiFragment.setArguments(args);
+        poiFragment.show(getSupportFragmentManager(), "POI");
         return true;
     }
 }
