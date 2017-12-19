@@ -1,5 +1,6 @@
 package com.ags.projectseelion;
 
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -13,6 +14,9 @@ import android.util.Log;
 import android.util.SparseArray;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -23,6 +27,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.Task;
 
@@ -51,9 +56,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private CameraPosition cameraPosition = null;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private LatLng defaultLocation = new LatLng(32.676149, -117.157703);
-    private Route route;
+    private Route routeType;
     private ArrayList<POI> toVisitList;
     private SparseArray<Marker> visibleMarkers = new SparseArray<>();
+    private LocationCallback locationCallback;
+    private List<List<LatLng>> route;
+    private Polyline lineToVisit;
+    private Polyline lineVisited;
 
     List<POI> pois = MapController.getInstance().getPOIs();
 
@@ -67,7 +76,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
         }
 
-        route = Route.values()[(getIntent().getIntExtra(KEY_ROUTE, 0))];
+        routeType = Route.values()[(getIntent().getIntExtra(KEY_ROUTE, 0))];
 
         setContentView(R.layout.activity_map);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -75,6 +84,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                onLocationChanged(locationResult.getLastLocation());
+            }
+        };
     }
 
     @Override
@@ -84,6 +100,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         super.onSaveInstanceState(outState);
     }
 
+    @Override
+    protected void onResume() {
+        registerLocationUpdates();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        deregisterLocationUpdates();
+        super.onPause();
+    }
 
     /**
      * Manipulates the map once available.
@@ -98,7 +125,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setOnMarkerClickListener(this::onMarkerClick);
-        mMap.addMarker(new MarkerOptions().position(defaultLocation).title("Marker in Sydney"));
         mMap.setOnCameraIdleListener(() -> {
             for (POI poi : pois) {
                 addMarkerForRoute(poi);
@@ -153,7 +179,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
     private void addMarkerForRoute(POI poi) {
-        switch (route) {
+        switch (routeType) {
             case Custom:
                 if (poi.isToVisit()) addMarker(poi);
                 break;
@@ -201,6 +227,33 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
     }
 
+    @SuppressLint("MissingPermission")
+    private void registerLocationUpdates() {
+        LocationRequest locationRequest = new LocationRequest()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(10000)
+                .setSmallestDisplacement(10)
+                .setMaxWaitTime(1000)
+                .setFastestInterval(10000);
+
+        if (hasLocationPermission() && locationCallback != null)
+            fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null);
+    }
+
+    private void deregisterLocationUpdates() {
+        if (locationCallback != null)
+            fusedLocationProviderClient.removeLocationUpdates(locationCallback);
+    }
+
+    public void onLocationChanged(Location lastLocation) {
+        Log.i("MAP", "Location Changed");
+        lastKnownLocation = lastLocation;
+        if (route != null) {
+            Log.i("Route", route.toString());
+            drawRoute(route);
+        }
+    }
+
     private boolean hasLocationPermission() {
         return ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
@@ -211,6 +264,62 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             ActivityCompat.requestPermissions(this,
                     new String[]{(android.Manifest.permission.ACCESS_FINE_LOCATION)},
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }
+    }
+
+    private void drawRoute(List<List<LatLng>> route) {
+        Log.i("MAP", "Drawing Route");
+
+        PolylineOptions lineOptionsVisited = new PolylineOptions();
+        PolylineOptions lineOptionsToVisit = new PolylineOptions();
+
+        LatLng northEast = route.get(0).get(0);
+        LatLng southWest = route.get(0).get(1);
+        // The first list contained the bounds of the route and is not part of the route:
+
+        LatLng start = route.get(1).get(1);
+        LatLng finish = route.get(route.size() - 1).get(route.get(route.size() - 1).size() - 1);
+
+        String direction;
+        if (Math.abs(northEast.latitude - start.latitude) + Math.abs(northEast.longitude - start.longitude) < Math.abs(northEast.latitude - finish.latitude) + Math.abs(northEast.longitude - finish.longitude)) {
+            direction = "SW";
+        } else direction = "NE";
+
+        for (int i = 1; i < route.size(); i++) {
+            List<LatLng> leg = route.get(i);
+            for (LatLng p : leg) {
+                if ((direction.equals("SW") && (Math.abs(finish.latitude - lastKnownLocation.getLatitude()) + Math.abs(finish.longitude - lastKnownLocation.getLongitude()) < Math.abs(finish.latitude - p.latitude) + Math.abs(finish.longitude - p.longitude))) || (direction.equals("NE") && (Math.abs(finish.latitude - lastKnownLocation.getLatitude()) + Math.abs(finish.longitude - lastKnownLocation.getLongitude()) < Math.abs(finish.latitude - p.latitude) + Math.abs(finish.longitude - p.longitude)))) {
+                    lineOptionsVisited.add(p);
+                } else {
+                    lineOptionsToVisit.add(p);
+                }
+            }
+        }
+
+        lineOptionsToVisit.width(10);
+        lineOptionsToVisit.color(Color.RED);
+        lineOptionsVisited.width(10);
+        lineOptionsVisited.color(Color.GRAY);
+
+        Log.d("onPostExecute", "onPostExecute lineoptions decoded");
+
+        // Drawing polyline in the Google Map for the i-th route
+        if (lineOptionsToVisit != null && lineOptionsVisited != null) {
+            LatLngBounds bounds = new LatLngBounds(southWest, northEast);
+            int padding = 80;
+            mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding));
+
+            if (lineToVisit != null)
+                lineToVisit.remove();
+            if (lineVisited != null)
+                lineVisited.remove();
+
+            lineToVisit = mMap.addPolyline(lineOptionsToVisit);
+            lineVisited = mMap.addPolyline(lineOptionsVisited);
+
+
+        } else {
+            Log.d("onPostExecute", "without Polylines drawn");
         }
     }
 
@@ -395,49 +504,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         // Executes in UI thread, after the parsing process
         @Override
         protected void onPostExecute(List<List<LatLng>> result) {
-            PolylineOptions lineOptionsVisited = new PolylineOptions();
-            PolylineOptions lineOptionsToVisit = new PolylineOptions();
-
-            LatLng northEast = result.get(0).get(0);
-            LatLng southWest = result.get(0).get(1);
-            // The first list contained the bounds of the route and is not part of the route:
-            result.remove(0);
-
-            LatLng start = result.get(0).get(0);
-            LatLng finish = result.get(result.size() - 1).get(result.get(result.size() - 1).size() - 1);
-
-            String direction;
-            if (Math.abs(northEast.latitude - start.latitude) + Math.abs(northEast.longitude - start.longitude) < Math.abs(northEast.latitude - finish.latitude) + Math.abs(northEast.longitude - finish.longitude)) {
-                direction = "SW";
-            } else direction = "NE";
-
-            for (List<LatLng> leg : result) {
-                for (LatLng p : leg) {
-                    if ((direction.equals("SW") && (Math.abs(finish.latitude - lastKnownLocation.getLatitude()) + Math.abs(finish.longitude - lastKnownLocation.getLongitude()) < Math.abs(finish.latitude - p.latitude) + Math.abs(finish.longitude - p.longitude))) || (direction.equals("NE") && (Math.abs(finish.latitude - lastKnownLocation.getLatitude()) + Math.abs(finish.longitude - lastKnownLocation.getLongitude()) < Math.abs(finish.latitude - p.latitude) + Math.abs(finish.longitude - p.longitude)))) {
-                        lineOptionsVisited.add(p);
-                    } else {
-                        lineOptionsToVisit.add(p);
-                    }
-                }
-            }
-
-            lineOptionsToVisit.width(10);
-            lineOptionsToVisit.color(Color.RED);
-            lineOptionsVisited.width(10);
-            lineOptionsVisited.color(Color.GRAY);
-
-            Log.d("onPostExecute", "onPostExecute lineoptions decoded");
-
-            // Drawing polyline in the Google Map for the i-th route
-            if (lineOptionsToVisit != null && lineOptionsVisited != null) {
-                mMap.addPolyline(lineOptionsToVisit);
-                mMap.addPolyline(lineOptionsVisited);
-                LatLngBounds bounds = new LatLngBounds(southWest, northEast);
-                int padding = 80;
-                mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding));
-            } else {
-                Log.d("onPostExecute", "without Polylines drawn");
-            }
+            route = result;
+            drawRoute(route);
         }
     }
 }
