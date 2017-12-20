@@ -367,23 +367,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             southWestBound = southWest;
         }
 
-        double prevDist = Double.MAX_VALUE;
+        LatLng finish = route.get(route.size() - 1).get(route.get(route.size() - 1).size() - 1);
 
         for (int i = 1; i < route.size(); i++) {
             List<LatLng> leg = route.get(i);
             for (LatLng p : leg) {
-                if (lastKnownLocation != null) {
-                    double dist = Math.abs(p.latitude - lastKnownLocation.getLatitude()) + Math.abs(p.longitude - lastKnownLocation.getLongitude());
-                    Log.i("POLYLINE", "prevDist: " + prevDist + "\tdist: " + dist);
-                    if (dist < prevDist) {
-                        lineOptionsVisited.add(p);
-                        Log.i("POLYLINE", "Added to visited.");
-                    }
-                    else {
-                        lineOptionsToVisit.add(p);
-                        Log.i("POLYLINE", "Added to toVisit");
-                    }
-                    prevDist = dist;
+                if (lastKnownLocation != null
+                        && (Math.abs(finish.latitude - lastKnownLocation.getLatitude()) + Math.abs(finish.longitude - lastKnownLocation.getLongitude()) < Math.abs(finish.latitude - p.latitude) + Math.abs(finish.longitude - p.longitude))) {
+                    lineOptionsVisited.add(p);
                 } else {
                     lineOptionsToVisit.add(p);
                 }
