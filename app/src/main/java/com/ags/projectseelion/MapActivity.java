@@ -532,37 +532,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         String trafficMode = "mode=walking";
 
         // Waypoints of route
-        StringBuilder wayPoints = new StringBuilder("waypoints=optimize:true|");
+        StringBuilder wayPoints = new StringBuilder("waypoints=|");
 
-
-        int nParts = (int) Math.ceil(chosenList.size() / 23d);
-
-        for (int i = 0; i < nParts; i++) {
-            int iStart = i * 23;
-            int iEnd = (i + 1) * 23;
-            if (iEnd > chosenList.size())
-                iEnd = chosenList.size();
-            if (iStart > 0)
-                iStart--;
-
-            List<POI> part = chosenList.subList(iStart, iEnd);
-            Log.i("PART", part.toString());
-
-            originLatLng = new LatLng(part.get(0).getLatitude(), part.get(0).getLongitude());
+        for(int i = 0; i < chosenList.size()-1; i++){
+            originLatLng = new LatLng(chosenList.get(i).getLatitude(), chosenList.get(i).getLongitude());
+            destLatLng = new LatLng(chosenList.get(i+1).getLatitude(), chosenList.get(i+1).getLongitude());
             str_origin = "origin=" + originLatLng.latitude + "," + originLatLng.longitude;
-
-            destLatLng = new LatLng(part.get(part.size() - 1).getLatitude(), part.get(part.size() - 1).getLongitude());
-
             str_dest = "destination=" + destLatLng.latitude + "," + destLatLng.longitude;
 
-            for (POI poi : part) {
-                LatLng wayPointLatLng = new LatLng(poi.getLatitude(), poi.getLongitude());
-                wayPoints.append(wayPointLatLng.latitude).append(",").append(wayPointLatLng.longitude);
-                wayPoints.append("|");
-            }
 
             // Url building
-            String parameters = str_origin + "&" + str_dest + "&" + wayPoints + "&" + trafficMode;
+            String parameters = str_origin + "&" + str_dest + "&" + trafficMode;
 
             String output = "json";
 
@@ -571,6 +551,47 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             urls.add(url);
             Log.i("URL", url);
         }
+
+
+
+
+
+//        int nParts = (int) Math.ceil(chosenList.size() / 23d);
+
+//        for (int i = 0; i < nParts; i++) {
+//            int iStart = i * 23;
+//            int iEnd = (i + 1) * 23;
+//            if (iEnd > chosenList.size())
+//                iEnd = chosenList.size();
+//            if (iStart > 0)
+//                iStart--;
+//
+//            List<POI> part = chosenList.subList(iStart, iEnd);
+//            Log.i("PART", part.toString());
+//
+//            originLatLng = new LatLng(part.get(0).getLatitude(), part.get(0).getLongitude());
+//            str_origin = "origin=" + originLatLng.latitude + "," + originLatLng.longitude;
+//
+//            destLatLng = new LatLng(part.get(part.size() - 1).getLatitude(), part.get(part.size() - 1).getLongitude());
+//
+//            str_dest = "destination=" + destLatLng.latitude + "," + destLatLng.longitude;
+//
+//            for (POI poi : part) {
+//                LatLng wayPointLatLng = new LatLng(poi.getLatitude(), poi.getLongitude());
+//                wayPoints.append(wayPointLatLng.latitude).append(",").append(wayPointLatLng.longitude);
+//                wayPoints.append("|");
+//            }
+//
+//            // Url building
+//            String parameters = str_origin + "&" + str_dest + "&" + wayPoints + "&" + trafficMode;
+//
+//            String output = "json";
+//
+//            String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_key);
+//            wayPoints.delete(0, wayPoints.length() - 1);
+//            urls.add(url);
+//            Log.i("URL", url);
+//        }
 
         FetchUrl fetch;
         for (String url : urls) {
@@ -666,7 +687,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
             try {
                 jObject = new JSONObject(jsonData[0]);
-
+                Log.i("PArse",jObject.toString());
                 RouteDataParser parser = new RouteDataParser();
 
                 // Starts parsing routes data
