@@ -55,6 +55,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private final static float DEFAULT_ZOOM = 18f;
     private final static String KEY_LOCATION = "LOCATION";
     private final static String KEY_CAMERA_POSITION = "CAMERA_POSITION";
+    private final static String KEY_VISITED_LOCATIONS = "VISITED_LOCATIONS";
     private final static int ZOOM_THRESHOLD = 10;
     List<POI> pois = MapController.getInstance().getPOIs();
     private boolean fresh = true;
@@ -68,8 +69,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private SparseArray<Marker> visibleMarkers = new SparseArray<>();
     private LocationCallback locationCallback;
     private List<List<LatLng>> route = new ArrayList<>();
-    private Polyline lineToVisit;
-    private Polyline lineVisited;
+    private List<Polyline> routeLines;
     private GeofencingClient mGeofencingClient;
     private ArrayList<Geofence> mGeofenceList;
     private PendingIntent mGeofencePendingIntent;
@@ -77,6 +77,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private int nRequest = 0;
     private LatLng northEastBound = null;
     private LatLng southWestBound = null;
+    private ArrayList<Location> visitedLocations = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +87,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             fresh = false;
             lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
             cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
+            visitedLocations = savedInstanceState.getParcelableArrayList(KEY_VISITED_LOCATIONS);
         }
 
         route.add(new ArrayList<>());
@@ -114,6 +116,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         locationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
+                visitedLocations.addAll(locationResult.getLocations());
                 onLocationChanged(locationResult.getLastLocation());
             }
         };
@@ -133,6 +136,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     protected void onSaveInstanceState(Bundle outState) {
         outState.putParcelable(KEY_CAMERA_POSITION, mMap.getCameraPosition());
         outState.putParcelable(KEY_LOCATION, lastKnownLocation);
+        outState.putParcelableArrayList(KEY_VISITED_LOCATIONS, visitedLocations);
         super.onSaveInstanceState(outState);
     }
 
@@ -364,9 +368,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private void drawRoute(List<List<LatLng>> route) {
         Log.i("MAP", "Drawing Route");
 
-        PolylineOptions lineOptionsVisited = new PolylineOptions();
-        PolylineOptions lineOptionsToVisit = new PolylineOptions();
-
+        // Bounds
         for (int i = 0; i < route.get(0).size(); i++) {
             if (i % 2 == 0) {
                 if (northEastBound != null) {
@@ -378,8 +380,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                         double tempLong = northEastBound.longitude;
                         northEastBound = new LatLng(route.get(0).get(i).latitude, tempLong);
                     }
-                } else
+                } else {
                     northEastBound = route.get(0).get(i);
+                }
             } else {
                 if (southWestBound != null) {
                     if (route.get(0).get(i).longitude < southWestBound.longitude) {
@@ -390,62 +393,74 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                         double tempLong = southWestBound.longitude;
                         southWestBound = new LatLng(route.get(0).get(i).latitude, tempLong);
                     }
-                } else
-                    southWestBound = route.get(0).get(i);
-            }
-        }
-
-        LatLng finish = route.get(route.size() - 1).get(route.get(route.size() - 1).size() - 1);
-
-        for (
-                int i = 1; i < route.size(); i++)
-
-        {
-            List<LatLng> leg = route.get(i);
-            for (LatLng p : leg) {
-                if (lastKnownLocation != null
-                        && (Math.abs(finish.latitude - lastKnownLocation.getLatitude()) + Math.abs(finish.longitude - lastKnownLocation.getLongitude()) < Math.abs(finish.latitude - p.latitude) + Math.abs(finish.longitude - p.longitude))) {
-                    lineOptionsVisited.add(p);
                 } else {
-                    lineOptionsToVisit.add(p);
+                    southWestBound = route.get(0).get(i);
                 }
             }
         }
+        LatLngBounds bounds = new LatLngBounds(southWestBound, northEastBound);
+        int padding = 150;
+        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding));
 
-        lineOptionsToVisit.width(10);
-        lineOptionsToVisit.color(Color.RED);
-        lineOptionsVisited.width(10);
-        lineOptionsVisited.color(Color.GRAY);
+        // Polyline creation
+        List<PolylineOptions> routeLinesOptions = new ArrayList<>();
+        PolylineOptions prevLine = null;
 
-        Log.d("onPostExecute", "onPostExecute lineoptions decoded");
+        for (int i = 1; i < route.size(); i++) {
+            List<LatLng> leg = route.get(i);
+            for (LatLng p : leg) {
+                if (prevLine != null) {
+                    LatLng prevP = prevLine.getPoints().get(0);
+                    float[] dP = new float[1];
+                    Location.distanceBetween(prevP.latitude, prevP.longitude, p.latitude, p.longitude, dP);
+                    if (dP[0] < 10) continue;
+                    prevLine.add(p);
+                    routeLinesOptions.add(prevLine);
+                }
+                prevLine = new PolylineOptions().add(p);
+            }
+        }
 
-        // Drawing polyline in the Google Map for the i-th route
-        if (lineOptionsToVisit != null && lineOptionsVisited != null)
+        // Polyline removal
+        if (routeLines != null) {
+            for (Polyline routeLine : routeLines) {
+                routeLine.remove();
+            }
+            routeLines.clear();
+        } else {
+            routeLines = new ArrayList<>();
+        }
 
-        {
-            LatLngBounds bounds = new LatLngBounds(southWestBound, northEastBound);
-            int padding = 150;
-            mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding));
-
-            if (lineToVisit != null)
-                lineToVisit.remove();
-            if (lineVisited != null)
-                lineVisited.remove();
-
-            lineToVisit = mMap.addPolyline(lineOptionsToVisit);
-            lineVisited = mMap.addPolyline(lineOptionsVisited);
-
-
-        } else
-
-        {
-            Log.d("onPostExecute", "without Polylines drawn");
+        // Polyline adding
+        for (PolylineOptions p : routeLinesOptions) {
+            p
+                    .width(10);
+            if (visitedLocations.isEmpty()) {
+                p.color(Color.RED);
+            } else {
+                boolean visited = false;
+                for (Location location : visitedLocations) {
+                    LatLng polyEnd = p.getPoints().get(p.getPoints().size() - 1);
+                    float[] dP = new float[1];
+                    Location.distanceBetween(location.getLatitude(), location.getLongitude(), polyEnd.latitude, polyEnd.longitude, dP);
+                    if (dP[0] <= 30) {
+                        visited = true;
+                        break;
+                    }
+                }
+                if (visited)
+                    p.color(Color.GRAY);
+                else
+                    p.color(Color.RED);
+            }
+            routeLines.add(mMap.addPolyline(p));
         }
     }
 
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         switch (requestCode) {
             case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
