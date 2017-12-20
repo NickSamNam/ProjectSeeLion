@@ -1,12 +1,10 @@
 package com.ags.projectseelion;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class HistorischeKilometer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,16 +1,12 @@
 package com.ags.projectseelion;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 
 public class InformationActivity extends AppCompatActivity {
     private POI poi;
