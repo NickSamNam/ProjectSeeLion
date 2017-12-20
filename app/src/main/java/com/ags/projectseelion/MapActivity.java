@@ -84,7 +84,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private GoogleApiClient googleApiClient;
 
     private int nRequest = 0;
-   
+
     private LatLng northEastBound = null;
     private LatLng southWestBound = null;
 
@@ -379,27 +379,40 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         PolylineOptions lineOptionsVisited = new PolylineOptions();
         PolylineOptions lineOptionsToVisit = new PolylineOptions();
 
-        LatLng northEast = route.get(0).get(0);
-        if (northEastBound != null) {
-            if (northEast.longitude > northEastBound.longitude && northEast.latitude > northEastBound.latitude) {
-                northEastBound = northEast;
+        for (int i = 0; i < route.get(0).size(); i++) {
+            if (i % 2 == 0) {
+                if (northEastBound != null) {
+                    if (route.get(0).get(i).longitude > northEastBound.longitude) {
+                        double tempLat = northEastBound.latitude;
+                        northEastBound = new LatLng(tempLat, route.get(0).get(i).longitude);
+                    }
+                    if (route.get(0).get(i).latitude > northEastBound.latitude) {
+                        double tempLong = northEastBound.longitude;
+                        northEastBound = new LatLng(route.get(0).get(i).latitude, tempLong);
+                    }
+                } else
+                    northEastBound = route.get(0).get(i);
+            } else {
+                if (southWestBound != null) {
+                    if (route.get(0).get(i).longitude < southWestBound.longitude) {
+                        double tempLat = southWestBound.latitude;
+                        southWestBound = new LatLng(tempLat, route.get(0).get(i).longitude);
+                    }
+                    if (route.get(0).get(i).latitude < southWestBound.latitude) {
+                        double tempLong = southWestBound.longitude;
+                        southWestBound = new LatLng(route.get(0).get(i).latitude, tempLong);
+                    }
+                } else
+                    southWestBound = route.get(0).get(i);
             }
-        } else {
-            northEastBound = northEast;
-        }
-
-        LatLng southWest = route.get(0).get(1);
-        if (southWestBound != null) {
-            if (southWest.longitude < southWestBound.longitude && southWest.latitude < southWestBound.latitude) {
-                southWestBound = southWest;
-            }
-        } else {
-            southWestBound = southWest;
         }
 
         LatLng finish = route.get(route.size() - 1).get(route.get(route.size() - 1).size() - 1);
 
-        for (int i = 1; i < route.size(); i++) {
+        for (
+                int i = 1; i < route.size(); i++)
+
+        {
             List<LatLng> leg = route.get(i);
             for (LatLng p : leg) {
                 if (lastKnownLocation != null
@@ -419,8 +432,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         Log.d("onPostExecute", "onPostExecute lineoptions decoded");
 
         // Drawing polyline in the Google Map for the i-th route
-        if (lineOptionsToVisit != null && lineOptionsVisited != null) {
-            LatLngBounds bounds = new LatLngBounds(southWest, northEast);
+        if (lineOptionsToVisit != null && lineOptionsVisited != null)
+
+        {
+            LatLngBounds bounds = new LatLngBounds(southWestBound, northEastBound);
             int padding = 150;
             mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding));
 
@@ -433,7 +448,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             lineVisited = mMap.addPolyline(lineOptionsVisited);
 
 
-        } else {
+        } else
+
+        {
             Log.d("onPostExecute", "without Polylines drawn");
         }
     }
