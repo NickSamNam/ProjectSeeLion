@@ -542,6 +542,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             int iEnd = (i + 1) * 23;
             if (iEnd > chosenList.size())
                 iEnd = chosenList.size();
+            if (iStart > 0)
+                iStart--;
 
             List<POI> part = chosenList.subList(iStart, iEnd);
             Log.i("PART", part.toString());
@@ -567,6 +569,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_key);
             wayPoints.delete(0, wayPoints.length() - 1);
             urls.add(url);
+            Log.i("URL", url);
         }
 
         FetchUrl fetch;
