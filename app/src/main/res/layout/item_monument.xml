@@ -15,7 +15,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Het kasteel van Breda" />
+        tools:text="Het kasteel van Breda"
+        android:layout_marginLeft="8dp" />
 
     <CheckBox
         android:id="@+id/item_monument_checkBox_visit"
@@ -26,5 +27,6 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="8dp" />
 </android.support.constraint.ConstraintLayout>

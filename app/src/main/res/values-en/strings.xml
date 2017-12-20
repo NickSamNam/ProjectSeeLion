@@ -17,4 +17,5 @@
     <string name="startroute">Start Route</string>
     <string name="afstand">Distance(kilometer):</string>
     <string name="notification">Arrived at POI.</string>
+    <string name="looptijd">Estimated travel time:</string>
 </resources>
