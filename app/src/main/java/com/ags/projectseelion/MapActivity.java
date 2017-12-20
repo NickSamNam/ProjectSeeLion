@@ -13,7 +13,6 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
@@ -21,7 +20,6 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.util.SparseArray;
 
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.Geofence;
@@ -369,19 +367,23 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             southWestBound = southWest;
         }
 
-        LatLng start = route.get(1).get(0);
-        LatLng finish = route.get(route.size() - 1).get(route.get(route.size() - 1).size() - 1);
-
-        String direction;
-        if (Math.abs(northEast.latitude - start.latitude) + Math.abs(northEast.longitude - start.longitude) < Math.abs(northEast.latitude - finish.latitude) + Math.abs(northEast.longitude - finish.longitude)) {
-            direction = "SW";
-        } else direction = "NE";
+        double prevDist = Double.MAX_VALUE;
 
         for (int i = 1; i < route.size(); i++) {
             List<LatLng> leg = route.get(i);
             for (LatLng p : leg) {
-                if (lastKnownLocation != null && ((direction.equals("SW") && (Math.abs(finish.latitude - lastKnownLocation.getLatitude()) + Math.abs(finish.longitude - lastKnownLocation.getLongitude()) < Math.abs(finish.latitude - p.latitude) + Math.abs(finish.longitude - p.longitude))) || (direction.equals("NE") && (Math.abs(finish.latitude - lastKnownLocation.getLatitude()) + Math.abs(finish.longitude - lastKnownLocation.getLongitude()) < Math.abs(finish.latitude - p.latitude) + Math.abs(finish.longitude - p.longitude))))) {
-                    lineOptionsVisited.add(p);
+                if (lastKnownLocation != null) {
+                    double dist = Math.abs(p.latitude - lastKnownLocation.getLatitude()) + Math.abs(p.longitude - lastKnownLocation.getLongitude());
+                    Log.i("POLYLINE", "prevDist: " + prevDist + "\tdist: " + dist);
+                    if (dist < prevDist) {
+                        lineOptionsVisited.add(p);
+                        Log.i("POLYLINE", "Added to visited.");
+                    }
+                    else {
+                        lineOptionsToVisit.add(p);
+                        Log.i("POLYLINE", "Added to toVisit");
+                    }
+                    prevDist = dist;
                 } else {
                     lineOptionsToVisit.add(p);
                 }
