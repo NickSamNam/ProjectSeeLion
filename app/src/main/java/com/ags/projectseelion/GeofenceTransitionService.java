@@ -70,7 +70,7 @@ public class GeofenceTransitionService extends IntentService {
 
 
         MapController mapController = MapController.getInstance();
-        mapController.init(this.getResources().openRawResource(this.getResources().getIdentifier("pois_historic_route","raw", this.getPackageName())));
+        mapController.init(this);
         POI poi = mapController.getPOINumber(poiNr);
 
         // Creating and sending Notification

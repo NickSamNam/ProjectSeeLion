@@ -91,6 +91,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MapController.getInstance().init(this);
         if (savedInstanceState != null) {
             fresh = false;
             lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);

@@ -24,6 +24,7 @@ public class MonumentSelectionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MapController.getInstance().init(this);
         setContentView(R.layout.activity_monument_selection);
 
         monuments = new ArrayList<>(MapController.getInstance().getPOIs());

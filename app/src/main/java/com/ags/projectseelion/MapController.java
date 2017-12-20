@@ -30,9 +30,9 @@ public class MapController {
     private List<POI> pois;
     private boolean init = false;
 
-    public void init(InputStream poiInputStream) {
+    public void init(Context context) {
         if (!init) {
-            pois = new JsonParser().getAllPOIs(getJsonArray(poiInputStream));
+            pois = new JsonParser().getAllPOIs(getJsonArray(context.getResources().openRawResource(context.getResources().getIdentifier("pois_historic_route","raw", context.getPackageName()))));
             init = true;
         }
     }
