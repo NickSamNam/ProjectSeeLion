@@ -64,7 +64,7 @@ public class POIFragment extends DialogFragment {
                 startActivity(intent);
             });
             btnClose.setOnClickListener((View view) -> dismiss());
-            if (poi.getImageName() != null && poi.getImageName().equals("") && getActivity() != null) {
+            if (poi.getImageName() != null && !poi.getImageName().equals("") && getActivity() != null) {
                 Glide
                         .with(this)
                         .load(getResources().getIdentifier(poi.getImageName(), "drawable", getActivity().getPackageName()))
