@@ -13,7 +13,6 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
@@ -21,7 +20,6 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.util.SparseArray;
 
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.Geofence;
@@ -72,7 +70,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private FusedLocationProviderClient fusedLocationProviderClient;
     private LatLng defaultLocation = new LatLng(32.676149, -117.157703);
     private Route routeType;
-    private ArrayList<POI> toVisitList;
+    private ArrayList<POI> chosenList;
     private SparseArray<Marker> visibleMarkers = new SparseArray<>();
     private LocationCallback locationCallback;
     private List<List<LatLng>> route = new ArrayList<>();
@@ -99,6 +97,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         mGeofenceList = new ArrayList<>();
 
         routeType = Route.values()[(getIntent().getIntExtra(KEY_ROUTE, 0))];
+
+        if(routeType==Route.Historic)
+            MapController.getInstance().setAllpoisToChosen();
+
+
 
         setContentView(R.layout.activity_map);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -185,19 +188,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
             getLocationPermission();
         }
+
         updateLocationUI();
         getDeviceLocation();
-
-        for (POI poi : pois)
-            addMarker(poi);
-
-        toVisitList = new ArrayList<>();
-        for (POI poi : pois) {
-            if (poi.isChosen() && (poi.getCategory() == Category.Building))
-                toVisitList.add(poi);
-        }
-
-        Log.d("Size", "onMapReady: " + toVisitList.size());
+        addPOIsToChosenList();
 
         for (POI poi : pois) {
             addMarkerForRoute(poi);
@@ -218,6 +212,32 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
 
         createRoute();
+    }
+
+    private void addPOIsToChosenList(){
+        chosenList = new ArrayList<>();
+        switch(routeType){
+            case Historic:{
+                Log.d("ROUTE", "Historic Route started");
+                for(POI poi : pois){
+                    chosenList.add(poi);
+                    Log.d("ROUTE", "Naam: "+poi.getName());
+                }
+            }break;
+            case Custom:{
+                Log.d("ROUTE", "Custom Route started");
+                for(POI poi : pois){
+                    if (poi.isChosen() && (poi.getCategory() == Category.Building)) {
+                        chosenList.add(poi);
+                        Log.d("ROUTE", "Naam: "+poi.getName());
+                    }
+                }
+
+
+
+            }break;
+        }
+        Log.d("Size", "onMapReady: " + chosenList.size());
     }
 
 
@@ -501,11 +521,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         List<String> urls = new ArrayList<>();
 
         // Origin of route
-        LatLng originLatLng = new LatLng(toVisitList.get(0).getLatitude(), toVisitList.get(0).getLongitude());
+        LatLng originLatLng = new LatLng(chosenList.get(0).getLatitude(), chosenList.get(0).getLongitude());
         String str_origin = "origin=" + originLatLng.latitude + "," + originLatLng.longitude;
 
         // Detination of route
-        LatLng destLatLng = new LatLng(toVisitList.get(toVisitList.size() - 1).getLatitude(), toVisitList.get(toVisitList.size() - 1).getLongitude());
+        LatLng destLatLng = new LatLng(chosenList.get(chosenList.size() - 1).getLatitude(), chosenList.get(chosenList.size() - 1).getLongitude());
         String str_dest = "destination=" + destLatLng.latitude + "," + destLatLng.longitude;
 
         // Mode of transportation
@@ -513,11 +533,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         // Waypoints of route
         StringBuilder wayPoints = new StringBuilder("waypoints=optimize:true|");
-        if (toVisitList.size() < 24) {
-            for (int i = 1; i < toVisitList.size() - 1; i++) {
-                LatLng wayPointLatLng = new LatLng(toVisitList.get(i).getLatitude(), toVisitList.get(i).getLongitude());
+        
+
+
+        if (chosenList.size() < 24) {
+            for (int i = 1; i < chosenList.size() - 1; i++) {
+                LatLng wayPointLatLng = new LatLng(chosenList.get(i).getLatitude(), chosenList.get(i).getLongitude());
                 wayPoints.append(wayPointLatLng.latitude).append(",").append(wayPointLatLng.longitude);
-                if (i < toVisitList.size() - 1 || toVisitList.size() == 2)
+                if (i < chosenList.size() - 1 || chosenList.size() == 2)
                     wayPoints.append("|");
             }
             // Url building
@@ -531,22 +554,22 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             int amountDone = 0;
             int amountLeft;
 
-            while (amountDone < toVisitList.size() - 1) {
+            while (amountDone < chosenList.size() - 1) {
 
 
-                if (toVisitList.size() - amountDone > 23)
+                if (chosenList.size() - amountDone > 23)
                     amountLeft = 22;
                 else
-                    amountLeft = toVisitList.size() - amountDone - 1;
+                    amountLeft = chosenList.size() - amountDone - 1;
 
-                originLatLng = new LatLng(toVisitList.get(amountDone).getLatitude(), toVisitList.get(amountDone).getLongitude());
+                originLatLng = new LatLng(chosenList.get(amountDone).getLatitude(), chosenList.get(amountDone).getLongitude());
                 str_origin = "origin=" + originLatLng.latitude + "," + originLatLng.longitude;
 
-                destLatLng = new LatLng(toVisitList.get(amountDone + amountLeft).getLatitude(), toVisitList.get(amountDone + amountLeft).getLongitude());
+                destLatLng = new LatLng(chosenList.get(amountDone + amountLeft).getLatitude(), chosenList.get(amountDone + amountLeft).getLongitude());
                 str_dest = "destination=" + destLatLng.latitude + "," + destLatLng.longitude;
 
                 for (int j = 0; j < amountLeft; j++) {
-                    LatLng wayPointLatLng = new LatLng(toVisitList.get(amountDone).getLatitude(), toVisitList.get(amountDone).getLongitude());
+                    LatLng wayPointLatLng = new LatLng(chosenList.get(amountDone).getLatitude(), chosenList.get(amountDone).getLongitude());
                     wayPoints.append(wayPointLatLng.latitude).append(",").append(wayPointLatLng.longitude);
                     if (j < amountLeft) {
                         wayPoints.append("|");
@@ -564,6 +587,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 urls.add(url);
             }
         }
+
+
+
+
 
         FetchUrl fetch;
         for (String url : urls) {
