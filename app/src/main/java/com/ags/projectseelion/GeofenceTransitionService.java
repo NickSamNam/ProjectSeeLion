@@ -66,7 +66,7 @@ public class GeofenceTransitionService extends IntentService {
         Log.i(TAG, "sendNotification: " + poiNr);
 
         // Intent to start the main Activity
-        Intent notificationIntent = new Intent(getApplicationContext(), InformationActivity.class);
+        Intent notificationIntent = new Intent(getApplicationContext(), GeofenceTransitionService.class);
         notificationIntent.putExtra(InformationActivity.KEY_POI, poiNr);
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
