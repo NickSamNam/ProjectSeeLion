@@ -21,6 +21,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.util.SparseArray;
 
+import com.android.volley.Request;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -83,6 +84,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private PendingIntent mGeofencePendingIntent;
     private GoogleApiClient googleApiClient;
 
+    private int nRequest = 0;
+   
     private LatLng northEastBound = null;
     private LatLng southWestBound = null;
 
@@ -348,6 +351,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private void drawRoute(List<List<LatLng>> route) {
         Log.i("MAP", "Drawing Route");
 
+        drawCounter++;
+
         PolylineOptions lineOptionsVisited = new PolylineOptions();
         PolylineOptions lineOptionsToVisit = new PolylineOptions();
 
@@ -414,6 +419,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             Log.d("onPostExecute", "without Polylines drawn");
         }
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -566,9 +572,20 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
 
         FetchUrl fetch;
+
+        nRequest = urls.size();
         for (String url : urls) {
-            fetch = new FetchUrl();
-            fetch.execute(url);
+            VolleyManager.getInstance(this).JsonObjectRequest(Request.Method.GET, url, null, object -> {
+                JSONObject response = (JSONObject) object;
+                RouteDataParser dataParser = new RouteDataParser();
+                List<List<LatLng>> routeData;
+                routeData = dataParser.parseRoutesInfo(response);
+                route.addAll(routeData);
+                nRequest--;
+                if (nRequest == 0)
+                    drawRoute(route);
+            });
+
         }
     }
 
