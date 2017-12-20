@@ -22,12 +22,24 @@ import java.util.List;
  */
 public class GeofenceTransitionService extends IntentService {
 
-    private static final String TAG = GeofenceTransitionService.class.getSimpleName();
-
     public static final int GEOFENCE_NOTIFICATION_ID = 0;
+    private static final String TAG = GeofenceTransitionService.class.getSimpleName();
 
     public GeofenceTransitionService() {
         super(TAG);
+    }
+
+    private static String getErrorString(int errorCode) {
+        switch (errorCode) {
+            case GeofenceStatusCodes.GEOFENCE_NOT_AVAILABLE:
+                return "GeoFence not available";
+            case GeofenceStatusCodes.GEOFENCE_TOO_MANY_GEOFENCES:
+                return "Too many GeoFences";
+            case GeofenceStatusCodes.GEOFENCE_TOO_MANY_PENDING_INTENTS:
+                return "Too many pending intents";
+            default:
+                return "Unknown error.";
+        }
     }
 
     @Override
@@ -95,19 +107,5 @@ public class GeofenceTransitionService extends IntentService {
                 .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND)
                 .setAutoCancel(true);
         return notificationBuilder.build();
-    }
-
-
-    private static String getErrorString(int errorCode) {
-        switch (errorCode) {
-            case GeofenceStatusCodes.GEOFENCE_NOT_AVAILABLE:
-                return "GeoFence not available";
-            case GeofenceStatusCodes.GEOFENCE_TOO_MANY_GEOFENCES:
-                return "Too many GeoFences";
-            case GeofenceStatusCodes.GEOFENCE_TOO_MANY_PENDING_INTENTS:
-                return "Too many pending intents";
-            default:
-                return "Unknown error.";
-        }
     }
 }

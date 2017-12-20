@@ -22,7 +22,7 @@ public class RouteMonumentSelectorActivity extends AppCompatActivity {
         btn_RouteSelector.setOnClickListener(view ->
         {
             Intent intent = new Intent(this, MapActivity.class);
-            intent.putExtra(MapActivity.KEY_ROUTE,Route.Historic);
+            intent.putExtra(MapActivity.KEY_ROUTE, Route.Historic);
 
             startActivity(intent);
         });

@@ -16,10 +16,10 @@ import java.util.Map;
  */
 
 public class JsonParser {
-    public List<POI> getAllPOIs(JSONArray array){
+    public List<POI> getAllPOIs(JSONArray array) {
         //JSONArray array = getJsonArray("pois_historic_route");
         ArrayList<POI> POIList = new ArrayList<>();
-        for (int i = 0; i < array.length();i++){
+        for (int i = 0; i < array.length(); i++) {
             try {
                 POIList.add(parsePOI(array.getJSONObject(i)));
             } catch (JSONException e) {
@@ -29,7 +29,7 @@ public class JsonParser {
         return POIList;
     }
 
-    private POI parsePOI(JSONObject json){
+    private POI parsePOI(JSONObject json) {
         POI poi = null;
         try {
             poi = new POI(
@@ -56,21 +56,21 @@ public class JsonParser {
     }
 
     private Category getCategory(String naam) {
-        if(naam.isEmpty())
+        if (naam.isEmpty())
             return Category.Intersection;
         else
             return Category.Building;
     }
 
-    private Map<String,String> getDescription(String tekst) {
+    private Map<String, String> getDescription(String tekst) {
         HashMap<String, String> descriptionMap = new HashMap();
-        descriptionMap.put("nl",getNLTekst(tekst));
-        descriptionMap.put("en","There is no translation available for this description.");
+        descriptionMap.put("nl", getNLTekst(tekst));
+        descriptionMap.put("en", "There is no translation available for this description.");
         return descriptionMap;
     }
 
     private String getNLTekst(String tekst) {
-        if(tekst.isEmpty())
+        if (tekst.isEmpty())
             return "Er is geen beschrijving beschikbaar voor dit punt";
         return tekst;
     }

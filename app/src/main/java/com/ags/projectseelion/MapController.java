@@ -21,12 +21,20 @@ import java.util.List;
  */
 
 public class MapController {
-    private static MapController instance = new MapController();
     public final static String KEY_PREFERENCES = "myPreferences";
     public final static String KEY_SAVENAME = "poidata";
     public final static String LOG_SHAREDPREF = "SharedPreferences";
+    private static MapController instance = new MapController();
     private List<POI> pois;
     private boolean init = false;
+
+    private MapController() {
+
+    }
+
+    public static MapController getInstance() {
+        return instance;
+    }
 
     public void init(Context context) {
         if (!init) {
@@ -39,14 +47,6 @@ public class MapController {
 
     public boolean isInit() {
         return init;
-    }
-
-    private MapController() {
-
-    }
-
-    public static MapController getInstance() {
-        return instance;
     }
 
     private JSONArray getJsonArray(InputStream ins) {
@@ -86,14 +86,14 @@ public class MapController {
         return null;
     }
 
-    public void setAllpoisToChosen(){
-        for (POI poi:pois) {
+    public void setAllpoisToChosen() {
+        for (POI poi : pois) {
             poi.setChosen(true);
         }
     }
 
-    public void resetCurrentData(Context context){
-        Log.i(LOG_SHAREDPREF,"file reset started.");
+    public void resetCurrentData(Context context) {
+        Log.i(LOG_SHAREDPREF, "file reset started.");
         SharedPreferences mPrefs = context.getSharedPreferences(KEY_PREFERENCES, context.MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = mPrefs.edit();
         prefsEditor.putString(KEY_SAVENAME, null);

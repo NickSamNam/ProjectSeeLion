@@ -11,6 +11,18 @@ import java.util.Map;
  */
 
 public class POI implements Parcelable, Serializable {
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<POI> CREATOR = new Parcelable.Creator<POI>() {
+        @Override
+        public POI createFromParcel(Parcel in) {
+            return new POI(in);
+        }
+
+        @Override
+        public POI[] newArray(int size) {
+            return new POI[size];
+        }
+    };
     private int number;
     private String name;
     private Map<String, String> description;
@@ -31,6 +43,17 @@ public class POI implements Parcelable, Serializable {
         this.number = number;
         visited = false;
         chosen = true;
+    }
+
+    protected POI(Parcel in) {
+        number = in.readInt();
+        name = in.readString();
+        imageName = in.readString();
+        longitude = in.readFloat();
+        latitude = in.readFloat();
+        category = (Category) in.readValue(Category.class.getClassLoader());
+        visited = in.readByte() != 0x00;
+        chosen = in.readByte() != 0x00;
     }
 
     public Category getCategory() {
@@ -69,17 +92,6 @@ public class POI implements Parcelable, Serializable {
         this.visited = visited;
     }
 
-    protected POI(Parcel in) {
-        number = in.readInt();
-        name = in.readString();
-        imageName = in.readString();
-        longitude = in.readFloat();
-        latitude = in.readFloat();
-        category = (Category) in.readValue(Category.class.getClassLoader());
-        visited = in.readByte() != 0x00;
-        chosen = in.readByte() != 0x00;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -96,19 +108,6 @@ public class POI implements Parcelable, Serializable {
         dest.writeByte((byte) (visited ? 0x01 : 0x00));
         dest.writeByte((byte) (chosen ? 0x01 : 0x00));
     }
-
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<POI> CREATOR = new Parcelable.Creator<POI>() {
-        @Override
-        public POI createFromParcel(Parcel in) {
-            return new POI(in);
-        }
-
-        @Override
-        public POI[] newArray(int size) {
-            return new POI[size];
-        }
-    };
 
     public boolean isChosen() {
         return chosen;

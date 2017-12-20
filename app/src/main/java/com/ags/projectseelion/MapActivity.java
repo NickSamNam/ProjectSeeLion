@@ -50,13 +50,13 @@ import java.util.List;
 import static com.google.android.gms.location.Geofence.NEVER_EXPIRE;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
+    public final static String KEY_ROUTE = "ROUTE";
     private final static int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0;
     private final static float DEFAULT_ZOOM = 18f;
     private final static String KEY_LOCATION = "LOCATION";
     private final static String KEY_CAMERA_POSITION = "CAMERA_POSITION";
-    public final static String KEY_ROUTE = "ROUTE";
     private final static int ZOOM_THRESHOLD = 10;
-
+    List<POI> pois = MapController.getInstance().getPOIs();
     private boolean fresh = true;
     private GoogleMap mMap;
     private Location lastKnownLocation = null;
@@ -74,13 +74,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private ArrayList<Geofence> mGeofenceList;
     private PendingIntent mGeofencePendingIntent;
     private GoogleApiClient googleApiClient;
-
     private int nRequest = 0;
-
     private LatLng northEastBound = null;
     private LatLng southWestBound = null;
-
-    List<POI> pois = MapController.getInstance().getPOIs();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -489,24 +485,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         return mGeofencePendingIntent;
     }
 
-    class GoogleReceiver extends BroadcastReceiver {
-
-        MapActivity mActivity;
-
-        public GoogleReceiver(Activity activity) {
-            mActivity = (MapActivity) activity;
-        }
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Bundle args = new Bundle();
-            args.putInt(POIFragment.KEY_POI, intent.getIntExtra("ID", 0));
-            POIFragment poiFragment = new POIFragment();
-            poiFragment.setArguments(args);
-            poiFragment.show(getSupportFragmentManager(), "POI");
-        }
-    }
-
     private void createRoute() {
         List<String> urls = new ArrayList<>();
 
@@ -578,6 +556,24 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     drawRoute(route);
             });
 
+        }
+    }
+
+    class GoogleReceiver extends BroadcastReceiver {
+
+        MapActivity mActivity;
+
+        public GoogleReceiver(Activity activity) {
+            mActivity = (MapActivity) activity;
+        }
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Bundle args = new Bundle();
+            args.putInt(POIFragment.KEY_POI, intent.getIntExtra("ID", 0));
+            POIFragment poiFragment = new POIFragment();
+            poiFragment.setArguments(args);
+            poiFragment.show(getSupportFragmentManager(), "POI");
         }
     }
 }

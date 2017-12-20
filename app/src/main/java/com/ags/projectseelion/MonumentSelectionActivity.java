@@ -21,7 +21,7 @@ public class MonumentSelectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_monument_selection);
 
         monuments = new ArrayList<>(MapController.getInstance().getPOIs());
-        for (Iterator<POI> iterator = monuments.iterator(); iterator.hasNext();) {
+        for (Iterator<POI> iterator = monuments.iterator(); iterator.hasNext(); ) {
             POI poi = iterator.next();
             if (poi.getCategory() != Category.Building) {
                 iterator.remove();

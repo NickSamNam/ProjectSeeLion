@@ -25,19 +25,23 @@ public class MainActivity extends AppCompatActivity {
         radioButtonEnglish = findViewById(R.id.activity_main_radioButton_english);
         continueButton = findViewById(R.id.activity_main_button_continue);
         SetCheckedBox(getResources().getConfiguration().locale.getLanguage());
-        continueButton.setOnClickListener(v->{
+        continueButton.setOnClickListener(v -> {
             OnContinueButtonClicked();
         });
     }
 
     private void SetCheckedBox(String language) {
-        switch (language){
-            case "nl": radioButtonDutch.setChecked(true); break;
-            case "en": radioButtonEnglish.setChecked(true); break;
+        switch (language) {
+            case "nl":
+                radioButtonDutch.setChecked(true);
+                break;
+            case "en":
+                radioButtonEnglish.setChecked(true);
+                break;
         }
     }
 
-    private void updateLocale(String language){
+    private void updateLocale(String language) {
         Locale newLocale = new Locale(language);
         Locale oldLocale = getResources().getConfiguration().locale;
         if (!newLocale.getLanguage().equals(oldLocale.getLanguage())) {
@@ -57,15 +61,15 @@ public class MainActivity extends AppCompatActivity {
     public void onRadioButtonClicked(View view) {
         if (!((RadioButton) view).isChecked()) return;
 
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.activity_main_radioButton_dutch:
                 radioButtonEnglish.setChecked(false);
                 updateLocale("nl");
-                    break;
+                break;
             case R.id.activity_main_radioButton_english:
                 radioButtonDutch.setChecked(false);
                 updateLocale("en");
-                    break;
+                break;
         }
     }
 }

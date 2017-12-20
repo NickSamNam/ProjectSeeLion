@@ -23,10 +23,8 @@ import java.io.UnsupportedEncodingException;
 
 public class VolleyManager {
     private static final String TAG = "NetworkManager";
-    private static VolleyManager instance = null;
-
     private static final String prefixURL = "http://some/url/prefix/";
-
+    private static VolleyManager instance = null;
     //for Volley API
     public RequestQueue requestQueue;
 
@@ -88,11 +86,12 @@ class CustomJsonArrayRequest extends JsonRequest<JSONArray> {
 
     /**
      * Creates a new request.
-     * @param method the HTTP method to use
-     * @param url URL to fetch the JSON from
-     * @param jsonRequest A {@link JSONObject} to post with the request. Null is allowed and
-     *   indicates no parameters will be posted along with request.
-     * @param listener Listener to receive the JSON response
+     *
+     * @param method        the HTTP method to use
+     * @param url           URL to fetch the JSON from
+     * @param jsonRequest   A {@link JSONObject} to post with the request. Null is allowed and
+     *                      indicates no parameters will be posted along with request.
+     * @param listener      Listener to receive the JSON response
      * @param errorListener Error listener, or null to ignore errors.
      */
     public CustomJsonArrayRequest(int method, String url, JSONObject jsonRequest,
