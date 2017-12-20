@@ -36,7 +36,7 @@ public class JsonParser {
                     json.getInt("Nummer"),                  //nummer
                     json.getString("Naam"),                 //name
                     getDescription(json.getString("Tekst")),//description
-                    json.getString("Foto"),                 //imagename
+                    getPlaceholderIfEmpty(json.getString("Foto")),                 //imagename
                     Location.convert(json.getString("OL")), //longitude
                     Location.convert(json.getString("NB")), //latitude
                     getCategory(json.getString("Naam"))     //Category
@@ -46,6 +46,13 @@ public class JsonParser {
             return null;
         }
         return poi;
+    }
+
+    private String getPlaceholderIfEmpty(String foto) {
+        if (foto.equals(""))
+            return "placeholder";
+        else
+            return foto;
     }
 
     private Category getCategory(String naam) {
