@@ -351,8 +351,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private void drawRoute(List<List<LatLng>> route) {
         Log.i("MAP", "Drawing Route");
 
-        drawCounter++;
-
         PolylineOptions lineOptionsVisited = new PolylineOptions();
         PolylineOptions lineOptionsToVisit = new PolylineOptions();
 
