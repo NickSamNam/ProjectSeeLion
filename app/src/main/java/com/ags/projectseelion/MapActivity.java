@@ -205,7 +205,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
 
         try {
-            if (hasLocationPermission() && fresh) {
+            if (hasLocationPermission() && fresh && !mGeofenceList.isEmpty()) {
                 mGeofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent())
                         .addOnSuccessListener(this, aVoid -> {
                             Log.d("SUC", "succes");
