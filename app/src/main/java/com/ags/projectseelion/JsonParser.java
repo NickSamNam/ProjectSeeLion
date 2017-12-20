@@ -57,9 +57,15 @@ public class JsonParser {
 
     private Map<String,String> getDescription(String tekst) {
         HashMap<String, String> descriptionMap = new HashMap();
-        descriptionMap.put("nl",tekst);
+        descriptionMap.put("nl",getNLTekst(tekst));
         descriptionMap.put("en","There is no translation available for this description.");
         return descriptionMap;
+    }
+
+    private String getNLTekst(String tekst) {
+        if(tekst.isEmpty())
+            return "Er is geen beschrijving beschikbaar voor dit punt";
+        return tekst;
     }
 
 }
