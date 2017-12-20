@@ -533,7 +533,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         String trafficMode = "mode=walking";
 
         // Waypoints of route
-        StringBuilder wayPoints = new StringBuilder("waypoints=optimize:true|");
+        StringBuilder wayPoints = new StringBuilder();
 
 
         int nParts = (int) Math.ceil(chosenList.size() / 23d);
@@ -556,6 +556,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
             str_dest = "destination=" + destLatLng.latitude + "," + destLatLng.longitude;
 
+            wayPoints.append("waypoints=optimize:true|");
             for (POI poi : part) {
                 LatLng wayPointLatLng = new LatLng(poi.getLatitude(), poi.getLongitude());
                 wayPoints.append(wayPointLatLng.latitude).append(",").append(wayPointLatLng.longitude);
@@ -568,7 +569,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             String output = "json";
 
             String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_key);
-            wayPoints.delete(0, wayPoints.length() - 1);
+            wayPoints.delete(0, wayPoints.length());
             urls.add(url);
             Log.i("URL", url);
         }
