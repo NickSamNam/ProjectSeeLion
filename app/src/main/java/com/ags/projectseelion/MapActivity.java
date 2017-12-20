@@ -1,6 +1,7 @@
 package com.ags.projectseelion;
 
 import android.annotation.SuppressLint;
+import android.app.DownloadManager;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -13,6 +14,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.util.SparseArray;
 
+import com.android.volley.Request;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -37,6 +39,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -146,8 +149,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         toVisitList = new ArrayList<>();
         for (POI poi : pois) {
-            if (poi.isChosen() && (poi.getCategory() == Category.Building))
+            if (poi.isChosen() && (poi.getCategory() == Category.Building)) {
+                Log.d("Pois to list", "onMapReady: " + poi.getName());
                 toVisitList.add(poi);
+            }
         }
 
         Log.d("Size", "onMapReady: " + toVisitList.size());
@@ -276,24 +281,24 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         PolylineOptions lineOptionsToVisit = new PolylineOptions();
 
         LatLng northEast = route.get(0).get(0);
-            if (northEastBound != null) {
-                if (northEast.longitude > northEastBound.longitude && northEast.latitude > northEastBound.latitude) {
-                    northEastBound = northEast;
-                }
-            } else {
+        if (northEastBound != null) {
+            if (northEast.longitude > northEastBound.longitude && northEast.latitude > northEastBound.latitude) {
                 northEastBound = northEast;
             }
-            
+        } else {
+            northEastBound = northEast;
+        }
+
         LatLng southWest = route.get(0).get(1);
-            if (southWestBound != null) {
-                if (southWest.longitude < southWestBound.longitude && southWest.latitude < southWestBound.latitude) {
-                    southWestBound = southWest;
-                }
-            } else {
+        if (southWestBound != null) {
+            if (southWest.longitude < southWestBound.longitude && southWest.latitude < southWestBound.latitude) {
                 southWestBound = southWest;
             }
+        } else {
+            southWestBound = southWest;
+        }
 
-        LatLng start = route.get(1).get(1);
+        LatLng start = route.get(0).get(1);
         LatLng finish = route.get(route.size() - 1).get(route.get(route.size() - 1).size() - 1);
 
         String direction;
@@ -321,7 +326,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         // Drawing polyline in the Google Map for the i-th route
         if (lineOptionsToVisit != null && lineOptionsVisited != null) {
-          LatLngBounds bounds = new LatLngBounds(southWest, northEast);
+            LatLngBounds bounds = new LatLngBounds(southWest, northEast);
             int padding = 150;
             mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding));
 
@@ -398,11 +403,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         String trafficMode = "mode=walking";
 
         // Waypoints of route
-        StringBuilder wayPoints = new StringBuilder("waypoints=optimize:true");
+
         if (toVisitList.size() < 24) {
-            for (int i = 1; i < toVisitList.size(); i++) {
+            StringBuilder wayPoints = new StringBuilder("waypoints=");
+            for (int i = 1; i < toVisitList.size() - 1; i++) {
                 LatLng wayPointLatLng = new LatLng(toVisitList.get(i).getLatitude(), toVisitList.get(i).getLongitude());
-                wayPoints.append(wayPointLatLng.latitude).append(",").append(originLatLng.longitude);
+                wayPoints.append(wayPointLatLng.latitude).append(",").append(wayPointLatLng.longitude);
                 if (i < toVisitList.size() - 1 || toVisitList.size() == 2)
                     wayPoints.append("|");
             }
@@ -417,23 +423,26 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             int amountDone = 0;
             int amountLeft;
 
-            while (amountDone < toVisitList.size() - 1) {
+            originLatLng = new LatLng(toVisitList.get(amountDone).getLatitude(), toVisitList.get(amountDone).getLongitude());
+            str_origin = "origin=" + originLatLng.latitude + "," + originLatLng.longitude;
 
+            destLatLng = new LatLng(toVisitList.get(23).getLatitude(), toVisitList.get(23).getLongitude());
+            str_dest = "destination=" + destLatLng.latitude + "," + destLatLng.longitude;
+
+            while (amountDone < toVisitList.size() - 1) {
+                StringBuilder wayPoints = new StringBuilder("waypoints=");
 
                 if (toVisitList.size() - amountDone > 23)
-                    amountLeft = 22;
+                    amountLeft = 23;
                 else
                     amountLeft = toVisitList.size() - amountDone - 1;
-
-                originLatLng = new LatLng(toVisitList.get(amountDone).getLatitude(), toVisitList.get(amountDone).getLongitude());
-                str_origin = "origin=" + originLatLng.latitude + "," + originLatLng.longitude;
 
                 destLatLng = new LatLng(toVisitList.get(amountDone + amountLeft).getLatitude(), toVisitList.get(amountDone + amountLeft).getLongitude());
                 str_dest = "destination=" + destLatLng.latitude + "," + destLatLng.longitude;
 
                 for (int j = 0; j < amountLeft; j++) {
                     LatLng wayPointLatLng = new LatLng(toVisitList.get(amountDone).getLatitude(), toVisitList.get(amountDone).getLongitude());
-                    wayPoints.append(wayPointLatLng.latitude).append(",").append(originLatLng.longitude);
+                    wayPoints.append(wayPointLatLng.latitude).append(",").append(wayPointLatLng.longitude);
                     if (j < amountLeft) {
                         wayPoints.append("|");
                     }
@@ -446,15 +455,25 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 String output = "json";
 
                 String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_key);
-                wayPoints.delete(0, wayPoints.length() - 1);
+                wayPoints.delete(0, wayPoints.length());
+
+                originLatLng = destLatLng;
+                str_origin = "origin=" + originLatLng.latitude + "," + originLatLng.longitude;
+
                 urls.add(url);
             }
         }
 
         FetchUrl fetch;
+
         for (String url : urls) {
-            fetch = new FetchUrl();
-            fetch.execute(url);
+            VolleyManager.getInstance(this).JsonObjectRequest(Request.Method.GET, url, null, object -> {
+                JSONObject response = (JSONObject) object;
+                RouteDataParser dataParser = new RouteDataParser();
+                List<List<LatLng>> routeData = new ArrayList<>();
+                routeData = dataParser.parseRoutesInfo(response);
+                drawRoute(routeData);
+            });
         }
     }
 

@@ -1,5 +1,7 @@
 package com.ags.projectseelion;
 
+import android.util.Log;
+
 import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
@@ -52,18 +54,22 @@ public class RouteDataParser {
                         String polyline;
                         polyline = (String) ((JSONObject) ((JSONObject) jSteps.get(k)).get("polyline")).get("points");
                         List<LatLng> list = decodePoly(polyline);
-
                         routes.add(list);
                     }
                 }
             }
 
-        } catch (JSONException e) {
+        } catch (
+                JSONException e)
+
+        {
             e.printStackTrace();
-        } catch (Exception e) {
+        } catch (
+                Exception e)
+
+        {
             e.printStackTrace();
         }
-
 
         return routes;
     }
