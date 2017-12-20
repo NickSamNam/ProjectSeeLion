@@ -532,7 +532,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         String trafficMode = "mode=walking";
 
         // Waypoints of route
-        StringBuilder wayPoints = new StringBuilder("waypoints=optimize:true|");
+        StringBuilder wayPoints = new StringBuilder("waypoints=|");
         
 
 
@@ -552,26 +552,34 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             urls.add(url);
         } else {
             int amountDone = 0;
-            int amountLeft;
+            int todo;
+            int originPOI = 0;
+            int destinationPOI;
+            int amountLeft = chosenList.size();
 
-            while (amountDone < chosenList.size() - 1) {
-
-
-                if (chosenList.size() - amountDone > 23)
-                    amountLeft = 22;
+            while (amountLeft-amountDone > 0) {
+                if(amountLeft-amountDone > 22)
+                    todo = 22;
                 else
-                    amountLeft = chosenList.size() - amountDone - 1;
+                    todo = amountLeft-amountDone;
 
-                originLatLng = new LatLng(chosenList.get(amountDone).getLatitude(), chosenList.get(amountDone).getLongitude());
+                destinationPOI = originPOI+todo-1;
+
+
+                originLatLng = new LatLng(chosenList.get(originPOI).getLatitude(), chosenList.get(originPOI).getLongitude());
                 str_origin = "origin=" + originLatLng.latitude + "," + originLatLng.longitude;
-
-                destLatLng = new LatLng(chosenList.get(amountDone + amountLeft).getLatitude(), chosenList.get(amountDone + amountLeft).getLongitude());
+                destLatLng = new LatLng(chosenList.get(destinationPOI).getLatitude(), chosenList.get(destinationPOI).getLongitude());
                 str_dest = "destination=" + destLatLng.latitude + "," + destLatLng.longitude;
 
-                for (int j = 0; j < amountLeft; j++) {
+                Log.i("test","Org: "+chosenList.get(originPOI).getNumber()+" Dest: "+chosenList.get(destinationPOI).getNumber());
+
+
+
+
+                for (int j = 0; j < todo; j++) {
                     LatLng wayPointLatLng = new LatLng(chosenList.get(amountDone).getLatitude(), chosenList.get(amountDone).getLongitude());
                     wayPoints.append(wayPointLatLng.latitude).append(",").append(wayPointLatLng.longitude);
-                    if (j < amountLeft) {
+                    if (j < todo) {
                         wayPoints.append("|");
                     }
                     amountDone++;
@@ -585,6 +593,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_key);
                 wayPoints.delete(0, wayPoints.length() - 1);
                 urls.add(url);
+                originPOI = destinationPOI;
             }
         }
 
