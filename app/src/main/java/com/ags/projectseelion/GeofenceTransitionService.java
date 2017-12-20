@@ -18,6 +18,7 @@ import com.google.android.gms.location.GeofencingEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by delaroy on 4/18/17.
@@ -34,6 +35,8 @@ public class GeofenceTransitionService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        MapController.getInstance().init(getApplicationContext());
+        MapController.getInstance().saveCurrentData(getApplicationContext());
         GeofencingEvent geofencingEvent = GeofencingEvent.fromIntent(intent);
         // Handling errors
         if (geofencingEvent.hasError()) {
@@ -50,6 +53,9 @@ public class GeofenceTransitionService extends IntentService {
             List<Geofence> triggeringGeofences = geofencingEvent.getTriggeringGeofences();
 
             int poi = Integer.parseInt(triggeringGeofences.get(0).getRequestId());
+
+            if (poi == 45)
+                MapController.getInstance().resetCurrentData(getApplicationContext());
 
             // Send notification details as a String
             sendNotification(poi);
@@ -69,9 +75,7 @@ public class GeofenceTransitionService extends IntentService {
         PendingIntent notificationPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
-        MapController mapController = MapController.getInstance();
-        mapController.init(this);
-        POI poi = mapController.getPOINumber(poiNr);
+        POI poi = MapController.getInstance().getPOINumber(poiNr);
 
         // Creating and sending Notification
         NotificationManager notificatioMng =
