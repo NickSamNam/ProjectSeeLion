@@ -515,29 +515,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
     }
 
-    private void createRoute(LatLng origin, LatLng dest) {
-        // Origin of route
-        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
-
-        // Detination of route
-        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
-
-        String trafficMode = "mode=walking";
-//        String trafficMode = "mode=driving";
-
-        // Building the parameters to the web service
-        String parameters = str_origin + "&" + str_dest + "&" + trafficMode;
-
-        // Output format
-        String output = "json";
-
-        // Building the url to the web service
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
-
-        FetchUrl fetch = new FetchUrl();
-        fetch.execute(url);
-    }
-
     private void createRoute() {
         List<String> urls = new ArrayList<>();
 
@@ -593,8 +570,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             urls.add(url);
             Log.i("URL", url);
         }
-
-        FetchUrl fetch;
 
         nRequest = urls.size();
         for (String url : urls) {
@@ -657,68 +632,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             }
         }
         return data;
-    }
-
-
-    // Fetches data from url passed
-    private class FetchUrl extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected String doInBackground(String... url) {
-
-            // For storing data from web service
-            String data = "";
-
-            try {
-                // Fetching the data from web service
-                data = downloadUrl(url[0]);
-                Log.d("Background Task data", data);
-            } catch (Exception e) {
-                Log.d("Background Task", e.toString());
-            }
-            return data;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-            ParserTask parserTask = new ParserTask();
-
-            // Invokes the thread for parsing the JSON data
-            parserTask.execute(result);
-        }
-    }
-
-    private class ParserTask extends AsyncTask<String, Integer, List<List<LatLng>>> {
-
-        // Parsing the data in non-ui thread
-        @Override
-        protected List<List<LatLng>> doInBackground(String... jsonData) {
-
-            JSONObject jObject;
-            List<List<LatLng>> routeData = null;
-
-            try {
-                jObject = new JSONObject(jsonData[0]);
-
-                RouteDataParser parser = new RouteDataParser();
-
-                // Starts parsing routes data
-                routeData = parser.parseRoutesInfo(jObject);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return routeData;
-        }
-
-        // Executes in UI thread, after the parsing process
-        @Override
-        protected void onPostExecute(List<List<LatLng>> result) {
-            route.addAll(result);
-            drawRoute(route);
-        }
     }
 }
 
