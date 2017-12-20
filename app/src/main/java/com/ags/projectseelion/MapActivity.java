@@ -99,6 +99,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
             cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
         }
+
+        route.add(new ArrayList<>());
+
         mGeofenceList = new ArrayList<>();
 
         routeType = Route.values()[(getIntent().getIntExtra(KEY_ROUTE, 0))];
@@ -351,7 +354,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onLocationChanged(Location lastLocation) {
         Log.i("MAP", "Location Changed");
         lastKnownLocation = lastLocation;
-        if (route.size() > 0) {
+        if (route.size() > 0 && route.get(0).size() > 0) {
             Log.i("Route", route.toString());
             drawRoute(route);
         }
@@ -583,6 +586,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 RouteDataParser dataParser = new RouteDataParser();
                 List<List<LatLng>> routeData;
                 routeData = dataParser.parseRoutesInfo(response);
+                route.get(0).addAll(routeData.get(0));
+                routeData.remove(0);
                 route.addAll(routeData);
                 nRequest--;
                 if (nRequest == 0)
