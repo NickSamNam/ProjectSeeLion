@@ -86,8 +86,14 @@ public class MapController {
         return null;
     }
 
-    public void resetCurrentData(Context context) {
-        Log.i(LOG_SHAREDPREF, "file reset started.");
+    public void setAllpoisToChosen(){
+        for (POI poi:pois) {
+            poi.setChosen(true);
+        }
+    }
+
+    public void resetCurrentData(Context context){
+        Log.i(LOG_SHAREDPREF,"file reset started.");
         SharedPreferences mPrefs = context.getSharedPreferences(KEY_PREFERENCES, context.MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = mPrefs.edit();
         prefsEditor.putString(KEY_SAVENAME, null);
