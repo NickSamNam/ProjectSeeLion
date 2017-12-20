@@ -98,9 +98,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         routeType = Route.values()[(getIntent().getIntExtra(KEY_ROUTE, 0))];
 
-        if(routeType==Route.Historic)
+        if (routeType == Route.Historic)
             MapController.getInstance().setAllpoisToChosen();
-
 
 
         setContentView(R.layout.activity_map);
@@ -214,28 +213,29 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         createRoute();
     }
 
-    private void addPOIsToChosenList(){
+    private void addPOIsToChosenList() {
         chosenList = new ArrayList<>();
-        switch(routeType){
-            case Historic:{
+        switch (routeType) {
+            case Historic: {
                 Log.d("ROUTE", "Historic Route started");
-                for(POI poi : pois){
+                for (POI poi : pois) {
                     chosenList.add(poi);
-                    Log.d("ROUTE", "Naam: "+poi.getName());
+                    Log.d("ROUTE", "Naam: " + poi.getName());
                 }
-            }break;
-            case Custom:{
+            }
+            break;
+            case Custom: {
                 Log.d("ROUTE", "Custom Route started");
-                for(POI poi : pois){
+                for (POI poi : pois) {
                     if (poi.isChosen() && (poi.getCategory() == Category.Building)) {
                         chosenList.add(poi);
-                        Log.d("ROUTE", "Naam: "+poi.getName());
+                        Log.d("ROUTE", "Naam: " + poi.getName());
                     }
                 }
 
 
-
-            }break;
+            }
+            break;
         }
         Log.d("Size", "onMapReady: " + chosenList.size());
     }
@@ -521,76 +521,53 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         List<String> urls = new ArrayList<>();
 
         // Origin of route
-        LatLng originLatLng = new LatLng(chosenList.get(0).getLatitude(), chosenList.get(0).getLongitude());
-        String str_origin = "origin=" + originLatLng.latitude + "," + originLatLng.longitude;
+        LatLng originLatLng;
+        String str_origin;
 
         // Detination of route
-        LatLng destLatLng = new LatLng(chosenList.get(chosenList.size() - 1).getLatitude(), chosenList.get(chosenList.size() - 1).getLongitude());
-        String str_dest = "destination=" + destLatLng.latitude + "," + destLatLng.longitude;
+        LatLng destLatLng;
+        String str_dest;
 
         // Mode of transportation
         String trafficMode = "mode=walking";
 
         // Waypoints of route
         StringBuilder wayPoints = new StringBuilder("waypoints=optimize:true|");
-        
 
 
-        if (chosenList.size() < 24) {
-            for (int i = 1; i < chosenList.size() - 1; i++) {
-                LatLng wayPointLatLng = new LatLng(chosenList.get(i).getLatitude(), chosenList.get(i).getLongitude());
+        int nParts = (int) Math.ceil(chosenList.size() / 23d);
+
+        for (int i = 0; i < nParts; i++) {
+            int iStart = i * 23;
+            int iEnd = (i + 1) * 23;
+            if (iEnd > chosenList.size())
+                iEnd = chosenList.size();
+
+            List<POI> part = chosenList.subList(iStart, iEnd);
+            Log.i("PART", part.toString());
+
+            originLatLng = new LatLng(part.get(0).getLatitude(), part.get(0).getLongitude());
+            str_origin = "origin=" + originLatLng.latitude + "," + originLatLng.longitude;
+
+            destLatLng = new LatLng(part.get(part.size() - 1).getLatitude(), part.get(part.size() - 1).getLongitude());
+
+            str_dest = "destination=" + destLatLng.latitude + "," + destLatLng.longitude;
+
+            for (POI poi : part) {
+                LatLng wayPointLatLng = new LatLng(poi.getLatitude(), poi.getLongitude());
                 wayPoints.append(wayPointLatLng.latitude).append(",").append(wayPointLatLng.longitude);
-                if (i < chosenList.size() - 1 || chosenList.size() == 2)
-                    wayPoints.append("|");
+                wayPoints.append("|");
             }
+
             // Url building
             String parameters = str_origin + "&" + str_dest + "&" + wayPoints + "&" + trafficMode;
 
             String output = "json";
 
             String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_key);
+            wayPoints.delete(0, wayPoints.length() - 1);
             urls.add(url);
-        } else {
-            int amountDone = 0;
-            int amountLeft;
-
-            while (amountDone < chosenList.size() - 1) {
-
-
-                if (chosenList.size() - amountDone > 23)
-                    amountLeft = 22;
-                else
-                    amountLeft = chosenList.size() - amountDone - 1;
-
-                originLatLng = new LatLng(chosenList.get(amountDone).getLatitude(), chosenList.get(amountDone).getLongitude());
-                str_origin = "origin=" + originLatLng.latitude + "," + originLatLng.longitude;
-
-                destLatLng = new LatLng(chosenList.get(amountDone + amountLeft).getLatitude(), chosenList.get(amountDone + amountLeft).getLongitude());
-                str_dest = "destination=" + destLatLng.latitude + "," + destLatLng.longitude;
-
-                for (int j = 0; j < amountLeft; j++) {
-                    LatLng wayPointLatLng = new LatLng(chosenList.get(amountDone).getLatitude(), chosenList.get(amountDone).getLongitude());
-                    wayPoints.append(wayPointLatLng.latitude).append(",").append(wayPointLatLng.longitude);
-                    if (j < amountLeft) {
-                        wayPoints.append("|");
-                    }
-                    amountDone++;
-                }
-
-                // Url building
-                String parameters = str_origin + "&" + str_dest + "&" + wayPoints + "&" + trafficMode;
-
-                String output = "json";
-
-                String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_key);
-                wayPoints.delete(0, wayPoints.length() - 1);
-                urls.add(url);
-            }
         }
-
-
-
-
 
         FetchUrl fetch;
         for (String url : urls) {
