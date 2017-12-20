@@ -22,6 +22,7 @@ public class InformationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MapController.getInstance().init(this);
         setContentView(R.layout.activity_information);
         imageView = findViewById(R.id.activity_information_imageView_poi_image);
         titleView = findViewById(R.id.activity_information_textView_poi_title);

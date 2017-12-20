@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class MonumentSelectionActivity extends AppCompatActivity {
@@ -24,6 +25,7 @@ public class MonumentSelectionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MapController.getInstance().init(this);
         setContentView(R.layout.activity_monument_selection);
 
         monuments = new ArrayList<>(MapController.getInstance().getPOIs());
@@ -41,6 +43,7 @@ public class MonumentSelectionActivity extends AppCompatActivity {
     }
 
     private void btnContinueOnClick(View view) {
+        MapController.getInstance().saveCurrentData(this);
         Intent intent = new Intent(getApplicationContext(), MapActivity.class);
         intent.putExtra(MapActivity.KEY_ROUTE, Route.Custom.ordinal());
         startActivity(intent);

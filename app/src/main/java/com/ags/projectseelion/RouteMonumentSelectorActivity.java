@@ -10,6 +10,7 @@ public class RouteMonumentSelectorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MapController.getInstance().init(this);
         setContentView(R.layout.activity_route_monument_selector);
 
         Button btn_RouteSelector = findViewById(R.id.activity_route_monument_selector_btn_selectroute);
