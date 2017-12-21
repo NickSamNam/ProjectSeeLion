@@ -56,7 +56,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private final static float DEFAULT_ZOOM = 18f;
     private final static String KEY_LOCATION = "LOCATION";
     private final static String KEY_CAMERA_POSITION = "CAMERA_POSITION";
-    private final static String KEY_VISITED_LOCATIONS = "VISITED_LOCATIONS";
     private final static int ZOOM_THRESHOLD = 10;
     List<POI> pois = MapController.getInstance().getPOIs();
     private boolean fresh = true;
