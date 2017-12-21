@@ -45,6 +45,7 @@ import com.google.android.gms.tasks.Task;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static com.google.android.gms.location.Geofence.NEVER_EXPIRE;
@@ -55,7 +56,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private final static float DEFAULT_ZOOM = 18f;
     private final static String KEY_LOCATION = "LOCATION";
     private final static String KEY_CAMERA_POSITION = "CAMERA_POSITION";
-    private final static String KEY_VISITED_LOCATIONS = "VISITED_LOCATIONS";
     private final static int ZOOM_THRESHOLD = 10;
     List<POI> pois = MapController.getInstance().getPOIs();
     private boolean fresh = true;
@@ -77,7 +77,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private int nRequest = 0;
     private LatLng northEastBound = null;
     private LatLng southWestBound = null;
-    private ArrayList<Location> visitedLocations = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +86,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             fresh = false;
             lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
             cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
-            visitedLocations = savedInstanceState.getParcelableArrayList(KEY_VISITED_LOCATIONS);
         }
 
         route.add(new ArrayList<>());
@@ -116,7 +114,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         locationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
-                visitedLocations.addAll(locationResult.getLocations());
                 onLocationChanged(locationResult.getLastLocation());
             }
         };
@@ -136,7 +133,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     protected void onSaveInstanceState(Bundle outState) {
         outState.putParcelable(KEY_CAMERA_POSITION, mMap.getCameraPosition());
         outState.putParcelable(KEY_LOCATION, lastKnownLocation);
-        outState.putParcelableArrayList(KEY_VISITED_LOCATIONS, visitedLocations);
         super.onSaveInstanceState(outState);
     }
 
@@ -432,26 +428,25 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
 
         // Polyline adding
+        boolean visited = false;
+        Collections.reverse(routeLinesOptions);
         for (PolylineOptions p : routeLinesOptions) {
-            p
-                    .width(10);
-            if (visitedLocations.isEmpty()) {
+            p.width(10);
+            if (lastKnownLocation == null) {
                 p.color(Color.RED);
             } else {
-                boolean visited = false;
-                for (Location location : visitedLocations) {
+                if (visited) {
+                    p.color(Color.GRAY);
+                } else {
                     LatLng polyEnd = p.getPoints().get(p.getPoints().size() - 1);
                     float[] dP = new float[1];
-                    Location.distanceBetween(location.getLatitude(), location.getLongitude(), polyEnd.latitude, polyEnd.longitude, dP);
+                    Location.distanceBetween(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude(), polyEnd.latitude, polyEnd.longitude, dP);
                     if (dP[0] <= 30) {
                         visited = true;
-                        break;
-                    }
+                        p.color(Color.GRAY);
+                    } else
+                        p.color(Color.RED);
                 }
-                if (visited)
-                    p.color(Color.GRAY);
-                else
-                    p.color(Color.RED);
             }
             routeLines.add(mMap.addPolyline(p));
         }
