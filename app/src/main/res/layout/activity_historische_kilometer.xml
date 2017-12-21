@@ -10,7 +10,7 @@
         android:id="@+id/activity_historische_kilometer_textView_titel"
         android:layout_width="384dp"
         android:layout_height="51dp"
-        android:text="@string/titel_historische_kilometer"
+        android:text="@string/historical_kilometer"
         android:textAlignment="center"
         android:textColor="@android:color/background_dark"
         android:textSize="36sp"

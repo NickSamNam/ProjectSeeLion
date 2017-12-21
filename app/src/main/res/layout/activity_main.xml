@@ -71,7 +71,8 @@
                 android:layout_alignParentRight="true"
                 tools:layout_editor_absoluteX="277dp"
                 tools:layout_editor_absoluteY="347dp"
-                android:onClick="onRadioButtonClicked" />
+                android:onClick="onRadioButtonClicked"
+                tools:ignore="NotSibling" />
 
             <TextView
                 android:id="@+id/activity_main_textView_english"
