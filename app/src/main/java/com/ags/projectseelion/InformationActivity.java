@@ -35,6 +35,6 @@ public class InformationActivity extends AppCompatActivity {
     }
 
     private void loadImage(String name) {
-        Glide.with(this).load(getResources().getIdentifier(name, "drawable", getPackageName())).apply(RequestOptions.centerCropTransform()).into(imageView);
+        Glide.with(this).load(getResources().getIdentifier(name, "drawable", getPackageName())).apply(RequestOptions.centerInsideTransform()).into(imageView);
     }
 }
