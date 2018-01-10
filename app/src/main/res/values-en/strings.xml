@@ -11,11 +11,15 @@
     <string name="filter">Filter</string>
     <string name="title_activity_map">Map</string>
     <string name="historical_kilometer">Historical Kilometer</string>
-    <string name="oke">Oké</string>
+    <string name="oke">OK</string>
     <string name="nederlands">Dutch</string>
     <string name="english">English</string>
     <string name="startroute">Start Route</string>
     <string name="afstand">Distance(kilometer):</string>
     <string name="notification">Arrived at POI.</string>
     <string name="looptijd">Estimated travel time:</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="dialog_confirm_exit_main">Are you sure you want to exit the app?</string>
+    <string name="dialog_confirm_exit_route">Are you sure you want to exit the route?</string>
 </resources>

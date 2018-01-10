@@ -16,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.util.SparseArray;
 
@@ -63,7 +64,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private Location lastKnownLocation = null;
     private CameraPosition cameraPosition = null;
     private FusedLocationProviderClient fusedLocationProviderClient;
-    private LatLng defaultLocation = new LatLng(32.676149, -117.157703);
+    private LatLng defaultLocation = new LatLng(51.5941508, 4.7782016);
     private Route routeType;
     private ArrayList<POI> chosenList;
     private SparseArray<Marker> visibleMarkers = new SparseArray<>();
@@ -160,6 +161,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         super.onPause();
     }
 
+    @Override
+    public void onBackPressed() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.dialog_confirm_exit_route)
+                .setCancelable(false)
+                .setPositiveButton(R.string.yes, (dialog, which) -> super.onBackPressed())
+                .setNegativeButton(R.string.no, ((dialog, which) -> dialog.dismiss()));
+        final AlertDialog alert = builder.create();
+        alert.show();
+    }
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -178,11 +190,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 addMarkerForRoute(poi);
             }
         });
+        mMap.setOnMyLocationButtonClickListener(() -> {
+            checkGPSAvailability();
+            return false;
+        });
 
         if (fresh) {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
             getLocationPermission();
         }
+
+        checkGPSAvailability();
 
         updateLocationUI();
         getDeviceLocation();
@@ -207,6 +225,22 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
 
         createRoute();
+    }
+
+    @SuppressLint("MissingPermission")
+    public void checkGPSAvailability() {
+        if (hasLocationPermission()) {
+            fusedLocationProviderClient.getLocationAvailability().addOnCompleteListener(this, (task -> {
+                if (!task.getResult().isLocationAvailable()) {
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setMessage(R.string.no_gps_text)
+                            .setCancelable(false)
+                            .setPositiveButton(getString(R.string.oke), (dialog, which) -> dialog.dismiss());
+                    final AlertDialog alert = builder.create();
+                    alert.show();
+                }
+            }));
+        }
     }
 
     private void addPOIsToChosenList() {

@@ -67,7 +67,7 @@ public class POIFragment extends DialogFragment {
                 Glide
                         .with(this)
                         .load(getResources().getIdentifier(poi.getImageName(), "drawable", getActivity().getPackageName()))
-                        .apply(RequestOptions.centerCropTransform())
+                        .apply(RequestOptions.centerInsideTransform())
                         .into(ivImage);
             }
         }

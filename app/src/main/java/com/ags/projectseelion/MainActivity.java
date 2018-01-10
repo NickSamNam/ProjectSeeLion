@@ -3,6 +3,7 @@ package com.ags.projectseelion;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +29,17 @@ public class MainActivity extends AppCompatActivity {
         continueButton.setOnClickListener(v -> {
             OnContinueButtonClicked();
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.dialog_confirm_exit_main)
+                .setCancelable(false)
+                .setPositiveButton(R.string.yes, (dialog, which) -> super.onBackPressed())
+                .setNegativeButton(R.string.no, ((dialog, which) -> dialog.dismiss()));
+        final AlertDialog alert = builder.create();
+        alert.show();
     }
 
     private void SetCheckedBox(String language) {
