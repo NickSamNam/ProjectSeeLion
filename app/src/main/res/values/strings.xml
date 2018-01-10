@@ -19,4 +19,7 @@
     <string name="afstand">Afstand (kilometers): </string>
     <string name="startroute">Start route</string>
     <string name="notification">Aangekomen bij POI.</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nee</string>
+    <string name="dialog_confirm_exit_main">Weet je zeker dat je de app wilt verlaten?</string>
 </resources>
