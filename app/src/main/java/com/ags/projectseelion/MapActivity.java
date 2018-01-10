@@ -63,7 +63,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private Location lastKnownLocation = null;
     private CameraPosition cameraPosition = null;
     private FusedLocationProviderClient fusedLocationProviderClient;
-    private LatLng defaultLocation = new LatLng(32.676149, -117.157703);
+    private LatLng defaultLocation = new LatLng(51.5941508, 4.7782016);
     private Route routeType;
     private ArrayList<POI> chosenList;
     private SparseArray<Marker> visibleMarkers = new SparseArray<>();
