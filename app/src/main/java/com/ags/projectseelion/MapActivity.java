@@ -161,6 +161,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         super.onPause();
     }
 
+    @Override
+    public void onBackPressed() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.dialog_confirm_exit_route)
+                .setCancelable(false)
+                .setPositiveButton(R.string.yes, (dialog, which) -> super.onBackPressed())
+                .setNegativeButton(R.string.no, ((dialog, which) -> dialog.dismiss()));
+        final AlertDialog alert = builder.create();
+        alert.show();
+    }
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
